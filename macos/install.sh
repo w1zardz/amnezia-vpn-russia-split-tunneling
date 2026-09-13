@@ -84,8 +84,19 @@ if [[ ! -d /Applications/AmneziaVPN.app ]]; then
     echo "Не найдена /Applications/AmneziaVPN.app" >&2
     exit 1
 fi
-if [[ ! -x /usr/bin/python3 ]]; then
-    echo "Не найден /usr/bin/python3" >&2
+# /usr/bin/python3 — shim выбранного Xcode: после обновления Xcode он может
+# существовать, но падать ещё до запуска Python. CLT запускаем напрямую.
+PYTHON_BIN=""
+for PYTHON_CANDIDATE in /Library/Developer/CommandLineTools/usr/bin/python3 /usr/bin/python3; do
+    if [[ -x "${PYTHON_CANDIDATE}" ]] && "${PYTHON_CANDIDATE}" -c \
+        'import fcntl, ipaddress, json, plistlib, sys; sys.exit(sys.version_info < (3, 9))' \
+        >/dev/null 2>&1; then
+        PYTHON_BIN="${PYTHON_CANDIDATE}"
+        break
+    fi
+done
+if [[ -z "${PYTHON_BIN}" ]]; then
+    echo "Не найден рабочий Apple Python 3.9+ (Command Line Tools или /usr/bin/python3). Переустановите Command Line Tools." >&2
     exit 1
 fi
 
@@ -107,19 +118,19 @@ chmod 700 "${STAGING_DIR}/set-amnezia-routes"
 
 install -m 600 "${SCRIPT_DIR}/io.github.amnezia-route-sync.plist.template" \
     "${STAGING_DIR}/launch-agent.plist"
-PROGRAM_ARGUMENTS_JSON="$(/usr/bin/python3 -c \
-    'import json,sys; print(json.dumps(["/usr/bin/python3", sys.argv[1]]))' "${UPDATE_SCRIPT}")"
+PROGRAM_ARGUMENTS_JSON="$("${PYTHON_BIN}" -c \
+    'import json,sys; print(json.dumps(sys.argv[1:]))' "${PYTHON_BIN}" "${UPDATE_SCRIPT}")"
 plutil -replace ProgramArguments -json "${PROGRAM_ARGUMENTS_JSON}" \
     "${STAGING_DIR}/launch-agent.plist"
 plutil -replace StandardOutPath -string "${STDOUT_LOG}" "${STAGING_DIR}/launch-agent.plist"
 plutil -replace StandardErrorPath -string "${STDERR_LOG}" "${STAGING_DIR}/launch-agent.plist"
-PATH_STATE_JSON="$(/usr/bin/python3 -c \
+PATH_STATE_JSON="$("${PYTHON_BIN}" -c \
     'import json,sys; print(json.dumps({sys.argv[1]: True}))' "${PENDING_PATH}")"
 plutil -replace KeepAlive.PathState -json "${PATH_STATE_JSON}" \
     "${STAGING_DIR}/launch-agent.plist"
 plutil -lint "${STAGING_DIR}/launch-agent.plist" >/dev/null
 # Тем же интерпретатором, что и LaunchAgent, а не первым python3 из PATH.
-/usr/bin/python3 "${STAGING_DIR}/update_amnezia_routes.py" --dry-run
+"${PYTHON_BIN}" "${STAGING_DIR}/update_amnezia_routes.py" --dry-run
 
 mkdir -p "${INSTALL_DIR}" "$(dirname "${LAUNCH_AGENT}")"
 chmod 700 "${INSTALL_DIR}"
