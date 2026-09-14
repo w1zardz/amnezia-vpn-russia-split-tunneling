@@ -1,6 +1,7 @@
 @echo off
 chcp 65001 >nul
 setlocal
+set "RESULT=0"
 title Российские сайты без VPN — установка для AmneziaVPN
 
 rem Двойной клик по файлу: права администратора запрашиваются сами, дальше
@@ -32,6 +33,7 @@ echo Список обновляется сам при входе в Windows и 
 goto end
 
 :failed
+set "RESULT=1"
 echo.
 echo Установка не удалась — причина написана выше.
 echo Проверьте, что AmneziaVPN установлен и подключение в нём настроено.
@@ -39,3 +41,4 @@ echo Проверьте, что AmneziaVPN установлен и подклю�
 :end
 echo.
 pause
+exit /b %RESULT%

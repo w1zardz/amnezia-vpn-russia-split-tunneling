@@ -13,6 +13,7 @@ TEXT_SUFFIXES = {
     "",
     ".bat",
     ".command",
+    ".cpp",
     ".md",
     ".py",
     ".ps1",

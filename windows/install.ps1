@@ -8,7 +8,8 @@
 в систему и каждые 6 часов.
 
 Задача регистрируется с наивысшими правами: чтобы применить новый список без
-перезагрузки Windows, updater перезапускает службу AmneziaVPN-service. Поэтому и
+перезагрузки Windows, updater отключает туннель через демон, а при сбое может
+перезапустить службу AmneziaVPN-service. Поэтому и
 установщик нужно запускать от имени администратора.
 #>
 
@@ -17,6 +18,7 @@ param(
     [switch]$Lite,
     [switch]$ReplaceAll,
     [switch]$NoLocalSubnets,
+    [switch]$AllowVpnReconnect,
     [ValidateRange(-1, 10000)]
     [int]$ServerIndex = -1,
     [string]$Source
@@ -94,7 +96,9 @@ try {
         } while ($stillRunning -and [DateTime]::UtcNow -lt $stopDeadline)
         if ($stillRunning) { throw 'Предыдущий updater не остановился за 20 секунд; переустановка отменена.' }
     }
-    & $PowerShellExe -NoProfile -ExecutionPolicy Bypass -File $stagedScript -RecoverOnly
+    $recoveryArguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $stagedScript, '-RecoverOnly')
+    if ($AllowVpnReconnect) { $recoveryArguments += '-AllowVpnReconnect' }
+    & $PowerShellExe @recoveryArguments
     if ($LASTEXITCODE -ne 0) { throw 'Не удалось восстановить предыдущую транзакцию; переустановка отменена.' }
 
     $dryRunArguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $stagedScript, '-DryRun')
@@ -157,6 +161,8 @@ try {
     if ($NoLocalSubnets) { $initialArguments += '-NoLocalSubnets' }
     if ($Source) { $initialArguments += @('-Source', $Source) }
     if ($ServerIndex -ge 0) { $initialArguments += @('-ServerIndex', [string]$ServerIndex) }
+    # One-time permission must never become a standing permission in the task.
+    if ($AllowVpnReconnect) { $initialArguments += '-AllowVpnReconnect' }
     & $PowerShellExe @initialArguments
     if ($LASTEXITCODE -ne 0) {
         throw 'Скрипт и задача установлены, но первичное применение не завершилось. Исправьте ошибку выше и повторите установку; журнал восстановления сохранён, если он был создан.'
@@ -164,7 +170,7 @@ try {
 
     Write-Host "Установлено: $InstalledScript"
     Write-Host 'Обновление: при входе в Windows и каждые 6 часов.'
-    Write-Host 'При смене списка updater сам закрывает AmneziaVPN, перезапускает службу и поднимает соединение — перезагрузка Windows не нужна.'
+    Write-Host 'При включённом KillSwitch работающая Amnezia автоматически не переподключается: применение изменённого списка откладывается.'
     Write-Host "Статус: Get-ScheduledTask -TaskName '$TaskName'"
     Write-Host "Результат последнего запуска: Get-Content `"$InstallDir\status.json`""
 } catch {

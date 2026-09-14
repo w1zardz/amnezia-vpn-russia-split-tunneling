@@ -29,7 +29,10 @@ try {
     $original = @{'example.com' = @('93.184.216.34'); '5.255.0.0/16' = @()}
     Write-RoutingRegistry $original
     $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($RegistryConfSubKey, $true)
-    try { $key.SetValue('untouched', 'sentinel') } finally { $key.Dispose() }
+    try {
+        $key.SetValue('untouched', 'sentinel')
+        $key.SetValue('killSwitchEnabled', 'false')
+    } finally { $key.Dispose() }
     $snapshot = Read-RoutingRegistrySnapshot | ConvertTo-Json -Depth 12 | ConvertFrom-Json
     Write-RoutingRegistry @{'other.example' = @('8.8.8.8')}
     Restore-RoutingRegistrySnapshot $snapshot
@@ -160,6 +163,48 @@ try {
     ${function:Test-VpnAdapterUp} = $adapterUp
     Write-Host 'PASS: adapter ownership'
 
+    # The daemon deletes the temporary WireGuard service while SCM callers may
+    # still hold a ServiceController. Only ERROR_SERVICE_DOES_NOT_EXIST is benign.
+    $raceGetTunnel = ${function:Get-TunnelService}
+    $raceService = [pscustomobject]@{ Status=[ServiceProcess.ServiceControllerStatus]::Stopped }
+    $raceService | Add-Member ScriptMethod Refresh {
+        throw [InvalidOperationException]::new('Service was deleted', [ComponentModel.Win32Exception]::new(1060))
+    }
+    $raceService | Add-Member ScriptMethod WaitForStatus {
+        param($status, $timeout)
+        throw [InvalidOperationException]::new('Service was deleted', [ComponentModel.Win32Exception]::new(1060))
+    }
+    function Get-TunnelService { return $raceService }
+    Assert-True (-not (Test-TunnelServiceRunning)) 'Deleted tunnel service reported running'
+    Assert-True (-not (Test-TunnelReady)) 'Deleted tunnel service reported ready'
+    Assert-True (Stop-ServiceHard $raceService) 'Deleted service was not considered stopped'
+    Assert-True (Wait-ServiceStatus $raceService ([ServiceProcess.ServiceControllerStatus]::Stopped) 1) 'Deletion during stop wait failed'
+    Assert-True (-not (Wait-ServiceStatus $raceService ([ServiceProcess.ServiceControllerStatus]::Running) 1)) 'Deleted service was considered started'
+    $raceService | Add-Member ScriptMethod Refresh {
+        throw [InvalidOperationException]::new('Access denied', [ComponentModel.Win32Exception]::new(5))
+    } -Force
+    Assert-Throws { Test-TunnelServiceRunning } 'Service access denial was hidden'
+    ${function:Get-TunnelService} = $raceGetTunnel
+    Write-Host 'PASS: temporary tunnel service deletion race'
+
+    $raceDisconnect = ${function:Request-AmneziaDisconnect}
+    $raceRunning = ${function:Test-TunnelRunning}
+    $script:disconnectRequests = 0
+    $script:raceTunnelRunning = $true
+    function Request-AmneziaDisconnect {
+        $script:disconnectRequests++
+        $script:raceTunnelRunning = $false
+        return $true
+    }
+    function Test-TunnelRunning { return $script:raceTunnelRunning }
+    function Get-TunnelService { throw 'SCM was used after the daemon already disconnected' }
+    Stop-AmneziaTunnel
+    Assert-True ($script:disconnectRequests -eq 1) 'Daemon cleanup was not requested'
+    ${function:Get-TunnelService} = $raceGetTunnel
+    ${function:Request-AmneziaDisconnect} = $raceDisconnect
+    ${function:Test-TunnelRunning} = $raceRunning
+    Write-Host 'PASS: disconnect cleans daemon state before stopping services'
+
     # All process/service functions below are mocks. Transactions still exercise
     # the real codec, temporary HKCU data, journal, and managed-entry files.
     $restoreSession = ${function:Restore-AmneziaSession}
@@ -195,6 +240,47 @@ try {
     $unchanged = Invoke-RoutingTransaction @('example.com','5.255.0.0/16') 'mock.exe' @{'example.com'=@('1.1.1.1')}
     Assert-True (-not $unchanged.Changed -and $script:stops -eq $stopsBefore) 'Unchanged list restarted VPN'
     Write-Host 'PASS: reconnect failure, crash recovery, no-op update'
+
+    # Enabled/unknown KillSwitch must stop the transaction BEFORE closing the
+    # GUI, disconnecting, writing settings, or creating a recovery journal.
+    $protectedSites = Read-ExceptSites
+    $protectedManaged = (Get-Content -LiteralPath $ManagedPath -Raw)
+    $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($RegistryConfSubKey, $true)
+    try { $key.SetValue('killSwitchEnabled', 'true') } finally { $key.Dispose() }
+    Assert-Throws { Invoke-RoutingTransaction @('new.example') 'mock.exe' } 'KillSwitch allowed an automatic reconnect'
+    Assert-True ($script:stops -eq $stopsBefore) 'KillSwitch guard ran after stopping the GUI'
+    Assert-True (Test-SitesEqual $protectedSites (Read-ExceptSites)) 'KillSwitch guard changed routes'
+    Assert-True ((Get-Content -LiteralPath $ManagedPath -Raw) -ceq $protectedManaged) 'KillSwitch guard changed managed ownership'
+    Assert-True (-not (Test-Path -LiteralPath $JournalPath)) 'KillSwitch guard created a transaction'
+    $protectedNoOp = Invoke-RoutingTransaction @('example.com','5.255.0.0/16') 'mock.exe' @{'example.com'=@('1.1.1.1')}
+    Assert-True (-not $protectedNoOp.Changed -and $script:stops -eq $stopsBefore) 'KillSwitch blocked or restarted a no-op update'
+
+    $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($RegistryConfSubKey, $true)
+    try { $key.DeleteValue('killSwitchEnabled') } finally { $key.Dispose() }
+    Assert-Throws { Assert-SafeAmneziaRestart (Get-AmneziaSession) } 'Missing KillSwitch setting permitted a disconnect'
+    Assert-SafeAmneziaRestart ([pscustomobject]@{GuiRunning=$false;Connected=$false})
+    $AllowVpnReconnect = $true
+    Assert-SafeAmneziaRestart (Get-AmneziaSession)
+    $AllowVpnReconnect = $false
+
+    # A legacy writing journal cannot bypass the guard. A restoring journal
+    # only brings the VPN back, so it must still recover with KillSwitch enabled.
+    $protectedBackup = Join-Path $testRoot 'protected-routing-backup.json'
+    Write-JsonAtomic $protectedBackup (Read-RoutingRegistrySnapshot)
+    $protectedJournal = [ordered]@{
+        version=1; phase='writing'; session=(ConvertTo-SessionDocument (Get-AmneziaSession))
+        backup=$protectedBackup; previous_managed=@('example.com','5.255.0.0/16')
+    }
+    Write-JsonAtomic $JournalPath $protectedJournal
+    Assert-Throws { Restore-PendingTransaction 'mock.exe' } 'Legacy rollback disconnected a protected VPN'
+    Assert-True ($script:stops -eq $stopsBefore -and (Read-JsonFile $JournalPath).phase -eq 'writing') 'Blocked rollback changed the session or journal'
+    $protectedJournal.phase = 'restoring'
+    Write-JsonAtomic $JournalPath $protectedJournal
+    Restore-PendingTransaction 'mock.exe'
+    Assert-True (-not (Test-Path -LiteralPath $JournalPath)) 'KillSwitch prevented restoring connectivity'
+    $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($RegistryConfSubKey, $true)
+    try { $key.SetValue('killSwitchEnabled', 'false') } finally { $key.Dispose() }
+    Write-Host 'PASS: KillSwitch blocks automatic disconnect, allows no-op and reconnect-only recovery'
 
     # Simulate a failed write, including a failed reconnect after rollback.
     $writeRegistry = ${function:Write-RoutingRegistry}

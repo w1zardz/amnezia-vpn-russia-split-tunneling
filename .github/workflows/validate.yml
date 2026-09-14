@@ -101,6 +101,10 @@ jobs:
           }
           & $env:TEST_SHELL -NoProfile -NonInteractive -ExecutionPolicy Bypass -File .\windows\test-updater.ps1
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build the optional app guard and validate its configuration
+        if: matrix.shell == 'powershell'
+        shell: powershell
+        run: .\windows\test-app-vpn-guard.ps1
 
   macos-helper:
     runs-on: macos-14

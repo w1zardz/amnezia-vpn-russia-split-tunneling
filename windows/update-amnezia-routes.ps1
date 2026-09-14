@@ -9,11 +9,15 @@
 аккуратно останавливая и возвращая GUI вместе с туннелем.
 
 Перезагрузка Windows не нужна. Демон AmneziaVPN-service не разбирает туннель,
-когда GUI просто закрывают, поэтому старые маршруты живут до перезапуска службы —
-скрипт перезапускает её сам и поднимает соединение через AmneziaVPN.exe --connect.
-Именно этот шаг раньше заменяли ребутом.
+когда GUI просто закрывают. Скрипт отправляет демону штатную команду отключения,
+чтобы удалить прежние маршруты, и затем возвращает соединение. Остановка службы
+используется только как резервный способ.
 
 Незавершённая запись журналируется и откатывается при следующем запуске.
+
+При включённом KillSwitch автоматическое закрытие работающей Amnezia запрещено:
+штатное отключение снимает его защиту. -AllowVpnReconnect разрешает такой
+перезапуск только для текущего запуска и допускает трафик без VPN в этот период.
 #>
 
 [CmdletBinding()]
@@ -23,6 +27,7 @@ param(
     [string]$Source,
     [switch]$ReplaceAll,
     [switch]$NoRestart,
+    [switch]$AllowVpnReconnect,
     [switch]$SelfTest,
     [switch]$Status,
     [switch]$RecoverOnly,
@@ -742,6 +747,26 @@ function Read-RoutingScalars {
     return $result
 }
 
+function Assert-SafeAmneziaRestart($Session) {
+    if (-not ($Session.GuiRunning -or $Session.Connected)) { return }
+    $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($RegistryConfSubKey, $false)
+    # Missing or unrecognized settings cannot establish that the user disabled
+    # protection. Never turn an uncertain setting into permission to disconnect.
+    $killSwitch = $null
+    try {
+        if ($null -ne $key) { $killSwitch = $key.GetValue('killSwitchEnabled', $null) }
+    } finally { if ($null -ne $key) { $key.Dispose() } }
+    if ([string]$killSwitch -in @('false', '0')) { return }
+    if ($AllowVpnReconnect) {
+        Write-Warning 'Разрешён перезапуск Amnezia: штатное отключение снимает KillSwitch. До восстановления VPN возможен прямой трафик.'
+        return
+    }
+    throw ('Обновление отложено: Amnezia работает, а KillSwitch включён или его состояние неизвестно. ' +
+           'Штатное отключение снимает защиту; updater не будет закрывать GUI и туннель. ' +
+           'Для разового осознанного переподключения используйте -AllowVpnReconnect после подготовки независимой защиты. ' +
+           'Этот флаг сам не блокирует трафик без VPN.')
+}
+
 function ConvertTo-QtMap($Sites) {
     $map = New-Object 'System.Collections.Generic.Dictionary[string,System.Collections.Generic.List[string]]' ([StringComparer]::Ordinal)
     foreach ($key in @($Sites.Keys)) {
@@ -914,9 +939,24 @@ function Get-TunnelService {
 function Test-TunnelServiceRunning {
     $tunnel = Get-TunnelService
     if ($null -eq $tunnel) { return $false }
-    $tunnel.Refresh()
-    return ($tunnel.Status -eq [ServiceProcess.ServiceControllerStatus]::Running -or
-            $tunnel.Status -eq [ServiceProcess.ServiceControllerStatus]::StartPending)
+    try {
+        $tunnel.Refresh()
+        return ($tunnel.Status -eq [ServiceProcess.ServiceControllerStatus]::Running -or
+                $tunnel.Status -eq [ServiceProcess.ServiceControllerStatus]::StartPending)
+    } catch {
+        if (Test-ServiceMissingError $_.Exception) { return $false }
+        throw
+    }
+}
+
+# WireGuard deletes its temporary service on disconnect. A ServiceController
+# obtained just before that deletion can no longer query or wait on it.
+function Test-ServiceMissingError([Exception]$Exception) {
+    while ($null -ne $Exception) {
+        if ($Exception -is [ComponentModel.Win32Exception] -and $Exception.NativeErrorCode -eq 1060) { return $true }
+        $Exception = $Exception.InnerException
+    }
+    return $false
 }
 
 function Test-AmneziaAdapter($Adapter) {
@@ -953,8 +993,13 @@ function Test-TunnelRunning {
 function Test-TunnelReady {
     $tunnel = Get-TunnelService
     if ($null -ne $tunnel) {
-        $tunnel.Refresh()
-        return ($tunnel.Status -eq [ServiceProcess.ServiceControllerStatus]::Running -and (Test-VpnAdapterUp) -and (Test-DaemonHandshake))
+        try {
+            $tunnel.Refresh()
+            return ($tunnel.Status -eq [ServiceProcess.ServiceControllerStatus]::Running -and (Test-VpnAdapterUp) -and (Test-DaemonHandshake))
+        } catch {
+            if (Test-ServiceMissingError $_.Exception) { return $false }
+            throw
+        }
     }
     return ((Test-VpnAdapterUp) -or (Test-AmneziaUserspaceTunnel))
 }
@@ -1097,12 +1142,22 @@ function Wait-ServiceStatus($Service, [ServiceProcess.ServiceControllerStatus]$S
         return $true
     } catch [ServiceProcess.TimeoutException] {
         return $false
+    } catch {
+        if (Test-ServiceMissingError $_.Exception) {
+            return ($Status -eq [ServiceProcess.ServiceControllerStatus]::Stopped)
+        }
+        throw
     }
 }
 
 function Stop-ServiceHard($Service) {
-    $Service.Refresh()
-    if ($Service.Status -eq [ServiceProcess.ServiceControllerStatus]::Stopped) { return $true }
+    try {
+        $Service.Refresh()
+        if ($Service.Status -eq [ServiceProcess.ServiceControllerStatus]::Stopped) { return $true }
+    } catch {
+        if (Test-ServiceMissingError $_.Exception) { return $true }
+        throw
+    }
     try {
         # Stop-Service сам может ждать бесконечно; ServiceController.Stop только
         # отправляет запрос, а ожидание ниже ограничено нашим таймаутом.
@@ -1126,10 +1181,36 @@ function Stop-ServiceHard($Service) {
     return (Wait-ServiceStatus $Service ([ServiceProcess.ServiceControllerStatus]::Stopped) 20)
 }
 
+function Request-AmneziaDisconnect {
+    # The same command as the GUI: the daemon removes exclusion routes from the
+    # physical adapter and clears its connection state before deleting the tunnel.
+    $pipe = New-Object IO.Pipes.NamedPipeClientStream('.', 'amneziavpn', [IO.Pipes.PipeDirection]::InOut, [IO.Pipes.PipeOptions]::Asynchronous)
+    $reader = $null
+    try {
+        $pipe.Connect(1000)
+        $request = [Text.Encoding]::UTF8.GetBytes('{"type":"deactivate"}' + "`n")
+        $pipe.Write($request, 0, $request.Length)
+        $pipe.Flush()
+        $reader = New-Object IO.StreamReader($pipe)
+        $reply = $reader.ReadLineAsync()
+        if (-not $reply.Wait(5000)) { return $false }
+        $message = $reply.GetAwaiter().GetResult() | ConvertFrom-Json
+        return ($message.type -eq 'disconnected')
+    } catch { return $false }
+    finally {
+        if ($null -ne $reader) { $reader.Dispose() }
+        $pipe.Dispose()
+    }
+}
+
 function Stop-AmneziaTunnel {
-    # Демон не разбирает туннель, когда GUI просто закрывают: маршруты прошлого
-    # списка остаются в таблице. Достаточно снять туннельную службу — вместе с
-    # адаптером уходят и её маршруты. Демон трогаем только если это не помогло.
+    # Stopping only the tunnel service leaves the daemon's state and routes on
+    # Ethernet alive. Ask the daemon to clean up first; SCM is a fallback.
+    [void](Request-AmneziaDisconnect)
+    $deadline = [DateTime]::UtcNow.AddSeconds(20)
+    while ([DateTime]::UtcNow -lt $deadline -and (Test-TunnelRunning)) { Start-Sleep -Milliseconds 250 }
+    if (-not (Test-TunnelRunning)) { return }
+
     $tunnel = Get-TunnelService
     if ($null -ne $tunnel) {
         if (-not (Stop-ServiceHard $tunnel)) {
@@ -1260,6 +1341,10 @@ function Restore-PendingTransaction([string]$ExePath) {
     if ($session.Connected -and -not (Test-Elevated)) {
         throw 'Для восстановления подключённой Amnezia нужны права администратора; journal сохранён.'
     }
+    # A writing journal may predate this guard. Preserve it if rollback would
+    # require disconnecting a currently running protected session. Phases that
+    # only restore connectivity above must remain recoverable without an opt-in.
+    Assert-SafeAmneziaRestart (Get-AmneziaSession)
     Stop-AmneziaGui
     if ($session.Connected) {
         Stop-AmneziaTunnel
@@ -1288,6 +1373,7 @@ function Invoke-RoutingTransaction([string[]]$Entries, [string]$ExePath, $Domain
     }
 
     $session = Get-AmneziaSession
+    Assert-SafeAmneziaRestart $session
     $currentSessionId = [Diagnostics.Process]::GetCurrentProcess().SessionId
     if (@(Get-Process -Name $GuiProcessName -ErrorAction SilentlyContinue |
             Where-Object { $_.SessionId -ne $currentSessionId }).Count -gt 0) {
