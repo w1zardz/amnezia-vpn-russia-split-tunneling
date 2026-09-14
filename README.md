@@ -6,6 +6,14 @@
 [![Установщик для macOS](https://img.shields.io/badge/macOS-%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%B2%20%D0%BE%D0%B4%D0%B8%D0%BD%20%D0%BA%D0%BB%D0%B8%D0%BA-000000)](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling/releases/latest/download/install-macos.zip)
 [![Звёзды](https://img.shields.io/github/stars/w1zardz/amnezia-vpn-russia-split-tunneling?style=flat)](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling/stargazers)
 
+> [!TIP]
+> 🔥 **Нужен VPN, который просто работает в России — без геморроя?**
+> Рекомендуем [**MATRIX VPN — mtrxvpn.com**](https://mtrxvpn.com): современные протоколы
+> **VLESS Reality, XHTTP, Trojan и Hysteria2**, устойчивые к блокировкам. Работает
+> даже в условиях **«белых списков»**. Подключение за минуту — без настройки серверов.
+>
+> 👉 [**Попробовать MATRIX VPN**](https://mtrxvpn.com)
+
 **Готовый автообновляемый список российских сайтов и IP-сетей для раздельного
 туннелирования (split tunneling) в AmneziaVPN и AmneziaWG.** Госуслуги, Сбер,
 Т-Банк, ВТБ, Ozon, Wildberries, Avito, Яндекс, VK Видео, Кинопоиск, РЖД и сотни
