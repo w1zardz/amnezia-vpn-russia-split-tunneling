@@ -24,6 +24,10 @@
 param(
     [switch]$DryRun,
     [switch]$Lite,
+    [switch]$YouTubeIngestDirect,
+    [switch]$TestYouTubeIngest,
+    [ValidateRange(0, 2147483647)]
+    [int]$DirectInterfaceIndex = 0,
     [string]$Source,
     [switch]$ReplaceAll,
     [switch]$NoRestart,
@@ -34,12 +38,26 @@ param(
     [switch]$NoLocalSubnets,
     [ValidateRange(-1, 10000)]
     [int]$ServerIndex = -1,
-    [string]$StateDir
+    [string]$StateDir,
+    [ValidateRange(0, 24)]
+    [int]$DnsCacheHours = 6,
+    # Installer handoff: DryRun writes an input snapshot; the initial run reads it.
+    [string]$PreparedPlanPath
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
+
+if ($TestYouTubeIngest -and ($DryRun -or $SelfTest -or $Status -or $RecoverOnly -or $PreparedPlanPath)) {
+    throw '-TestYouTubeIngest — отдельная диагностика без изменения настроек.'
+}
+if ($DirectInterfaceIndex -and -not $TestYouTubeIngest) {
+    throw '-DirectInterfaceIndex используется только с -TestYouTubeIngest.'
+}
+if ($PreparedPlanPath -and ($SelfTest -or $Status -or $RecoverOnly)) {
+    throw '-PreparedPlanPath предназначен только для проверки или применения списка.'
+}
 
 $IsWindowsHost = ($env:OS -eq 'Windows_NT')
 if (-not $IsWindowsHost -and -not $SelfTest) {
@@ -89,6 +107,9 @@ $ImportPath = Join-Path $StateDir 'amnezia-split-routes.json'
 $JournalPath = Join-Path $StateDir '.registry-transaction.json'
 $BackupDir = Join-Path $StateDir 'backups'
 $DnsCachePath = Join-Path $StateDir 'dns-cache.json'
+
+# OBS YouTube RTMPS primary/backup. No wildcard, Google ASN, or playback domains.
+$YouTubeIngestDomains = @('a.rtmps.youtube.com', 'b.rtmps.youtube.com')
 
 $RoutingValueNames = @('ExceptSites', 'routeMode', 'sitesSplitTunnelingEnabled')
 
@@ -237,7 +258,8 @@ function Write-JsonAtomic([string]$Path, $Value) {
     [IO.Directory]::CreateDirectory($directory) | Out-Null
     $temporary = "$Path.tmp.$PID"
     try {
-        $json = $Value | ConvertTo-Json -Depth 12
+        # Preserve empty/single-element arrays (not pipeline enumeration).
+        $json = ConvertTo-Json -InputObject $Value -Depth 12
         [IO.File]::WriteAllText($temporary, $json + [Environment]::NewLine, (New-Object Text.UTF8Encoding($false)))
         if ([IO.File]::Exists($Path)) { [IO.File]::Replace($temporary, $Path, [NullString]::Value) }
         else { [IO.File]::Move($temporary, $Path) }
@@ -379,14 +401,78 @@ function Test-Hostname([string]$Value) {
 
 # --- загрузка и проверка списка ------------------------------------------------
 
-function Get-HttpsText([string]$Url) {
-    if (-not $Url.StartsWith('https://', [StringComparison]::OrdinalIgnoreCase)) { throw "Разрешён только HTTPS: $Url" }
+function New-SourceHttpClient {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     $handler = New-Object System.Net.Http.HttpClientHandler
     $handler.AllowAutoRedirect = $false
     $client = [Net.Http.HttpClient]::new($handler)
     $client.Timeout = [TimeSpan]::FromSeconds(60)
     $client.DefaultRequestHeaders.UserAgent.ParseAdd('Amnezia-Split-Route-Sync-Windows/2.0')
+    return $client
+}
+
+function New-SourceHttpException([Net.Http.HttpResponseMessage]$Response, [string]$Url) {
+    $failure = [Net.Http.HttpRequestException]::new("Источник вернул HTTP $([int]$Response.StatusCode): $Url")
+    # HttpRequestException.StatusCode отсутствует в .NET Framework / PowerShell 5.1.
+    $failure.Data['SourceHttpStatusCode'] = [int]$Response.StatusCode
+    $retryAfter = $Response.Headers.RetryAfter
+    if ($null -ne $retryAfter) {
+        $seconds = $null
+        if ($null -ne $retryAfter.Delta) { $seconds = $retryAfter.Delta.TotalSeconds }
+        elseif ($null -ne $retryAfter.Date) { $seconds = ($retryAfter.Date.UtcDateTime - [DateTime]::UtcNow).TotalSeconds }
+        if ($null -ne $seconds) {
+            # Сервер не должен задерживать обновление произвольным Retry-After.
+            $failure.Data['SourceRetryAfterSeconds'] = [int][Math]::Ceiling([Math]::Max(0, [Math]::Min(30, $seconds)))
+        }
+    }
+    return $failure
+}
+
+function Get-SourceRetryDelay([Exception]$Exception, [int]$Attempt) {
+    $transient = $false
+    $statusCode = 0
+    $delay = 5 * $Attempt
+    # PowerShell оборачивает ошибки методов .NET; проверяем всю цепочку, чтобы
+    # HttpRequestException с внутренней ошибкой сертификата не стал временным.
+    for ($failure = $Exception; $null -ne $failure; $failure = $failure.InnerException) {
+        if ($failure -is [IO.InvalidDataException] -or $failure -is [Text.DecoderFallbackException] -or
+            $failure -is [ArgumentException] -or $failure -is [UriFormatException] -or
+            $failure -is [Security.Authentication.AuthenticationException]) { return -1 }
+        if ($failure.Data.Contains('SourceHttpStatusCode')) { $statusCode = [int]$failure.Data['SourceHttpStatusCode'] }
+        if ($failure.Data.Contains('SourceRetryAfterSeconds')) { $delay = [int]$failure.Data['SourceRetryAfterSeconds'] }
+        if ($failure -is [Net.Http.HttpRequestException]) {
+            if ($failure.PSObject.Properties.Name -contains 'StatusCode' -and $null -ne $failure.StatusCode) {
+                $statusCode = [int]$failure.StatusCode
+            }
+            if ($failure.PSObject.Properties.Name -contains 'HttpRequestError' -and
+                [string]$failure.HttpRequestError -eq 'SecureConnectionError') { return -1 }
+            $transient = $true
+        } elseif ($failure -is [Net.WebException]) {
+            if ($failure.Status -in @([Net.WebExceptionStatus]::TrustFailure, [Net.WebExceptionStatus]::SecureChannelFailure)) { return -1 }
+            if ($failure.Status -eq [Net.WebExceptionStatus]::ProtocolError) {
+                if ($failure.Response -is [Net.HttpWebResponse]) { $statusCode = [int]$failure.Response.StatusCode }
+                else { return -1 }
+            } elseif ($failure.Status -in @(
+                [Net.WebExceptionStatus]::Timeout, [Net.WebExceptionStatus]::ConnectFailure,
+                [Net.WebExceptionStatus]::ConnectionClosed, [Net.WebExceptionStatus]::ReceiveFailure,
+                [Net.WebExceptionStatus]::SendFailure, [Net.WebExceptionStatus]::NameResolutionFailure,
+                [Net.WebExceptionStatus]::ProxyNameResolutionFailure, [Net.WebExceptionStatus]::KeepAliveFailure,
+                [Net.WebExceptionStatus]::PipelineFailure
+            )) { $transient = $true }
+        } elseif ($failure -is [TimeoutException] -or $failure -is [OperationCanceledException] -or
+            $failure -is [IO.IOException] -or $failure -is [Net.Sockets.SocketException]) { $transient = $true }
+    }
+    if ($statusCode -ne 0) { $transient = ($statusCode -eq 408 -or $statusCode -eq 429 -or ($statusCode -ge 500 -and $statusCode -le 599)) }
+    if (-not $transient) { return -1 }
+    return [int][Math]::Max(0, [Math]::Min(30, $delay))
+}
+
+function Get-HttpsText([string]$Url) {
+    $parsedUrl = $null
+    if (-not [Uri]::TryCreate($Url, [UriKind]::Absolute, [ref]$parsedUrl) -or $parsedUrl.Scheme -ne 'https') {
+        throw [ArgumentException]::new("Разрешён только корректный HTTPS URL: $Url")
+    }
+    $client = New-SourceHttpClient
     $response = $null
     $stream = $null
     $memory = $null
@@ -394,9 +480,9 @@ function Get-HttpsText([string]$Url) {
     $cancellation.CancelAfter(60000)
     try {
         $response = $client.GetAsync($Url, [Net.Http.HttpCompletionOption]::ResponseHeadersRead, $cancellation.Token).GetAwaiter().GetResult()
-        if (-not $response.IsSuccessStatusCode) { throw "Источник вернул HTTP $([int]$response.StatusCode): $Url" }
+        if (-not $response.IsSuccessStatusCode) { throw (New-SourceHttpException $response $Url) }
         if ($null -ne $response.Content.Headers.ContentLength -and [long]$response.Content.Headers.ContentLength -gt $MaxListBytes) {
-            throw "Источник больше $MaxListBytes байт: $Url"
+            throw [IO.InvalidDataException]::new("Источник больше $MaxListBytes байт: $Url")
         }
         $stream = $response.Content.ReadAsStreamAsync().GetAwaiter().GetResult()
         $memory = New-Object IO.MemoryStream
@@ -404,26 +490,25 @@ function Get-HttpsText([string]$Url) {
         $total = 0
         while (($read = $stream.ReadAsync($buffer, 0, $buffer.Length, $cancellation.Token).GetAwaiter().GetResult()) -gt 0) {
             $total += $read
-            if ($total -gt $MaxListBytes) { throw "Источник больше $MaxListBytes байт: $Url" }
+            if ($total -gt $MaxListBytes) { throw [IO.InvalidDataException]::new("Источник больше $MaxListBytes байт: $Url") }
             $memory.Write($buffer, 0, $read)
         }
-        if ($total -eq 0) { throw "Источник пуст: $Url" }
+        if ($total -eq 0) { throw [IO.InvalidDataException]::new("Источник пуст: $Url") }
         $utf8 = [Text.UTF8Encoding]::new($false, $true)
         return $utf8.GetString($memory.ToArray())
     } catch [Threading.Tasks.TaskCanceledException] {
         # HttpClient переводит собственный таймаут именно в это исключение, а
         # необработанным оно вылезает в консоль как «Отменена задача» без единого
         # намёка на причину.
-        throw "Источник не ответил за 60 секунд: $Url"
+        throw [TimeoutException]::new("Источник не ответил за 60 секунд: $Url", $_.Exception)
     } catch [OperationCanceledException] {
-        throw "Источник не ответил за 60 секунд: $Url"
+        throw [TimeoutException]::new("Источник не ответил за 60 секунд: $Url", $_.Exception)
     } finally {
         if ($null -ne $stream) { $stream.Dispose() }
         if ($null -ne $memory) { $memory.Dispose() }
         if ($null -ne $response) { $response.Dispose() }
         $cancellation.Dispose()
         $client.Dispose()
-        $handler.Dispose()
     }
 }
 
@@ -436,11 +521,14 @@ function Get-SourceText([string]$SourceValue) {
             $attempt++
             try { return (Get-HttpsText $SourceValue) } catch {
                 if ($attempt -ge 3) { throw }
+                $delay = Get-SourceRetryDelay $_.Exception $attempt
+                if ($delay -lt 0) { throw }
                 Write-Host "Загрузка не удалась ($($_.Exception.Message)), попытка $attempt из 3"
-                Start-Sleep -Seconds (5 * $attempt)
+                Start-Sleep -Seconds $delay
             }
         }
     }
+    if ($SourceValue -match '^[a-z][a-z0-9+.-]*://') { throw [ArgumentException]::new("Разрешён только HTTPS: $SourceValue") }
     if (-not (Test-Path -LiteralPath $SourceValue -PathType Leaf)) { throw "Не найден файл списка: $SourceValue" }
     $info = Get-Item -LiteralPath $SourceValue
     if ($info.Length -gt $MaxListBytes) { throw "Файл списка больше $MaxListBytes байт: $SourceValue" }
@@ -534,6 +622,18 @@ $IPv6ProbeAddress = '2a02:6b8::347'   # trust.yandex.ru, платёжная фо
 $IPv6ProbePort = 443
 $IPv6ProbeTimeoutMs = 4000
 
+function Get-TunnelAliases {
+    $aliases = New-Object 'System.Collections.Generic.HashSet[string]' ([StringComparer]::OrdinalIgnoreCase)
+    foreach ($adapter in @(Get-NetAdapter -IncludeHidden -ErrorAction Stop)) {
+        if ([string]$adapter.Status -ne 'Up') { continue }
+        if ("$($adapter.Name) $($adapter.InterfaceDescription)" -match '(?i)amnezia') {
+            [void]$aliases.Add([string]$adapter.Name)
+        }
+    }
+    # A HashSet must remain a collection even with zero or one interface.
+    return ,$aliases
+}
+
 function Test-IPv6Reachable {
     $client = $null
     try {
@@ -551,20 +651,15 @@ function Test-IPv6Reachable {
 
 function Write-IPv6TunnelWarning {
     $tunnelAliases = $null
-    $routes = @()
     $addresses = @()
     try {
         $tunnelAliases = Get-TunnelAliases
-        $routes = @(Get-NetRoute -AddressFamily IPv6 -ErrorAction Stop |
-            Where-Object { $_.DestinationPrefix -in @('::/0', '::/1') })
+        if ($tunnelAliases.Count -eq 0) { return }
         $addresses = @(Get-NetIPAddress -AddressFamily IPv6 -ErrorAction Stop)
     } catch {
-        # Диагностика необязательна: нет NetTCPIP — просто молчим.
+        Write-Warning "Не удалось проверить IPv6: $($_.Exception.Message)"
         return
     }
-
-    $tunnelRoutes = @($routes | Where-Object { $tunnelAliases.Contains([string]$_.InterfaceAlias) })
-    if ($tunnelRoutes.Count -eq 0) { return }
 
     # Глобальный IPv6 (2000::/3) на обычном адаптере: значит провайдер IPv6 выдал.
     $nativeAliases = New-Object 'System.Collections.Generic.List[string]'
@@ -576,15 +671,26 @@ function Write-IPv6TunnelWarning {
         if (-not $nativeAliases.Contains($alias)) { $nativeAliases.Add($alias) }
     }
     if ($nativeAliases.Count -eq 0) { return }
+    try {
+        # A more specific direct route can override the tunnel's IPv6 default.
+        # Find-NetRoute also returns NetIPAddress; inspect only route objects.
+        $probeRoutes = @(Find-NetRoute -RemoteIPAddress $IPv6ProbeAddress -ErrorAction Stop |
+            Where-Object { $_.PSObject.Properties.Name -contains 'NextHop' })
+        $tunnelRoutes = @($probeRoutes | Where-Object { $tunnelAliases.Contains([string]$_.InterfaceAlias) })
+    } catch {
+        Write-Warning "Не удалось определить маршрут проверки IPv6: $($_.Exception.Message)"
+        return
+    }
+    if ($tunnelRoutes.Count -eq 0) { return }
     if (Test-IPv6Reachable) { return }
 
     $tunnelNames = @($tunnelRoutes | ForEach-Object { [string]$_.InterfaceAlias } | Sort-Object -Unique)
     $adapter = $nativeAliases[0]
-    Write-Warning "IPv6 уходит в туннель ($($tunnelNames -join ', ')) и там не работает: соединение с [$IPv6ProbeAddress]:$IPv6ProbePort не установилось."
+    Write-Warning "Контрольное IPv6-соединение через туннель ($($tunnelNames -join ', ')) не установилось: [$IPv6ProbeAddress]:$IPv6ProbePort. Проверьте IPv6 на VPN-сервере и доступность этого адреса."
     Write-Host '  Список RU Direct это не лечит: AmneziaVPN исключает из VPN только IPv4.'
-    Write-Host '  Сайты с AAAA (Яндекс Директ и его оплата, trust.yandex.ru, pay.yandex.ru, yandex.ru)'
-    Write-Host '  браузер пробует по IPv6 через VPN — страницы и платёжные формы виснут или не грузятся.'
-    Write-Host "  Отключите IPv6 на адаптере (PowerShell от администратора):"
+    Write-Host '  Сбой одной проверки не доказывает недоступность всего IPv6.'
+    Write-Host '  Если страницы с AAAA зависают, для проверки можно временно отключить IPv6'
+    Write-Host "  на адаптере (PowerShell от администратора):"
     Write-Host "    Disable-NetAdapterBinding -Name `"$adapter`" -ComponentID ms_tcpip6"
     Write-Host "  Вернуть обратно:"
     Write-Host "    Enable-NetAdapterBinding -Name `"$adapter`" -ComponentID ms_tcpip6"
@@ -641,7 +747,12 @@ function Resolve-ManagedDomains([string[]]$Domains, [int]$TimeoutSeconds = 45, [
             foreach ($domain in $Domains) { [void]$requested.Add($domain) }
             $knownSet = New-Object 'System.Collections.Generic.HashSet[string]' ([StringComparer]::Ordinal)
             foreach ($domain in $known) { [void]$knownSet.Add([string]$domain) }
-            if ($age.TotalHours -ge 0 -and $age.TotalHours -lt 4 -and
+            # Refresh slightly before expiry: the cache timestamp is written
+            # AFTER DNS completes, so at the next six-hour trigger it can be a
+            # few minutes younger than six hours. Without this margin, updates
+            # can slip to the following trigger. Login/retry runs still reuse it.
+            $refreshAfterMinutes = [Math]::Max(0, 60 * $DnsCacheHours - 5)
+            if ($age.TotalMinutes -ge 0 -and $age.TotalMinutes -lt $refreshAfterMinutes -and
                 $requested.IsSubsetOf($knownSet)) {
                 foreach ($entry in $cached.addresses.PSObject.Properties) {
                     if (-not $requested.Contains($entry.Name)) { continue }
@@ -679,6 +790,13 @@ function Resolve-ManagedDomains([string[]]$Domains, [int]$TimeoutSeconds = 45, [
     return [pscustomobject]@{ Addresses = $addresses; PreviousAddresses = $previousAddresses; Cache = $cache; Cached = $false }
 }
 
+function Add-OptionalDirectDomains($List) {
+    if ($YouTubeIngestDirect) {
+        $List.Domains = @(@($List.Domains) + $YouTubeIngestDomains | Sort-Object -Unique)
+    }
+    return $List
+}
+
 function Get-ManagedRoutePlan($List, $Dns, $Current, [string[]]$PreviousManaged) {
     $networks = New-Object 'System.Collections.Generic.List[object]'
     foreach ($value in $List.Cidrs) { $networks.Add((ConvertTo-Cidr $value)) }
@@ -695,6 +813,13 @@ function Get-ManagedRoutePlan($List, $Dns, $Current, [string[]]$PreviousManaged)
             if (-not $sourceAddresses.ContainsKey($domain)) { continue }
             $ips = @(Get-PublicIPv4Values $sourceAddresses[$domain] | Sort-Object -Unique)
             if ($ips.Count -gt 0) { break }
+        }
+        if ($YouTubeIngestDirect -and $YouTubeIngestDomains -contains $domain) {
+            if ($ips.Count -eq 0) { throw "YouTube ingest: нет известных публичных IPv4 для $domain; настройки не изменены." }
+            if ($ips.Count -gt 32) { throw "YouTube ingest: слишком много IPv4 для $domain; настройки не изменены." }
+            if (-not $Dns.Addresses.ContainsKey($domain)) {
+                Write-Warning "YouTube ingest: DNS $domain недоступен, использую последние известные IPv4. Перед эфиром повторите проверку."
+            }
         }
         if ($ips.Count -eq 0) { $unresolved++; continue }
         $domainAddresses[$domain] = $ips
@@ -716,6 +841,103 @@ function Get-ManagedRoutePlan($List, $Dns, $Current, [string[]]$PreviousManaged)
         RemovedRouteCount = $networks.Count - $collapsed.Count
         UnresolvedDomainCount = $unresolved
     }
+}
+
+# --- передача проверенного ввода от установщика --------------------------------
+
+function ConvertTo-UtcTimestamp($Value) {
+    $timestamp = if ($Value -is [DateTime]) { $Value }
+                 else { [DateTime]::Parse([string]$Value, [Globalization.CultureInfo]::InvariantCulture, [Globalization.DateTimeStyles]::RoundtripKind) }
+    return $timestamp.ToUniversalTime()
+}
+
+function Save-PreparedRouteInput([string]$Path, [string]$SourceName, $InputData) {
+    $previous = @{}
+    foreach ($domain in $InputData.List.Domains) {
+        if ($InputData.Dns.PreviousAddresses.ContainsKey($domain)) {
+            $previous[$domain] = $InputData.Dns.PreviousAddresses[$domain]
+        }
+    }
+    Write-JsonAtomic $Path ([ordered]@{
+        version = 1
+        created_at = [DateTime]::UtcNow.ToString('o')
+        source = $SourceName
+        lite = [bool]$Lite
+        no_local_subnets = [bool]$NoLocalSubnets
+        youtube_ingest_direct = [bool]$YouTubeIngestDirect
+        dns_cache_hours = $DnsCacheHours
+        text = $InputData.Text
+        dns = [ordered]@{
+            updated_at = $InputData.Dns.Cache.updated_at
+            addresses = $InputData.Dns.Addresses
+            previous_addresses = $previous
+            cached = [bool]$InputData.Dns.Cached
+        }
+    })
+}
+
+function ConvertFrom-PreparedAddressMap($Value, [string[]]$Domains) {
+    if ($null -eq $Value -or $Value -isnot [pscustomobject]) { throw 'Неверная карта DNS в подготовленном плане.' }
+    $allowed = New-Object 'System.Collections.Generic.HashSet[string]' ([StringComparer]::Ordinal)
+    foreach ($domain in $Domains) { [void]$allowed.Add($domain) }
+    $result = @{}
+    foreach ($property in $Value.PSObject.Properties) {
+        if (-not $allowed.Contains($property.Name)) { throw 'Подготовленный DNS содержит домен вне списка.' }
+        $raw = @($property.Value)
+        $public = @(Get-PublicIPv4Values $raw)
+        if ($public.Count -ne $raw.Count) { throw 'Подготовленный DNS содержит некорректный или непубличный IPv4.' }
+        if ($public.Count -gt 0) { $result[$property.Name] = @($public | Sort-Object -Unique) }
+    }
+    return $result
+}
+
+function Get-RouteInputs([string]$SourceName, [string]$PreparedPath) {
+    if (-not $PreparedPath) {
+        $text = Get-SourceText $SourceName
+        $list = Add-OptionalDirectDomains (ConvertFrom-ImportList $text $SourceName)
+        return [pscustomobject]@{ Text = $text; List = $list; Dns = (Resolve-ManagedDomains $list.Domains) }
+    }
+
+    if ((Get-Item -LiteralPath $PreparedPath -ErrorAction Stop).Length -gt (4 * $MaxListBytes)) {
+        throw 'Подготовленный план превышает допустимый размер.'
+    }
+    $saved = Read-JsonFile $PreparedPath
+    if ($null -eq $saved -or $saved.version -ne 1 -or $saved.source -cne $SourceName -or
+        $saved.lite -isnot [bool] -or $saved.lite -ne [bool]$Lite -or
+        $saved.no_local_subnets -isnot [bool] -or $saved.no_local_subnets -ne [bool]$NoLocalSubnets -or
+        $saved.PSObject.Properties.Name -notcontains 'youtube_ingest_direct' -or
+        $saved.youtube_ingest_direct -isnot [bool] -or $saved.youtube_ingest_direct -ne [bool]$YouTubeIngestDirect -or
+        $saved.dns_cache_hours -ne $DnsCacheHours) {
+        throw 'Подготовленный план не соответствует параметрам запуска.'
+    }
+    $age = [DateTime]::UtcNow - (ConvertTo-UtcTimestamp $saved.created_at)
+    if ($age.TotalMinutes -lt 0 -or $age.TotalMinutes -ge 15) {
+        throw 'Подготовленный план устарел; повторите установку для новой проверки.'
+    }
+    $text = [string]$saved.text
+    if ([Text.Encoding]::UTF8.GetByteCount($text) -gt $MaxListBytes) { throw 'Подготовленный список слишком велик.' }
+    # Revalidate all inputs; the registry and route plan are deliberately NOT
+    # reused because the application/manual settings may have changed meanwhile.
+    $list = Add-OptionalDirectDomains (ConvertFrom-ImportList $text $SourceName)
+    $addresses = ConvertFrom-PreparedAddressMap $saved.dns.addresses $list.Domains
+    $previous = ConvertFrom-PreparedAddressMap $saved.dns.previous_addresses $list.Domains
+    $updated = ConvertTo-UtcTimestamp $saved.dns.updated_at
+    $dnsAge = [DateTime]::UtcNow - $updated
+    if ($dnsAge.TotalSeconds -lt 0) { throw 'Подготовленный DNS содержит время из будущего.' }
+    # A cache that expired between preflight and apply still needs refreshing.
+    # With disk caching disabled, a freshly prepared lookup may be handed off
+    # for at most the same 15-minute installation window.
+    $maxAgeMinutes = if ($DnsCacheHours -gt 0) { 60 * $DnsCacheHours } else { 15 }
+    if ($dnsAge.TotalMinutes -ge $maxAgeMinutes) {
+        $dns = Resolve-ManagedDomains $list.Domains
+    } else {
+        $dns = [pscustomobject]@{
+            Addresses = $addresses; PreviousAddresses = $previous; Cached = [bool]$saved.dns.cached
+            Cache = [ordered]@{ version = 1; updated_at = $updated.ToString('o'); domains = @($list.Domains); addresses = $addresses }
+        }
+    }
+    Write-Host 'Использую список и DNS из предварительной проверки установщика.'
+    return [pscustomobject]@{ Text = $text; List = $list; Dns = $dns }
 }
 
 # --- реестр -------------------------------------------------------------------
@@ -867,6 +1089,16 @@ function Assert-RoutingRegistry($Sites) {
     } finally { $key.Dispose() }
 }
 
+function Get-OwnedEntries($Current, [string[]]$PreviousManaged, [string[]]$Entries) {
+    $previous = New-Object 'System.Collections.Generic.HashSet[string]' ([StringComparer]::Ordinal)
+    foreach ($value in @($PreviousManaged)) { [void]$previous.Add($value) }
+    foreach ($entry in @($Entries)) {
+        # An existing manual entry remains manual even while the catalog also
+        # contains it. Only an explicit ReplaceAll transfers its ownership.
+        if ($ReplaceAll -or $previous.Contains($entry) -or -not $Current.ContainsKey($entry)) { $entry }
+    }
+}
+
 function Get-DesiredSites($Current, [string[]]$PreviousManaged, [string[]]$Entries, $DomainAddresses = @{}) {
     $desired = @{}
     if (-not $ReplaceAll) {
@@ -880,6 +1112,7 @@ function Get-DesiredSites($Current, [string[]]$PreviousManaged, [string[]]$Entri
     # пустым списком нельзя: иначе каждый запуск видел бы «список изменился»
     # и дёргал GUI с туннелем на ровном месте.
     foreach ($entry in @($Entries)) {
+        if ($desired.ContainsKey($entry)) { continue } # Preserve manual values and ownership.
         if ($DomainAddresses.ContainsKey($entry)) { $desired[$entry] = @($DomainAddresses[$entry]) }
         elseif ((Test-Hostname $entry) -and $Current.ContainsKey($entry)) {
             $desired[$entry] = @(Get-PublicIPv4Values $Current[$entry] | Sort-Object -Unique)
@@ -1345,14 +1578,26 @@ function Restore-PendingTransaction([string]$ExePath) {
     # require disconnecting a currently running protected session. Phases that
     # only restore connectivity above must remain recoverable without an opt-in.
     Assert-SafeAmneziaRestart (Get-AmneziaSession)
-    Stop-AmneziaGui
-    if ($session.Connected) {
-        Stop-AmneziaTunnel
+    $recoveryFailure = $null
+    try {
+        Stop-AmneziaGui
+        if ($session.Connected) { Stop-AmneziaTunnel }
+        Restore-RoutingRegistrySnapshot (Read-JsonFile $backupPath)
+        Write-JsonAtomic $ManagedPath @($journal.previous_managed | ForEach-Object { [string]$_ })
+        Write-JsonAtomic $JournalPath ([ordered]@{ version = 1; phase = 'restoring'; session = (ConvertTo-SessionDocument $session) })
+    } catch {
+        $recoveryFailure = $_
+        throw
+    } finally {
+        # Recovery can itself encounter a full disk or a Registry error after
+        # stopping VPN. Always attempt to restore the session, keeping its
+        # journal until BOTH rollback and reconnection have succeeded.
+        try { Restore-AmneziaSession $session $ExePath }
+        catch {
+            if ($null -eq $recoveryFailure) { throw }
+            Write-Warning "Дополнительно не удалось восстановить AmneziaVPN; journal сохранён: $($_.Exception.Message)"
+        }
     }
-    Restore-RoutingRegistrySnapshot (Read-JsonFile $backupPath)
-    Write-JsonAtomic $ManagedPath @($journal.previous_managed | ForEach-Object { [string]$_ })
-    Write-JsonAtomic $JournalPath ([ordered]@{ version = 1; phase = 'restoring'; session = (ConvertTo-SessionDocument $session) })
-    Restore-AmneziaSession $session $ExePath
     Remove-Item -LiteralPath $JournalPath -Force
     Write-Host 'Откачена незавершённая routing-транзакция.'
 }
@@ -1361,14 +1606,15 @@ function Invoke-RoutingTransaction([string[]]$Entries, [string]$ExePath, $Domain
     $current = Read-ExceptSites
     $previousManaged = @(Read-ManagedEntries)
     $desired = Get-DesiredSites $current $previousManaged $Entries $DomainAddresses
+    $ownedEntries = @(Get-OwnedEntries $current $previousManaged $Entries)
     $scalars = Read-RoutingScalars
-    $manualCount = $desired.Count - @($Entries).Count
+    $manualCount = $desired.Count - $ownedEntries.Count
 
     $needsChange = -not (Test-SitesEqual $current $desired) -or
                    ([string]$scalars.mode -cne [string]$RouteModeVpnAllExceptSites) -or
                    ([string]$scalars.enabled -cne 'true')
     if (-not $needsChange) {
-        Write-JsonAtomic $ManagedPath @($Entries)
+        Write-JsonAtomic $ManagedPath $ownedEntries
         return [pscustomobject]@{ Changed = $false; ManualCount = $manualCount }
     }
 
@@ -1403,6 +1649,7 @@ function Invoke-RoutingTransaction([string[]]$Entries, [string]$ExePath, $Domain
 
     $stopAttempted = $false
     $resolved = $false
+    $transactionFailure = $null
     try {
         if (-not $NoRestart) {
             $stopAttempted = $true
@@ -1413,7 +1660,8 @@ function Invoke-RoutingTransaction([string[]]$Entries, [string]$ExePath, $Domain
         # После выхода GUI кэш QSettings уже на диске — перечитываем факт.
         $current = Read-ExceptSites
         $desired = Get-DesiredSites $current $previousManaged $Entries $DomainAddresses
-        $manualCount = $desired.Count - @($Entries).Count
+        $ownedEntries = @(Get-OwnedEntries $current $previousManaged $Entries)
+        $manualCount = $desired.Count - $ownedEntries.Count
 
         $backupPath = Join-Path $BackupDir ("routing-{0}.json" -f (Get-Date -Format 'yyyyMMdd-HHmmss-fff'))
         Write-JsonAtomic $backupPath (Read-RoutingRegistrySnapshot)
@@ -1423,13 +1671,13 @@ function Invoke-RoutingTransaction([string[]]$Entries, [string]$ExePath, $Domain
             session          = (ConvertTo-SessionDocument $session)
             backup           = $backupPath
             previous_managed = @($previousManaged)
-            desired_managed  = @($Entries)
+            desired_managed  = $ownedEntries
         })
 
         try {
             Write-RoutingRegistry $desired
             Assert-RoutingRegistry $desired
-            Write-JsonAtomic $ManagedPath @($Entries)
+            Write-JsonAtomic $ManagedPath $ownedEntries
             $resolved = $true
         } catch {
             try {
@@ -1441,20 +1689,188 @@ function Invoke-RoutingTransaction([string[]]$Entries, [string]$ExePath, $Domain
             }
             throw
         }
+    } catch {
+        $transactionFailure = $_
+        throw
     } finally {
-        if ($resolved) {
-            Write-JsonAtomic $JournalPath ([ordered]@{ version = 1; phase = 'restoring'; session = (ConvertTo-SessionDocument $session) })
+        $finalizationFailure = $null
+        try {
+            if ($resolved) {
+                Write-JsonAtomic $JournalPath ([ordered]@{ version = 1; phase = 'restoring'; session = (ConvertTo-SessionDocument $session) })
+            }
+        } catch {
+            $finalizationFailure = $_
+        } finally {
+            # Even a full disk must not prevent the attempt to bring VPN back.
+            try {
+                if ($stopAttempted) { Restore-AmneziaSession $session $ExePath }
+            } catch {
+                if ($null -eq $finalizationFailure) { $finalizationFailure = $_ }
+                else { Write-Warning "Дополнительно не удалось восстановить AmneziaVPN: $($_.Exception.Message)" }
+            }
         }
-        if ($stopAttempted) {
-            Restore-AmneziaSession $session $ExePath
-        }
-        if ($resolved) {
+        if ($null -ne $finalizationFailure) {
+            if ($null -ne $transactionFailure) {
+                Write-Warning "Завершение транзакции не удалось; journal сохранён: $($finalizationFailure.Exception.Message)"
+            } else {
+                throw $finalizationFailure
+            }
+        } elseif ($resolved) {
             Remove-Item -LiteralPath $JournalPath -Force -ErrorAction SilentlyContinue
             Remove-OldRoutingBackups
         }
     }
 
     return [pscustomobject]@{ Changed = $true; ManualCount = $manualCount }
+}
+
+# --- YouTube ingest: read-only IPv4 diagnosis ----------------------------------
+
+function Initialize-IngestProbe {
+    if ('AmneziaRouteSync.IngestProbe' -as [type]) { return }
+    Add-Type -TypeDefinition @'
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Net.Security;
+using System.Net.Sockets;
+using System.Security.Cryptography;
+
+namespace AmneziaRouteSync {
+    public sealed class IngestProbeResult {
+        public string Stage = "TCP";
+        public string Result = "Failed";
+        public string LocalAddress = "";
+        public string Detail = "";
+        public int SocketError;
+    }
+    public static class IngestProbe {
+        static int Remaining(Stopwatch clock, int timeout) {
+            int left = timeout - (int)clock.ElapsedMilliseconds;
+            if (left <= 0) throw new TimeoutException("Probe deadline exceeded");
+            return left;
+        }
+        static byte[] ReadExact(Stream stream, int size, Stopwatch clock, int timeout) {
+            byte[] bytes = new byte[size];
+            int offset = 0;
+            while (offset < size) {
+                int left = Remaining(clock, timeout);
+                if (stream.CanTimeout) stream.ReadTimeout = left;
+                int read = stream.Read(bytes, offset, size - offset);
+                if (read == 0) throw new EndOfStreamException("Incomplete RTMP handshake");
+                offset += read;
+            }
+            return bytes;
+        }
+        // No connect/publish command or stream key: only the RTMP handshake.
+        public static void Handshake(Stream stream, int timeout) {
+            Stopwatch clock = Stopwatch.StartNew();
+            byte[] c0c1 = new byte[1537];
+            using (RandomNumberGenerator rng = RandomNumberGenerator.Create()) { rng.GetBytes(c0c1); }
+            c0c1[0] = 3;
+            Array.Clear(c0c1, 1, 8); // simple handshake: time and version zero
+            if (stream.CanTimeout) stream.WriteTimeout = Remaining(clock, timeout);
+            stream.Write(c0c1, 0, c0c1.Length);
+            byte[] s0s1 = ReadExact(stream, 1537, clock, timeout);
+            if (s0s1[0] != 3) throw new InvalidDataException("Unexpected RTMP version");
+            if (stream.CanTimeout) stream.WriteTimeout = Remaining(clock, timeout);
+            stream.Write(s0s1, 1, 1536);
+            byte[] s2 = ReadExact(stream, 1536, clock, timeout);
+            // S2 must echo C1's random bytes; its time fields may differ.
+            for (int i = 8; i < 1536; i++) {
+                if (s2[i] != c0c1[i + 1]) throw new InvalidDataException("Invalid RTMP echo");
+            }
+        }
+        public static IngestProbeResult Run(string hostname, string address, int interfaceIndex, string localAddress, int timeout) {
+            IngestProbeResult result = new IngestProbeResult();
+            Stopwatch clock = Stopwatch.StartNew();
+            try {
+                using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)) {
+                    if (interfaceIndex > 0) {
+                        // Windows IP_UNICAST_IF takes an index in network byte order.
+                        socket.SetSocketOption(SocketOptionLevel.IP, (SocketOptionName)31, IPAddress.HostToNetworkOrder(interfaceIndex));
+                        socket.Bind(new IPEndPoint(IPAddress.Parse(localAddress), 0));
+                    }
+                    IAsyncResult connect = socket.BeginConnect(IPAddress.Parse(address), 443, null, null);
+                    using (var wait = connect.AsyncWaitHandle) {
+                        if (!wait.WaitOne(Remaining(clock, timeout))) throw new TimeoutException("TCP timeout");
+                    }
+                    socket.EndConnect(connect);
+                    result.LocalAddress = ((IPEndPoint)socket.LocalEndPoint).Address.ToString();
+                    result.Stage = "TLS";
+                    using (NetworkStream network = new NetworkStream(socket, false))
+                    using (SslStream tls = new SslStream(network, false)) {
+                        // Default certificate validation, with the original hostname/SNI.
+                        IAsyncResult auth = tls.BeginAuthenticateAsClient(hostname, null, null);
+                        using (var wait = auth.AsyncWaitHandle) {
+                            if (!wait.WaitOne(Remaining(clock, timeout))) throw new TimeoutException("TLS timeout");
+                        }
+                        tls.EndAuthenticateAsClient(auth);
+                        result.Stage = "RTMP";
+                        Handshake(tls, Remaining(clock, timeout));
+                        result.Result = "OK";
+                        result.Detail = "TLS + RTMP handshake; upload bitrate not tested";
+                    }
+                }
+            } catch (Exception error) {
+                result.Detail = error.Message;
+                for (Exception inner = error; inner != null; inner = inner.InnerException) {
+                    SocketException socketError = inner as SocketException;
+                    if (socketError != null) result.SocketError = socketError.ErrorCode;
+                }
+                if (result.SocketError == 10013) result.Result = "LocalAccessDenied";
+            }
+            return result;
+        }
+    }
+}
+'@
+}
+
+function Get-IngestDirectInterface {
+    $physical = @(Get-NetAdapter -Physical -ErrorAction Stop | Where-Object Status -eq 'Up')
+    $physicalIndices = @($physical | ForEach-Object { $_.ifIndex })
+    $candidates = @(foreach ($route in @(Get-NetRoute -AddressFamily IPv4 -DestinationPrefix '0.0.0.0/0' -ErrorAction Stop)) {
+        if ($route.InterfaceIndex -notin $physicalIndices) { continue }
+        if ($DirectInterfaceIndex -gt 0 -and $route.InterfaceIndex -ne $DirectInterfaceIndex) { continue }
+        $ipInterface = Get-NetIPInterface -InterfaceIndex $route.InterfaceIndex -AddressFamily IPv4 -ErrorAction Stop
+        [pscustomobject]@{ Index = [int]$route.InterfaceIndex; Alias = $route.InterfaceAlias
+            Metric = [int]$route.RouteMetric + [int]$ipInterface.InterfaceMetric }
+    })
+    $selected = $candidates | Sort-Object Metric, Index | Select-Object -First 1
+    if ($null -eq $selected) { throw 'Не найден активный физический интерфейс с IPv4 default route. При необходимости задайте -DirectInterfaceIndex.' }
+    $address = Get-NetIPAddress -InterfaceIndex $selected.Index -AddressFamily IPv4 -ErrorAction Stop |
+        Where-Object { $_.AddressState -eq 'Preferred' -and -not $_.SkipAsSource } | Select-Object -First 1
+    if ($null -eq $address) { throw 'У выбранного физического интерфейса нет пригодного IPv4.' }
+    return [pscustomobject]@{ Index = $selected.Index; Alias = $selected.Alias; Address = $address.IPAddress }
+}
+
+function Invoke-YouTubeIngestCheck {
+    $direct = Get-IngestDirectInterface
+    Initialize-IngestProbe
+    Write-Host "Прямые пробы: $($direct.Alias), index $($direct.Index). VPN и маршруты не изменяются."
+    foreach ($domain in $YouTubeIngestDomains) {
+        try {
+            $lookup = Start-DomainLookup $domain
+            if (-not $lookup.Wait(8000)) { throw 'DNS timeout' }
+            $addresses = @(Get-PublicIPv4Values ($lookup.GetAwaiter().GetResult()) | Sort-Object -Unique)
+            if ($addresses.Count -eq 0) { throw 'Нет публичных IPv4' }
+        } catch {
+            [pscustomobject]@{ Server=$domain; Address=''; Path='Direct'; LocalAddress=''; Stage='DNS'; Result='Failed'; Detail=$_.Exception.Message }
+            continue
+        }
+        # Bound runtime and traffic. Both paths test the SAME sample, not two DNS answers.
+        foreach ($address in @($addresses | Select-Object -First 2)) {
+            foreach ($mode in @('Direct','System')) {
+                $index = if ($mode -eq 'Direct') { $direct.Index } else { 0 }
+                $local = if ($mode -eq 'Direct') { $direct.Address } else { '' }
+                $probe = [AmneziaRouteSync.IngestProbe]::Run($domain, $address, $index, $local, 4000)
+                [pscustomobject]@{ Server=$domain; Address=$address; Path=$mode; LocalAddress=$probe.LocalAddress
+                    Stage=$probe.Stage; Result=$probe.Result; Detail=$probe.Detail }
+            }
+        }
+    }
 }
 
 # --- self-test -----------------------------------------------------------------
@@ -1621,6 +2037,21 @@ if ($Status) {
     exit 0
 }
 
+if ($TestYouTubeIngest) {
+    $checks = @(Invoke-YouTubeIngestCheck)
+    $checks | Format-Table Server, Address, Path, LocalAddress, Stage, Result -AutoSize | Out-Host
+    foreach ($check in @($checks | Where-Object Result -ne 'OK')) {
+        Write-Host "$($check.Server) $($check.Address) $($check.Path): $($check.Detail)"
+    }
+    if (@($checks | Where-Object Result -eq 'LocalAccessDenied').Count -gt 0) {
+        Write-Warning '10013: локальный запрет Windows/WFP/KillSwitch. Это не подтверждает блокировку у провайдера.'
+    }
+    Write-Host 'System — текущий маршрут Windows, он может идти через VPN или напрямую. Direct принудительно использует физический интерфейс.'
+    Write-Host 'Проверены до двух IPv4 на сервер, TLS и RTMP handshake. Нужен закрытый тест OBS с целевым битрейтом 10–15 минут.'
+    if (@($checks | Where-Object { $_.Path -eq 'Direct' -and $_.Result -eq 'OK' }).Count -eq 0) { exit 2 }
+    exit 0
+}
+
 # --- основной сценарий ---------------------------------------------------------
 
 $currentSid = [Security.Principal.WindowsIdentity]::GetCurrent().User.Value
@@ -1635,13 +2066,12 @@ $hasLock = $false
 try {
     try { $hasLock = $mutex.WaitOne(0) } catch [Threading.AbandonedMutexException] { $hasLock = $true }
     if (-not $hasLock) {
-        if ($DryRun -or $RecoverOnly) { throw 'Другой updater уже работает; проверка/восстановление не выполнены. Дождитесь его завершения.' }
+        if ($DryRun -or $RecoverOnly -or $PreparedPlanPath) { throw 'Другой updater уже работает; проверка/применение/восстановление не выполнены. Дождитесь его завершения.' }
         Write-Host 'Другой updater уже работает, пропускаю запуск.'
         exit 0
     }
 
     Assert-QtCodec
-    Write-IPv6TunnelWarning
     if (-not $DryRun) { [IO.Directory]::CreateDirectory($StateDir) | Out-Null }
 
     $exePath = $null
@@ -1667,8 +2097,13 @@ try {
         exit 0
     }
 
-    $text = Get-SourceText $Source
-    $list = ConvertFrom-ImportList $text $Source
+    # Optional network diagnosis must never delay crash recovery or RecoverOnly.
+    Write-IPv6TunnelWarning
+
+    $preparedInputPath = if ($DryRun) { '' } else { $PreparedPlanPath }
+    $inputData = Get-RouteInputs $Source $preparedInputPath
+    $text = $inputData.Text
+    $list = $inputData.List
     $localSubnets = @(Get-LocalSubnetEntries)
     Write-Host "Проверено $($list.Domains.Count) доменов и $($list.Cidrs.Count) сетей IPv4 для AmneziaVPN $appVersion"
     if ($localSubnets.Count -gt 0) {
@@ -1677,15 +2112,27 @@ try {
         Write-Host 'Локальных подсетей не найдено — LAN останется в туннеле.'
     }
 
-    $dns = Resolve-ManagedDomains $list.Domains
+    $dns = $inputData.Dns
     Write-Host "DNS: $($dns.Addresses.Count) из $($list.Domains.Count) доменов с публичными IPv4; кэш: $($dns.Cached)"
     $plan = Get-ManagedRoutePlan $list $dns (Read-ExceptSites) @(Read-ManagedEntries)
     $entries = @($plan.Entries) + $localSubnets
+    $youTubeAddresses = @{}
+    if ($YouTubeIngestDirect) {
+        foreach ($domain in $YouTubeIngestDomains) {
+            $youTubeAddresses[$domain] = @($plan.DomainAddresses[$domain])
+            Write-Host "YouTube ingest direct: $domain -> $($youTubeAddresses[$domain] -join ', ')"
+        }
+        Write-Host 'Профиль IPv4: в OBS выберите YouTube - RTMPS и семейство IP IPv4 Only. Доступность: -TestYouTubeIngest.'
+        Write-Host 'Исключения действуют для всех приложений на этих IP; адреса могут использоваться другими сервисами Google.'
+    }
     Write-Host "Маршруты после DNS: $($plan.InputRouteCount) -> $($plan.Entries.Count); убрано повторов и перекрытий: $($plan.RemovedRouteCount)"
     if ($plan.UnresolvedDomainCount -gt 0) {
         Write-Warning "$($plan.UnresolvedDomainCount) доменов без известных IPv4 пропущены; их готовые BGP-сети сохранены."
     }
-    if ($DryRun) { exit 0 }
+    if ($DryRun) {
+        if ($PreparedPlanPath) { Save-PreparedRouteInput $PreparedPlanPath $Source $inputData }
+        exit 0
+    }
 
     # Сохраняем привязку имён ДО записи CIDR: даже сбой при восстановлении VPN
     # не должен лишить следующую попытку fallback при недоступном DNS.
@@ -1711,6 +2158,9 @@ try {
         manual_entries_preserved = [int]$result.ManualCount
         app_version              = $appVersion
         dns_resolved_count       = $dns.Addresses.Count
+        dns_cache_hours          = $DnsCacheHours
+        youtube_ingest_direct    = [bool]$YouTubeIngestDirect
+        youtube_ingest_addresses = $youTubeAddresses
         updated_at               = [DateTime]::UtcNow.ToString('o')
     })
 

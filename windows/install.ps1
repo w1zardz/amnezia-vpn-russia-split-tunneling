@@ -16,11 +16,14 @@
 [CmdletBinding()]
 param(
     [switch]$Lite,
+    [switch]$YouTubeIngestDirect,
     [switch]$ReplaceAll,
     [switch]$NoLocalSubnets,
     [switch]$AllowVpnReconnect,
     [ValidateRange(-1, 10000)]
     [int]$ServerIndex = -1,
+    [ValidateRange(0, 24)]
+    [int]$DnsCacheHours = 6,
     [string]$Source
 )
 
@@ -56,7 +59,9 @@ if ($Source) {
     }
 }
 $updaterArguments = New-Object 'System.Collections.Generic.List[string]'
+[void]$updaterArguments.Add("-DnsCacheHours $DnsCacheHours")
 if ($Lite) { [void]$updaterArguments.Add('-Lite') }
+if ($YouTubeIngestDirect) { [void]$updaterArguments.Add('-YouTubeIngestDirect') }
 if ($ReplaceAll) { [void]$updaterArguments.Add('-ReplaceAll') }
 if ($NoLocalSubnets) { [void]$updaterArguments.Add('-NoLocalSubnets') }
 if ($Source) { [void]$updaterArguments.Add("-Source `"$Source`"") }
@@ -69,6 +74,7 @@ $backupDir = Join-Path $env:TEMP ("amnezia-route-backup-{0}" -f [Guid]::NewGuid(
 [IO.Directory]::CreateDirectory($backupDir) | Out-Null
 
 $stagedScript = Join-Path $stagingDir 'update-amnezia-routes.ps1'
+$preparedPlan = Join-Path $stagingDir 'prepared-route-input.json'
 $scriptExisted = $false
 $taskWasPresent = $false
 $oldTaskXml = $null
@@ -101,8 +107,10 @@ try {
     & $PowerShellExe @recoveryArguments
     if ($LASTEXITCODE -ne 0) { throw 'Не удалось восстановить предыдущую транзакцию; переустановка отменена.' }
 
-    $dryRunArguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $stagedScript, '-DryRun')
+    $dryRunArguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $stagedScript, '-DryRun',
+        '-DnsCacheHours', [string]$DnsCacheHours, '-PreparedPlanPath', $preparedPlan)
     if ($Lite) { $dryRunArguments += '-Lite' }
+    if ($YouTubeIngestDirect) { $dryRunArguments += '-YouTubeIngestDirect' }
     if ($NoLocalSubnets) { $dryRunArguments += '-NoLocalSubnets' }
     if ($Source) { $dryRunArguments += @('-Source', $Source) }
     & $PowerShellExe @dryRunArguments
@@ -155,8 +163,10 @@ try {
     $installComplete = $true
     # Первый запуск синхронный: установщик сообщает об успехе только после
     # применения и восстановления VPN, а ошибки не теряются в фоновой задаче.
-    $initialArguments = @('-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', $InstalledScript)
+    $initialArguments = @('-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', $InstalledScript,
+        '-DnsCacheHours', [string]$DnsCacheHours, '-PreparedPlanPath', $preparedPlan)
     if ($Lite) { $initialArguments += '-Lite' }
+    if ($YouTubeIngestDirect) { $initialArguments += '-YouTubeIngestDirect' }
     if ($ReplaceAll) { $initialArguments += '-ReplaceAll' }
     if ($NoLocalSubnets) { $initialArguments += '-NoLocalSubnets' }
     if ($Source) { $initialArguments += @('-Source', $Source) }
@@ -170,6 +180,9 @@ try {
 
     Write-Host "Установлено: $InstalledScript"
     Write-Host 'Обновление: при входе в Windows и каждые 6 часов.'
+    if ($YouTubeIngestDirect) {
+        Write-Host 'YouTube ingest direct включён. Перед эфиром: updater -TestYouTubeIngest; OBS: YouTube - RTMPS, IPv4 Only.'
+    }
     Write-Host 'При включённом KillSwitch работающая Amnezia автоматически не переподключается: применение изменённого списка откладывается.'
     Write-Host "Статус: Get-ScheduledTask -TaskName '$TaskName'"
     Write-Host "Результат последнего запуска: Get-Content `"$InstallDir\status.json`""

@@ -120,10 +120,11 @@ try {
     # Even multiple failed refreshes keep last-known IPs after domain keys have
     # been removed from Registry. They never count as fresh successful answers.
     Write-JsonAtomic $DnsCachePath ([ordered]@{
-        version=1; updated_at=[DateTime]::UtcNow.AddHours(-5).ToString('o')
+        version=1; updated_at=[DateTime]::UtcNow.AddHours(-7).ToString('o')
         domains=@('fail.example'); addresses=@{}; last_known_addresses=@{'fail.example'=@('9.9.9.9')}
     })
     $failedAgain = Resolve-ManagedDomains @('fail.example')
+    Assert-True (-not $failedAgain.Cached -and $script:lookupCount -eq 3) 'Expired cache did not attempt a failed refresh'
     Assert-True ($failedAgain.Addresses.Count -eq 0 -and $failedAgain.PreviousAddresses['fail.example'][0] -eq '9.9.9.9') 'Failed refresh lost last-known DNS or marked it fresh'
     Remove-Item -LiteralPath $DnsCachePath -Force
     $script:lookupCount = 0
