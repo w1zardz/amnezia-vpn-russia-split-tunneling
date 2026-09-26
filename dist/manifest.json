@@ -3,26 +3,26 @@
   "selection_policy": "reviewed-catalog",
   "services": 62,
   "core_services": 48,
-  "domains": 1084,
+  "domains": 1116,
   "cidrs": 857,
   "addresses": 462530,
-  "entries": 1941,
-  "lite_domains": 631,
+  "entries": 1973,
+  "lite_domains": 663,
   "lite_cidrs": 543,
-  "lite_entries": 1174,
+  "lite_entries": 1206,
   "ip_entries": 857,
   "routing": {
     "full": {
-      "candidates": 2099,
-      "unique": 1184,
+      "candidates": 2185,
+      "unique": 1227,
       "compacted": 857,
-      "redundant": 1242
+      "redundant": 1328
     },
     "lite": {
-      "candidates": 1358,
-      "unique": 791,
+      "candidates": 1444,
+      "unique": 834,
       "compacted": 543,
-      "redundant": 815
+      "redundant": 901
     }
   },
   "allowed_ips": 7876,
@@ -33,15 +33,15 @@
   "external_domains_dropped": 0,
   "external_roots": 0,
   "external_roots_dropped": 0,
-  "domains_with_ips": 805,
-  "lite_domains_with_ips": 433,
+  "domains_with_ips": 891,
+  "lite_domains_with_ips": 519,
   "sha256": {
-    "amnezia-ru-direct.json": "d9b3a24851ba2625167d7edcf9ef9eeecf40fe4dfe9340b57ee3d667543b7a39",
-    "amnezia-ru-direct-lite.json": "fe4ad94a11416f017e9c5579ab98f92e5ec10059cde5d5098888041f4e3ea8c5",
+    "amnezia-ru-direct.json": "7838dbfcdcb27388a6428a103647a887f98cc6c66ff32f8a2a053927a25a5341",
+    "amnezia-ru-direct-lite.json": "19823ce7f1c52d272463a7c83486bdd67d2506a389c16585875f27a8754b6369",
     "amnezia-ru-direct-ip.json": "d2b0b80b954af7cc0eca10abf764ec57b7c4233244d9fbc87569d876229278ad",
-    "ru-direct-domains.txt": "16ab053ce0ceb0c2221ce81373cab6e27349ba840fd8beb0c4e82e285e31039c",
+    "ru-direct-domains.txt": "13605dc1fdfc7235473bee226130e7dc5e59727cbcf1a6c20e5373e40e30c164",
     "ru-direct-ipv4.txt": "e8731e9afde12f85d8f5da4d26a6d00ae41dea3aa6e1ba5d36ef196ad348554a",
     "wg-allowed-ips.txt": "743df8bab6c0f8391071572b6ab576302141f1c5191246390c1c5edda7b5bf8b",
-    "happ-ru-direct.json": "a10094f11ce52f2c9842e3b347201fafefa94d0b5b9dce9e5e1fdaac4187393f"
+    "happ-ru-direct.json": "1bbf088af746aa33dbccbc76b8d5cfa445c373707bcd9ec56155996ffc4e9c50"
   }
 }

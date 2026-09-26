@@ -377,6 +377,40 @@ class DnsTests(unittest.TestCase):
             self.assertEqual((result["resolved"], result["total"]), (3, 5))
             self.assertEqual(catalog.load_domain_ips(path)["b.ru"], ["95.213.0.5"])
 
+    def test_reviewed_networks_do_not_bypass_public_or_cdn_filters(self):
+        addresses = ["8.8.8.8", "8.8.8.9", "1.1.1.1", "104.16.0.1", "10.0.0.1"]
+        networks = [ipaddress.ip_network(value) for value in
+                    ("8.8.8.8/32", "1.1.1.1/32", "104.16.0.0/24", "10.0.0.0/24")]
+        self.assertEqual(resolver.ru_addresses(addresses, ru_table(), networks),
+                         ["1.1.1.1", "8.8.8.8"])
+
+    def test_snapshot_keeps_current_and_stale_ips_only_in_own_reviewed_networks(self):
+        services = [catalog.Service(id="game", title="Game", tier="core", category="gaming",
+                                   category_title="Gaming", notes="", cidrs=["8.8.8.0/24"],
+                                   domains=["s1.game.ru", "s2.game.ru", "s3.game.ru", "api.game.ru"])]
+        answers = {
+            "s1.game.ru": answer(resolver.OK, "8.8.8.8"),
+            "s2.game.ru": answer(resolver.FAIL),
+            "s3.game.ru": answer(resolver.OK, "1.1.1.1"),
+            "api.game.ru": answer(resolver.OK, "104.16.0.1"),
+            "other.ru": answer(resolver.OK, "8.8.8.8"),
+        }
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "domain-ips.json"
+            path.write_bytes(catalog.json_bytes({"version": 1, "domains": {
+                "s2.game.ru": ["8.8.8.9", "1.1.1.1"],
+            }}))
+            with patch.object(sys, "argv", ["resolve", "--output", str(path)]), \
+                 patch.object(catalog, "load_catalog", return_value=services), \
+                 patch.object(resolver, "full_list_domains", return_value=list(answers)), \
+                 patch.object(catalog, "load_asn_table", return_value=ru_table()), \
+                 patch.object(resolver, "resolve_many", return_value=answers), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(resolver.main(), 0)
+            self.assertEqual(catalog.load_domain_ips(path), {
+                "s1.game.ru": ["8.8.8.8"], "s2.game.ru": ["8.8.8.9"],
+            })
+
 
 class ExternalRootTests(unittest.TestCase):
     def run_import(self, temporary, sources, texts, answers, failures=None):

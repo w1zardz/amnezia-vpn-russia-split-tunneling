@@ -14,6 +14,7 @@
      отдают разные адреса из пула;
   3. оставляем только публичные IPv4 российских ASN вне deny-листа глобальных
      CDN — проверка по той же таблице IP→ASN, что и у импорта внешних списков;
+     явно заданные сети своего сервиса допускаются и при иной стране в IP→ASN;
   4. домен без свежего ответа сохраняет адреса из прошлого снимка; если свежие
      адреса получили меньше 60% доменов, DNS нас душит — файл не перезаписываем.
 """
@@ -361,9 +362,32 @@ def address_verdict(address: str, table: catalog.AsnTable) -> tuple[str, tuple |
     return ACCEPT, record
 
 
-def ru_addresses(addresses: Iterable[str], table: catalog.AsnTable) -> list[str]:
-    accepted = {address for address in addresses if address_verdict(address, table)[0] == ACCEPT}
+def ru_addresses(
+    addresses: Iterable[str], table: catalog.AsnTable,
+    manual_networks: Iterable[ipaddress.IPv4Network] = (),
+) -> list[str]:
+    # A reviewed service CIDR already goes direct in every export. Keep its DNS
+    # labels even when the anti-DDoS provider is registered abroad. This does
+    # not allow other addresses of that ASN or bypass the public/CDN checks.
+    networks = tuple(manual_networks)
+    accepted = set()
+    for address in addresses:
+        verdict = address_verdict(address, table)[0]
+        if verdict == ACCEPT or (
+            verdict in (FOREIGN, NO_ROW)
+            and any(ipaddress.IPv4Address(address) in network for network in networks)
+        ):
+            accepted.add(address)
     return sorted(accepted, key=ipaddress.IPv4Address)[: catalog.MAX_DOMAIN_IPS]
+
+
+def manual_domain_networks(services: Iterable[catalog.Service]) -> dict[str, list[ipaddress.IPv4Network]]:
+    result: dict[str, list[ipaddress.IPv4Network]] = {}
+    for service in services:
+        networks = [ipaddress.IPv4Network(value) for value in service.cidrs]
+        for domain in service.domains:
+            result.setdefault(domain, []).extend(networks)
+    return result
 
 
 def full_list_domains(services: list[catalog.Service], with_external: bool = False) -> list[str]:
@@ -392,6 +416,7 @@ def main() -> int:
         if arguments.limit is not None and arguments.limit < 1:
             raise ResolveError("--limit должен быть положительным")
         services = catalog.load_catalog()
+        manual_networks = manual_domain_networks(services)
         domains = full_list_domains(services, arguments.with_external)
         if arguments.limit:
             domains = domains[: arguments.limit]
@@ -420,16 +445,16 @@ def main() -> int:
             answer = answers[domain]
             if answer.status == FAIL:
                 # Резолверы промолчали — держим прошлые адреса, но и их сверяем с таблицей.
-                kept = ru_addresses(previous.get(domain, []), table)
+                kept = ru_addresses(previous.get(domain, []), table, manual_networks.get(domain, ()))
                 if kept:
                     result[domain] = kept
                     stale += 1
                 continue
-            accepted = ru_addresses(answer.addresses, table)
+            accepted = ru_addresses(answer.addresses, table, manual_networks.get(domain, ()))
             if accepted:
                 result[domain] = accepted
         print(
-            f"с российскими IPv4: {len(result)} доменов (из прошлого снимка {stale}); "
+            f"с разрешёнными IPv4: {len(result)} доменов (из прошлого снимка {stale}); "
             f"адресов {sum(len(values) for values in result.values())}"
         )
 
