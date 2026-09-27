@@ -89,8 +89,10 @@
   },
   {
     "hostname": "afisha.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "213.180.193.71"
+    ],
+    "ip": "213.180.193.71"
   },
   {
     "hostname": "aif.ru",
@@ -123,8 +125,10 @@
   },
   {
     "hostname": "alice.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "213.180.193.143"
+    ],
+    "ip": "213.180.193.143"
   },
   {
     "hostname": "am.ru",
@@ -161,13 +165,17 @@
   },
   {
     "hostname": "api.cdngrand.com",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "185.169.132.163"
+    ],
+    "ip": "185.169.132.163"
   },
   {
     "hostname": "api.grnd.game",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "185.169.132.163"
+    ],
+    "ip": "185.169.132.163"
   },
   {
     "hostname": "api.grnd.gg",
@@ -277,8 +285,12 @@
   },
   {
     "hostname": "avatars.mds.yandex.net",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.250.247.181",
+      "87.250.247.182",
+      "87.250.247.183"
+    ],
+    "ip": "87.250.247.181"
   },
   {
     "hostname": "aviasales.ru",
@@ -342,8 +354,10 @@
   },
   {
     "hostname": "balance.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "213.180.204.33"
+    ],
+    "ip": "213.180.204.33"
   },
   {
     "hostname": "bank.yandex.ru",
@@ -456,13 +470,17 @@
   },
   {
     "hostname": "captcha-api.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.250.250.121"
+    ],
+    "ip": "87.250.250.121"
   },
   {
     "hostname": "captcha.yandex.net",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "213.180.204.242"
+    ],
+    "ip": "213.180.204.242"
   },
   {
     "hostname": "carprice.ru",
@@ -636,8 +654,10 @@
   },
   {
     "hostname": "diehard.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "77.88.21.33"
+    ],
+    "ip": "77.88.21.33"
   },
   {
     "hostname": "direct.yandex.com",
@@ -656,8 +676,10 @@
   },
   {
     "hostname": "disk.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.250.250.50"
+    ],
+    "ip": "87.250.250.50"
   },
   {
     "hostname": "dixy.ru",
@@ -788,8 +810,10 @@
   },
   {
     "hostname": "eda.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.250.251.213"
+    ],
+    "ip": "87.250.251.213"
   },
   {
     "hostname": "egrul.nalog.ru",
@@ -868,8 +892,10 @@
   },
   {
     "hostname": "ext.captcha.yandex.net",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.250.251.153"
+    ],
+    "ip": "87.250.251.153"
   },
   {
     "hostname": "farpost.ru",
@@ -940,8 +966,10 @@
   },
   {
     "hostname": "forms.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "213.180.204.73"
+    ],
+    "ip": "213.180.204.73"
   },
   {
     "hostname": "freelance.ru",
@@ -1016,8 +1044,10 @@
   },
   {
     "hostname": "go.yandex",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.250.251.249"
+    ],
+    "ip": "87.250.251.249"
   },
   {
     "hostname": "goldapple.ru",
@@ -1065,13 +1095,17 @@
   },
   {
     "hostname": "grnd.game",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.251.65.36"
+    ],
+    "ip": "87.251.65.36"
   },
   {
     "hostname": "grnd.gg",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "185.169.132.16"
+    ],
+    "ip": "185.169.132.16"
   },
   {
     "hostname": "gtd.ru",
@@ -1186,8 +1220,10 @@
   },
   {
     "hostname": "id.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "5.45.196.9"
+    ],
+    "ip": "5.45.196.9"
   },
   {
     "hostname": "iledebeaute.ru",
@@ -1223,8 +1259,10 @@
   },
   {
     "hostname": "img.cdngrand.com",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.251.65.29"
+    ],
+    "ip": "87.251.65.29"
   },
   {
     "hostname": "imgsmail.ru",
@@ -1296,7 +1334,6 @@
       "93.93.91.107",
       "212.193.147.201",
       "212.193.147.203",
-      "212.193.152.97",
       "212.193.157.209"
     ],
     "ip": "46.235.185.248"
@@ -1399,8 +1436,10 @@
   },
   {
     "hostname": "lavka.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.250.250.116"
+    ],
+    "ip": "87.250.250.116"
   },
   {
     "hostname": "lenta.com",
@@ -1622,8 +1661,10 @@
   },
   {
     "hostname": "mail.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "77.88.21.37"
+    ],
+    "ip": "77.88.21.37"
   },
   {
     "hostname": "major-express.ru",
@@ -1641,13 +1682,17 @@
   },
   {
     "hostname": "maps.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "213.180.204.242"
+    ],
+    "ip": "213.180.204.242"
   },
   {
     "hostname": "market.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.250.250.22"
+    ],
+    "ip": "87.250.250.22"
   },
   {
     "hostname": "matchtv.ru",
@@ -1773,12 +1818,11 @@
   {
     "hostname": "mos.ru",
     "ips": [
-      "94.79.51.135",
       "94.79.51.170",
       "212.11.151.57",
       "212.11.155.134"
     ],
-    "ip": "94.79.51.135"
+    "ip": "94.79.51.170"
   },
   {
     "hostname": "move.ru",
@@ -2037,9 +2081,9 @@
   {
     "hostname": "okey.ru",
     "ips": [
-      "194.67.71.194"
+      "194.67.71.193"
     ],
-    "ip": "194.67.71.194"
+    "ip": "194.67.71.193"
   },
   {
     "hostname": "okeydostavka.ru",
@@ -2188,13 +2232,17 @@
   },
   {
     "hostname": "passport.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "93.158.134.39"
+    ],
+    "ip": "93.158.134.39"
   },
   {
     "hostname": "pay.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.250.250.167"
+    ],
+    "ip": "87.250.250.167"
   },
   {
     "hostname": "pb.nalog.ru",
@@ -2257,8 +2305,10 @@
   },
   {
     "hostname": "plus.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "93.158.134.98"
+    ],
+    "ip": "93.158.134.98"
   },
   {
     "hostname": "pobeda.aero",
@@ -2314,8 +2364,10 @@
   },
   {
     "hostname": "practicum.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.250.250.5"
+    ],
+    "ip": "87.250.250.5"
   },
   {
     "hostname": "premier.one",
@@ -3623,8 +3675,10 @@
   },
   {
     "hostname": "sso.passport.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "93.158.134.144"
+    ],
+    "ip": "93.158.134.144"
   },
   {
     "hostname": "st.kp.yandex.net",
@@ -3697,8 +3751,10 @@
   },
   {
     "hostname": "storage.yandexcloud.net",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "213.180.193.243"
+    ],
+    "ip": "213.180.193.243"
   },
   {
     "hostname": "stream.vkvideo.ru",
@@ -3792,8 +3848,10 @@
   },
   {
     "hostname": "surveys.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "77.88.21.129"
+    ],
+    "ip": "77.88.21.129"
   },
   {
     "hostname": "sutochno.ru",
@@ -3837,8 +3895,10 @@
   },
   {
     "hostname": "taxi.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "37.9.112.5"
+    ],
+    "ip": "37.9.112.5"
   },
   {
     "hostname": "tbank.ru",
@@ -3932,8 +3992,10 @@
   },
   {
     "hostname": "translate.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "213.180.204.193"
+    ],
+    "ip": "213.180.204.193"
   },
   {
     "hostname": "transport.mos.ru",
@@ -3944,13 +4006,17 @@
   },
   {
     "hostname": "travel.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "93.158.134.81"
+    ],
+    "ip": "93.158.134.81"
   },
   {
     "hostname": "trust.yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "87.250.250.146"
+    ],
+    "ip": "87.250.250.146"
   },
   {
     "hostname": "ttk.ru",
@@ -4502,13 +4568,17 @@
   },
   {
     "hostname": "www.grnd.game",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "185.169.132.16"
+    ],
+    "ip": "185.169.132.16"
   },
   {
     "hostname": "www.grnd.gg",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "185.169.132.16"
+    ],
+    "ip": "185.169.132.16"
   },
   {
     "hostname": "www.kinopoisk.ru",
@@ -4635,8 +4705,12 @@
   },
   {
     "hostname": "ya.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "5.255.255.242",
+      "77.88.44.242",
+      "77.88.55.242"
+    ],
+    "ip": "5.255.255.242"
   },
   {
     "hostname": "yakutia.aero",
@@ -4647,18 +4721,28 @@
   },
   {
     "hostname": "yandex.com",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "5.255.255.77",
+      "77.88.44.55",
+      "77.88.55.88"
+    ],
+    "ip": "5.255.255.77"
   },
   {
     "hostname": "yandex.net",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "213.180.204.242"
+    ],
+    "ip": "213.180.204.242"
   },
   {
     "hostname": "yandex.ru",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "5.255.255.77",
+      "77.88.44.55",
+      "77.88.55.88"
+    ],
+    "ip": "5.255.255.77"
   },
   {
     "hostname": "yandexadexchange.net",
@@ -4672,13 +4756,17 @@
   },
   {
     "hostname": "yastat.net",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "37.9.64.225"
+    ],
+    "ip": "37.9.64.225"
   },
   {
     "hostname": "yastatic.net",
-    "ips": [],
-    "ip": ""
+    "ips": [
+      "37.9.64.225"
+    ],
+    "ip": "37.9.64.225"
   },
   {
     "hostname": "yoomoney.ru",
@@ -4960,10 +5048,6 @@
   },
   {
     "hostname": "46.235.188.172/32",
-    "ip": ""
-  },
-  {
-    "hostname": "46.235.188.251/32",
     "ip": ""
   },
   {
@@ -5548,10 +5632,6 @@
   },
   {
     "hostname": "94.79.51.14/32",
-    "ip": ""
-  },
-  {
-    "hostname": "94.79.51.135/32",
     "ip": ""
   },
   {
@@ -6383,7 +6463,7 @@
     "ip": ""
   },
   {
-    "hostname": "194.67.71.194/32",
+    "hostname": "194.67.71.193/32",
     "ip": ""
   },
   {
@@ -6643,7 +6723,7 @@
     "ip": ""
   },
   {
-    "hostname": "212.193.152.96/31",
+    "hostname": "212.193.152.96/32",
     "ip": ""
   },
   {
@@ -6660,6 +6740,10 @@
   },
   {
     "hostname": "212.193.153.14/32",
+    "ip": ""
+  },
+  {
+    "hostname": "212.193.153.34/32",
     "ip": ""
   },
   {
