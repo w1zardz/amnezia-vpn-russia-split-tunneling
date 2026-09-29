@@ -121,6 +121,8 @@ jobs:
           cat dist/RELEASE_NOTES.md >> "${RUNNER_TEMP}/notes.md"
           # Установщик в один клик: постоянная ссылка releases/latest/download/install-windows.bat.
           cp windows/install.bat "${RUNNER_TEMP}/install-windows.bat"
+          # Отключение автообновления в один клик: releases/latest/download/uninstall-windows.bat.
+          cp windows/uninstall.bat "${RUNNER_TEMP}/uninstall-windows.bat"
           # macOS: .command отдаётся в ZIP — иначе браузер теряет бит +x и Finder
           # отказывается запускать файл по двойному клику.
           install -m 755 macos/install-macos.command "${RUNNER_TEMP}/install-macos.command"
@@ -138,6 +140,7 @@ jobs:
             dist/happ-ru-direct.json \
             dist/manifest.json \
             "${RUNNER_TEMP}/install-windows.bat" \
+            "${RUNNER_TEMP}/uninstall-windows.bat" \
             "${RUNNER_TEMP}/install-macos.zip"
           # При push сохраняем предыдущий выпуск для отката. Ежедневный и ручной
           # запуск сохраняют прежнюю политику очистки истории Releases.

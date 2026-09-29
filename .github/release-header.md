@@ -19,6 +19,9 @@ Instagram и весь остальной интернет — через VPN. В
 обновление при входе в систему и каждые 6 часов. **Ваши ручные домены и сети
 сохраняются.** При изменении списка скрипт переподключает VPN.
 
+Отключить автообновление на Windows: **uninstall-windows.bat** из Assets →
+двойной щелчок → «Да». [macOS и подробности](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling#отключение-автообновления).
+
 [Подробная установка и команды для PowerShell/Терминала](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling#установка-скрипта-с-автообновлением).
 
 Скрипты также подходят для Premium. У подключения Amnezia Free нет раздельного

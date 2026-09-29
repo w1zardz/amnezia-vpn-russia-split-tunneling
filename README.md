@@ -186,6 +186,40 @@ bash macos/install.sh
 Подробности установки, проверки и удаления: [Windows](#windows--полностью-автоматически)
 · [macOS](#macos--полностью-автоматически).
 
+### Отключение автообновления
+
+Скрипт перестанет обновлять список, его задача и файлы удалятся. Сам список
+остаётся в AmneziaVPN — если он больше не нужен, очистите его в разделе
+**«Раздельное туннелирование сайтов»** или замените своим.
+
+#### 🪟 Windows
+
+1. Скачайте **[uninstall-windows.bat](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling/releases/latest/download/uninstall-windows.bat)**.
+2. Дважды щёлкните по файлу и нажмите **«Да»** в окне Windows.
+3. Дождитесь надписи «Готово» и нажмите любую клавишу.
+
+Права администратора нужны, потому что задача автообновления зарегистрирована
+с наивысшими правами. Код — [`windows/uninstall.bat`](windows/uninstall.bat).
+
+<details>
+<summary>Без скачивания — через Планировщик заданий</summary>
+
+1. Нажмите **Win + R**, введите `taskschd.msc`, нажмите Enter.
+2. В **«Библиотеке планировщика заданий»** найдите задачу
+   `Amnezia-Split-Route-Sync-S-1-5-…`, щёлкните правой кнопкой → **«Удалить»**.
+3. Нажмите **Win + R**, введите `%LOCALAPPDATA%` и удалите папку
+   `AmneziaRouteSync`.
+
+</details>
+
+#### 🍏 macOS
+
+В **Терминале**:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/w1zardz/amnezia-vpn-russia-split-tunneling/master/macos/uninstall.sh | bash
+```
+
 <a id="ручной-импорт-json"></a>
 
 ## 📱 Ручной импорт JSON
@@ -493,6 +527,9 @@ Get-Content "$env:LOCALAPPDATA\AmneziaRouteSync\status.json"
 powershell -NoProfile -ExecutionPolicy Bypass -File windows\uninstall.ps1
 ```
 
+После установки в один клик папки проекта на диске нет — отключайте через
+[uninstall-windows.bat](#отключение-автообновления).
+
 Ручные записи, добавленные в Amnezia самостоятельно, сохраняются — скрипт
 заменяет только те, которыми управлял сам. Снести всё и оставить только наш
 список: флаг `-ReplaceAll`.
@@ -774,6 +811,8 @@ Updater сам сетевые настройки Mac не меняет.
 bash macos/uninstall.sh
 ```
 
+Без папки проекта — [командой из Терминала](#отключение-автообновления).
+
 ### 📱 iPhone, iPad и Android
 
 Мобильная песочница не даёт стороннему скрипту править настройки AmneziaVPN,
@@ -928,6 +967,12 @@ Start-Service AmneziaVPN-service
 
 Не выключать VPN, а импортировать этот список: банки, маркетплейсы и Госуслуги
 пойдут через обычное подключение, остальной трафик останется в туннеле.
+
+#### Как отключить автообновление?
+
+Windows — скачайте и запустите [uninstall-windows.bat](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling/releases/latest/download/uninstall-windows.bat),
+macOS — одна команда в Терминале. Подробно: [Отключение автообновления](#отключение-автообновления).
+Список в AmneziaVPN при этом остаётся, его чистят в самом приложении.
 
 #### Мои собственные записи в Amnezia пропадут?
 

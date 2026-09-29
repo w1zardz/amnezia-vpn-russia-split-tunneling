@@ -23,6 +23,10 @@ if (-not $env:LOCALAPPDATA) { throw 'Не определён LOCALAPPDATA тек
 $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
 $CurrentSid = $identity.User.Value
 if ($CurrentSid -eq 'S-1-5-18') { throw 'Uninstaller нельзя запускать от SYSTEM.' }
+$principal = New-Object Security.Principal.WindowsPrincipal($identity)
+if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    throw 'Запустите PowerShell от имени администратора: задачу автообновления installer регистрирует с наивысшими правами.'
+}
 
 $InstallDir = Join-Path $env:LOCALAPPDATA 'AmneziaRouteSync'
 $InstalledScript = Join-Path $InstallDir 'update-amnezia-routes.ps1'
