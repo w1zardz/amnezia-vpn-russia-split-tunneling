@@ -200,6 +200,60 @@
         "vkteams.ru"
       ],
       "cidrs": []
+    },
+    {
+      "id": "rustore",
+      "title": "RuStore — каталог, API, загрузки и CDN",
+      "tier": "core",
+      "notes": "Домены извлечены из клиента RuStore 1.104.0.2 и проверены через DNS 2026-09-30; public-api-m.rustore.ru и vkpns-dg.rustore.ru добавлены по официальному объявлению миграции. reef.vk-cdn.net обслуживает CDN загрузок. Сохранены точные /32 ранее и сейчас наблюдавшихся адресов, включая все ответы static.rustore.ru: ограничение размера поля ips не должно обрезать покрытие IP-экспорта. Трафик выделяется по адресам серверов; весь процесс эмулятора не исключается.",
+      "domains": [
+        "ads-integration.rustore.ru",
+        "ads.rustore.ru",
+        "adv.rustore.ru",
+        "api.rustore.ru",
+        "apps.rustore.ru",
+        "auth.vkpns.rustore.ru",
+        "backapi.rustore.ru",
+        "help.rustore.ru",
+        "pay-backapi.rustore.ru",
+        "public-api-m.rustore.ru",
+        "public-api.rustore.ru",
+        "rc.rustore.ru",
+        "rebus.rustore.ru",
+        "reef.vk-cdn.net",
+        "rustore.ru",
+        "static.rustore.ru",
+        "stats.rustore.ru",
+        "vkpns-dg.rustore.ru",
+        "vkpns-topics.rustore.ru",
+        "vkpns.rustore.ru",
+        "www.rustore.ru"
+      ],
+      "cidrs": [
+        "87.240.137.141/32",
+        "87.240.190.71/32",
+        "89.221.236.52/32",
+        "90.156.232.47/32",
+        "90.156.232.221/32",
+        "95.163.58.192/32",
+        "95.163.58.194/32",
+        "95.163.58.195/32",
+        "95.163.58.196/32",
+        "95.163.58.197/32",
+        "95.163.58.199/32",
+        "95.163.58.200/32",
+        "95.163.58.204/32",
+        "95.163.58.207/32",
+        "95.163.58.209/32",
+        "95.163.58.210/32",
+        "95.163.58.211/32",
+        "95.163.58.212/32",
+        "95.163.58.213/32",
+        "95.163.60.61/32",
+        "95.163.60.63/32",
+        "95.163.61.31/32",
+        "95.163.61.56/32"
+      ]
     }
   ]
 }

@@ -7,6 +7,26 @@ $testDir = Join-Path ([IO.Path]::GetTempPath()) ('amnezia-app-guard-test-' + [Gu
 try {
     & (Join-Path $PSScriptRoot 'build-app-vpn-guard.ps1') -OutputDir $testDir
     $exe = Join-Path $testDir 'app-vpn-guard.exe'
+    $watchTest = New-Object Diagnostics.Process
+    try {
+        $watchTest.StartInfo.FileName = $exe
+        $watchTest.StartInfo.Arguments = '--self-test-watch'
+        $watchTest.StartInfo.UseShellExecute = $false
+        $watchTest.StartInfo.CreateNoWindow = $true
+        $watchTest.StartInfo.RedirectStandardOutput = $true
+        $watchTest.StartInfo.RedirectStandardError = $true
+        [void]$watchTest.Start()
+        if (-not $watchTest.WaitForExit(15000)) {
+            $watchTest.Kill()
+            $watchTest.WaitForExit()
+            throw 'Interface notification self-test did not finish within 15 seconds.'
+        }
+        $watchResult = $watchTest.StandardOutput.ReadToEnd()
+        $watchErrors = $watchTest.StandardError.ReadToEnd()
+        if ($watchTest.ExitCode -ne 0) { throw "Interface notification self-test failed: $watchErrors" }
+    } finally { $watchTest.Dispose() }
+    if ($watchResult -notmatch 'PASS: watch fallback') { throw 'Interface notification self-test did not report success.' }
+    Write-Host $watchResult.Trim()
     $config = Join-Path $testDir 'test.txt'
     $encoding = New-Object Text.UTF8Encoding($false)
     [IO.File]::WriteAllLines($config, @('A|AmneziaVPN', "P|$exe", "P|$($exe.ToUpperInvariant())"), $encoding)

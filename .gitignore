@@ -3,3 +3,5 @@ __pycache__/
 *.py[cod]
 *.log
 config/protected-ips.json
+.idea/
+/Изображение Codex *.png

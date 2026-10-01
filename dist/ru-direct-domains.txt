@@ -28,9 +28,12 @@ acdn.tinkoff.ru
 acm.timus.ru
 acra-ratings.ru
 adfox.yandex.ru
+ads-integration.rustore.ru
 ads.adfox.ru
+ads.rustore.ru
 ads.vk.com
 ads.vk.ru
+adv.rustore.ru
 aeroflot.ru
 afisha.ru
 afisha.yandex.ru
@@ -48,6 +51,9 @@ am.ru
 amediateka.ru
 an.yandex.ru
 anywayanyday.com
+api-eu.grnd.gg
+api-test-eu.grnd.gg
+api-test.grnd.gg
 api.avito.ru
 api.cdngrand.com
 api.grnd.game
@@ -55,10 +61,13 @@ api.grnd.gg
 api.nomerogram.ru
 api.ok.ru
 api.ozon.ru
+api.rustore.ru
 api.vk.com
 api.vk.ru
+apps.rustore.ru
 apteka.ru
 arbitr.ru
+arena1005.grnd.gg
 argumenti.ru
 argumentiru.com
 asna.ru
@@ -67,6 +76,7 @@ astralinux.ru
 auchan.ru
 audience.yandex.ru
 auth.mail.ru
+auth.vkpns.rustore.ru
 auto.mail.ru
 auto.ru
 autodoc.ru
@@ -83,6 +93,7 @@ avtokod.mos.ru
 avtokod.ru
 avtovaz.ru
 azimuth.aero
+backapi.rustore.ru
 balance.yandex.ru
 bank.yandex.ru
 banki.ru
@@ -129,6 +140,7 @@ cdn.tbank.ru
 cdn1.ozone.ru
 cdn2.ozone.ru
 cdngrand.com
+cdntest.grnd.gg
 championat.com
 chizhik.ru
 cian.ru
@@ -315,6 +327,7 @@ headhunter.ru
 health.mail.ru
 health.yandex.ru
 helix.ru
+help.rustore.ru
 henderson.ru
 hh.ru
 hi-tech.mail.ru
@@ -583,7 +596,9 @@ partner.yandex.ru
 partners.gosuslugi.ru
 pass.rzd.ru
 passport.yandex.ru
+pay-backapi.rustore.ru
 pay.yandex.ru
+paymaster.ru
 pb.nalog.ru
 pedsovet.su
 perekrestok.ru
@@ -625,6 +640,8 @@ psu.ru
 psv1.userapi.com
 psv4.userapi.com
 pu.vk.com
+public-api-m.rustore.ru
+public-api.rustore.ru
 qdelivery.ru
 qiwi.com
 qiwi.ru
@@ -638,10 +655,13 @@ ranepa.ru
 rasp.yandex.ru
 rbc.ru
 rbk.ru
+rc.rustore.ru
 rea.ru
 realty.yandex.ru
+rebus.rustore.ru
 redos.ru
 redwings.aero
+reef.vk-cdn.net
 reg.ru
 reksoft.ru
 ren.tv
@@ -706,6 +726,7 @@ russia-1.ru
 russia-24.ru
 russia.tv
 russianpost.ru
+rustore.ru
 rutube.ru
 rutubelist.ru
 rzd-bonus.ru
@@ -864,6 +885,7 @@ selectel.ru
 seller.market.yandex.ru
 seller.ozon.ru
 seller.wildberries.ru
+sentry.cdngrand.com
 service.nalog.ru
 severstal.ru
 sfedu.ru
@@ -911,8 +933,10 @@ start.ru
 static-basket-01.wbbasket.ru
 static.avito.ru
 static.cdngrand.com
+static.rustore.ru
 static.rutube.ru
 static.vk.com
+stats.rustore.ru
 stepik.org
 stolichki.ru
 stopgame.ru
@@ -929,6 +953,7 @@ sun6.userapi.com
 sun9.userapi.com
 superjob.ru
 suppliers.wildberries.ru
+support.grnd.gg
 support.kripmine.ru
 surgutneftegaz.ru
 surveys.yandex.ru
@@ -948,6 +973,7 @@ technopark.ru
 tele2.ru
 telemost.yandex.ru
 tensor.ru
+test.cdngrand.com
 thebell.io
 ticket.rzd.ru
 timeweb.com
@@ -1030,6 +1056,9 @@ vkontakte.ru
 vkplay.live
 vkplay.ru
 vkplaycdn.ru
+vkpns-dg.rustore.ru
+vkpns-topics.rustore.ru
+vkpns.rustore.ru
 vkteams.ru
 vkuseraudio.com
 vkuseraudio.net
@@ -1079,6 +1108,7 @@ www.kripmine.ru
 www.nomerogram.ru
 www.ok.ru
 www.ozon.ru
+www.rustore.ru
 www.rutube.ru
 www.sberbank.ru
 www.tbank.ru

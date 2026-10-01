@@ -127,6 +127,16 @@
       ]
     },
     {
+      "id": "paymaster",
+      "title": "PayMaster — форма оплаты",
+      "tier": "core",
+      "domains": [
+        "paymaster.ru"
+      ],
+      "cidrs": [],
+      "notes": "Форма /cpay/ и её ресурсы загружаются с paymaster.ru. В снимке DNS нужны оба A-адреса; добавляем точные IPv4, без расширения до сетей провайдеров."
+    },
+    {
       "id": "brokers",
       "title": "Брокеры и инвестиции",
       "tier": "core",

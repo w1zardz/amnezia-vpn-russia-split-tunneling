@@ -368,7 +368,9 @@ def ru_addresses(
 ) -> list[str]:
     # A reviewed service CIDR already goes direct in every export. Keep its DNS
     # labels even when the anti-DDoS provider is registered abroad. This does
-    # not allow other addresses of that ASN or bypass the public/CDN checks.
+    # not allow other addresses of that ASN or bypass the public checks.
+    # Shared CDN hosts require an explicitly reviewed /32. A broad service
+    # network must never whitelist the CDN's other tenants or its whole ASN.
     networks = tuple(manual_networks)
     accepted = set()
     for address in addresses:
@@ -376,6 +378,10 @@ def ru_addresses(
         if verdict == ACCEPT or (
             verdict in (FOREIGN, NO_ROW)
             and any(ipaddress.IPv4Address(address) in network for network in networks)
+        ) or (
+            verdict == GLOBAL_CDN
+            and any(network.prefixlen == 32 and ipaddress.IPv4Address(address) in network
+                    for network in networks)
         ):
             accepted.add(address)
     return sorted(accepted, key=ipaddress.IPv4Address)[: catalog.MAX_DOMAIN_IPS]

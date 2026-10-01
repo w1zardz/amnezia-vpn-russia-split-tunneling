@@ -23,6 +23,47 @@ import analyze_amnezia_log as log_analyzer
 
 
 class RouteLoadTests(unittest.TestCase):
+    def test_reviewed_cdn_host_does_not_whitelist_neighbours_or_broad_prefix(self):
+        table = catalog.AsnTable([row('104.26.13.0', '104.26.13.255', 13335, 'US')])
+        addresses = ['104.26.13.47', '104.26.13.48']
+        self.assertEqual(resolver.ru_addresses(addresses, table,
+                         [ipaddress.ip_network('104.26.13.47/32')]), ['104.26.13.47'])
+        self.assertEqual(resolver.ru_addresses(addresses, table,
+                         [ipaddress.ip_network('104.26.13.0/24')]), [])
+        self.assertEqual(resolver.ru_addresses(['10.0.0.1'], table,
+                         [ipaddress.ip_network('10.0.0.1/32')]), [])
+
+    def test_grand_and_rustore_download_routes_survive_missing_dns(self):
+        services = catalog.load_catalog()
+        prefixes = builder.curated_prefixes(catalog.load_prefixes(),
+                                            set(refresh.load_asn_expand()))
+        for tiers in (catalog.TIERS, ('core',)):
+            _domains, cidrs = builder.build(services, prefixes, tiers)
+            networks = [ipaddress.ip_network(value) for value in cidrs]
+            for value in ('91.240.87.158', '143.20.177.3', '104.26.13.47',
+                          '87.251.65.29', '185.169.132.163', '90.156.232.47',
+                          '90.156.232.221', '95.163.58.192', '95.163.58.194',
+                          '95.163.58.213', '95.163.60.61', '95.163.60.63'):
+                with self.subTest(tiers=tiers, address=value):
+                    self.assertTrue(any(ipaddress.ip_address(value) in n for n in networks))
+
+    def test_service_exports_leave_telegram_networks_in_vpn(self):
+        # Official list: https://core.telegram.org/resources/cidr.txt (2026-09-30).
+        telegram = [ipaddress.ip_network(value) for value in (
+            '91.108.56.0/22', '91.108.4.0/22', '91.108.8.0/22', '91.108.16.0/22',
+            '91.108.12.0/22', '149.154.160.0/20', '91.105.192.0/23',
+            '91.108.20.0/22', '185.76.151.0/24')]
+        services = catalog.load_catalog()
+        prefixes = builder.curated_prefixes(catalog.load_prefixes(),
+                                            set(refresh.load_asn_expand()))
+        for tiers in (catalog.TIERS, ('core',)):
+            domains, cidrs = builder.build(services, prefixes, tiers)
+            routes = builder.snapshot_routes(domains, cidrs, catalog.load_domain_ips())
+            networks = [ipaddress.ip_network(value) for value in routes]
+            for subnet in telegram:
+                with self.subTest(tiers=tiers, telegram=str(subnet)):
+                    self.assertFalse(any(subnet.overlaps(n) for n in networks))
+
     def test_manual_catalog_routes_survive_external_and_country_filters(self):
         manual = catalog.Service(id='manual', title='Manual', tier='core', category='custom',
                                  category_title='Custom', domains=['custom.example'],

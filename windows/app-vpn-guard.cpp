@@ -24,6 +24,75 @@ static const GUID Sublayer = {0xb61fbdb7,0xbb47,0x4684,{0x81,0xe2,0x3c,0x19,0x86
 void check(DWORD code, const char* operation) {
     if (code != ERROR_SUCCESS) throw std::runtime_error(std::string(operation) + ": " + std::to_string(code));
 }
+enum class WatchWake { Change, Fallback };
+template<class Wait, class Clock>
+WatchWake waitForInterfaceChanges(Wait wait, Clock clock, DWORD fallback = 30000,
+                                 DWORD quiet = 75, DWORD maximum = 250) {
+    if (!wait(fallback)) return WatchWake::Fallback;
+    const auto deadline = clock() + maximum;
+    for (;;) {
+        const auto now = clock();
+        if (now >= deadline) return WatchWake::Change;
+        // Settle short IPv4/IPv6 bursts, but never postpone a refresh forever
+        // when an unrelated interface is continuously changing.
+        const auto remaining = static_cast<DWORD>(deadline - now);
+        if (!wait((std::min)(quiet, remaining))) return WatchWake::Change;
+    }
+}
+class InterfaceChangeWatch {
+    HANDLE event_ = nullptr;
+    HANDLE notification_ = nullptr;
+    decltype(&CancelMibChangeNotify2) cancel_;
+    static VOID CALLBACK changed(PVOID context, PMIB_IPINTERFACE_ROW, MIB_NOTIFICATION_TYPE) noexcept {
+        // No adapter queries, filtering operations, or object references here.
+        SetEvent(static_cast<HANDLE>(context));
+    }
+public:
+    explicit InterfaceChangeWatch(bool enabled = true,
+                                  decltype(&NotifyIpInterfaceChange) subscribe = &NotifyIpInterfaceChange,
+                                  decltype(&CancelMibChangeNotify2) cancel = &CancelMibChangeNotify2) : cancel_(cancel) {
+        if (!enabled) return;
+        event_ = CreateEventW(nullptr, FALSE, FALSE, nullptr);
+        if (!event_) check(GetLastError(), "Create interface notification event");
+        const auto result = subscribe(AF_UNSPEC, changed, event_, FALSE, &notification_);
+        if (result != NO_ERROR)
+            std::cerr << "Interface notifications unavailable: " << result << "; using 30-second fallback\n";
+    }
+    ~InterfaceChangeWatch() {
+        // Cancellation runs on the owning thread and waits for callbacks. Keep
+        // their event alive until it completes; the callback never waits on us.
+        if (notification_) {
+            const auto result = cancel_(notification_);
+            if (result != NO_ERROR) {
+                // A callback may still run. Keep this handle until process exit
+                // rather than signal a closed/recycled handle; no `this` escapes.
+                std::cerr << "Cannot cancel interface notifications: " << result << "; event retained until process exit\n";
+                return;
+            }
+        }
+        if (event_) CloseHandle(event_);
+    }
+    InterfaceChangeWatch(const InterfaceChangeWatch&) = delete;
+    InterfaceChangeWatch& operator=(const InterfaceChangeWatch&) = delete;
+    WatchWake wait(DWORD fallback = 30000, DWORD quiet = 75, DWORD maximum = 250) {
+        return waitForInterfaceChanges([this](DWORD timeout) {
+            const auto result = WaitForSingleObject(event_, timeout);
+            if (result == WAIT_FAILED) check(GetLastError(), "Wait for interface notification");
+            if (result != WAIT_OBJECT_0 && result != WAIT_TIMEOUT) throw std::runtime_error("Unexpected interface wait result");
+            return result == WAIT_OBJECT_0;
+        }, [] { return GetTickCount64(); }, fallback, quiet, maximum);
+    }
+};
+template<class Refresh, class Wait>
+void runInterfaceWatch(bool continuous, Refresh refresh, Wait wait) {
+    for (;;) {
+        // Apply immediately, before any wait; a callback arriving during refresh
+        // stays signaled on the auto-reset event for the following iteration.
+        refresh();
+        if (!continuous) return;
+        wait();
+    }
+}
 struct Engine {
     HANDLE handle = nullptr;
     explicit Engine(bool dynamic = false) {
@@ -359,10 +428,128 @@ void probe(const std::wstring& adapter) {
     WSACleanup();
     // Dynamic probe filters are removed even if this process crashes.
 }
+// Isolated tests use synthetic clocks/events and never open WFP or change an
+// interface. The fake cancellation invokes an in-flight callback synchronously.
+struct WatchTestNotifications {
+    static inline PIPINTERFACE_CHANGE_CALLBACK callback = nullptr;
+    static inline HANDLE event = nullptr;
+    static inline DWORD subscribeResult = NO_ERROR, cancelResult = NO_ERROR;
+    static inline unsigned cancellations = 0;
+    static inline bool eventAliveDuringCancel = false;
+    static NETIO_STATUS WINAPI subscribe(ADDRESS_FAMILY family, PIPINTERFACE_CHANGE_CALLBACK action,
+                                        PVOID context, BOOLEAN initial, HANDLE* handle) {
+        if (family != AF_UNSPEC || initial) return ERROR_INVALID_PARAMETER;
+        callback = action;
+        event = static_cast<HANDLE>(context);
+        *handle = subscribeResult == NO_ERROR ? reinterpret_cast<HANDLE>(1) : nullptr;
+        return subscribeResult;
+    }
+    static NETIO_STATUS WINAPI cancel(HANDLE) {
+        ++cancellations;
+        callback(event, nullptr, MibParameterNotification);
+        eventAliveDuringCancel = WaitForSingleObject(event, 0) == WAIT_OBJECT_0;
+        return cancelResult;
+    }
+};
+struct WatchSystemNotifications {
+    static inline NETIO_STATUS subscribeResult = ERROR_IO_PENDING, cancelResult = ERROR_IO_PENDING;
+    static NETIO_STATUS WINAPI subscribe(ADDRESS_FAMILY family, PIPINTERFACE_CHANGE_CALLBACK action,
+                                        PVOID context, BOOLEAN, HANDLE* handle) {
+        // Ask Windows for its initial registration callback. This confirmation
+        // does not change an interface and needs no synthetic network traffic.
+        subscribeResult = NotifyIpInterfaceChange(family, action, context, TRUE, handle);
+        return subscribeResult;
+    }
+    static NETIO_STATUS WINAPI cancel(HANDLE handle) {
+        cancelResult = CancelMibChangeNotify2(handle);
+        return cancelResult;
+    }
+};
+void selfTestWatch() {
+    const auto require = [](bool value, const char* message) { if (!value) throw std::runtime_error(message); };
+    struct Timeline {
+        ULONGLONG now = 0;
+        std::vector<ULONGLONG> changes;
+        size_t next = 0;
+        std::vector<DWORD> waits;
+        WatchWake run() {
+            return waitForInterfaceChanges([this](DWORD timeout) {
+                waits.push_back(timeout);
+                if (next < changes.size() && changes[next] <= now + timeout) {
+                    now = (std::max)(now, changes[next++]);
+                    return true;
+                }
+                now += timeout;
+                return false;
+            }, [this] { return now; });
+        }
+    };
+    Timeline idle;
+    require(idle.run() == WatchWake::Fallback && idle.now == 30000 && idle.waits.size() == 1,
+            "Idle watcher did not use a single 30-second fallback wait");
+    Timeline burst;
+    burst.changes = {0, 10, 20};
+    require(burst.run() == WatchWake::Change && burst.now == 95 && burst.next == 3,
+            "Interface burst was not coalesced after 75 quiet milliseconds");
+    Timeline storm;
+    for (ULONGLONG time = 0; time <= 1000; time += 10) storm.changes.push_back(time);
+    require(storm.run() == WatchWake::Change && storm.now == 250 && storm.next < storm.changes.size(),
+            "Continuous notifications postponed refresh beyond 250 milliseconds");
+    std::string order;
+    runInterfaceWatch(false, [&] { order += 'R'; }, [&] { order += 'W'; });
+    require(order == "R", "One-shot policy waited for an interface event");
+    struct StopTest {};
+    order.clear();
+    try {
+        runInterfaceWatch(true, [&] { order += 'R'; }, [&] { order += 'W'; throw StopTest{}; });
+    } catch (const StopTest&) {}
+    require(order == "RW", "Initial watch policy was not applied before waiting");
+    {
+        InterfaceChangeWatch watcher(true, WatchTestNotifications::subscribe, WatchTestNotifications::cancel);
+        // A callback during policy application must survive until the next wait;
+        // a burst before that wait should not cause several duplicate refreshes.
+        WatchTestNotifications::callback(WatchTestNotifications::event, nullptr, MibAddInstance);
+        WatchTestNotifications::callback(WatchTestNotifications::event, nullptr, MibParameterNotification);
+        require(watcher.wait(0, 0, 0) == WatchWake::Change, "Queued interface notification was lost");
+        require(watcher.wait(0, 0, 0) == WatchWake::Fallback, "Queued interface burst was not coalesced");
+    }
+    DWORD flags = 0;
+    require(WatchTestNotifications::cancellations == 1 && WatchTestNotifications::eventAliveDuringCancel,
+            "Notification event closed before an in-flight callback completed");
+    require(!GetHandleInformation(WatchTestNotifications::event, &flags), "Cancelled watcher leaked its event");
+    WatchTestNotifications::subscribeResult = ERROR_NOT_SUPPORTED;
+    {
+        InterfaceChangeWatch watcher(true, WatchTestNotifications::subscribe, WatchTestNotifications::cancel);
+        require(watcher.wait(0, 0, 0) == WatchWake::Fallback, "Registration failure disabled fallback refreshes");
+    }
+    require(WatchTestNotifications::cancellations == 1 && !GetHandleInformation(WatchTestNotifications::event, &flags),
+            "Failed registration cancelled an invalid subscription or leaked its event");
+    WatchTestNotifications::subscribeResult = NO_ERROR;
+    WatchTestNotifications::cancelResult = ERROR_GEN_FAILURE;
+    {
+        InterfaceChangeWatch watcher(true, WatchTestNotifications::subscribe, WatchTestNotifications::cancel);
+    }
+    require(GetHandleInformation(WatchTestNotifications::event, &flags) != FALSE,
+            "Cancellation failure closed a handle still reachable by callbacks");
+    // The fake subscription cannot deliver another callback, so tests can clean
+    // up the retained handle. Production lets process termination release it.
+    CloseHandle(WatchTestNotifications::event);
+    bool initialDelivered = false;
+    {
+        InterfaceChangeWatch watcher(true, WatchSystemNotifications::subscribe, WatchSystemNotifications::cancel);
+        require(WatchSystemNotifications::subscribeResult == NO_ERROR, "Real interface notification registration failed");
+        initialDelivered = watcher.wait(5000, 0, 0) == WatchWake::Change;
+    }
+    require(WatchSystemNotifications::cancelResult == NO_ERROR, "Real interface notification cancellation failed");
+    require(initialDelivered, "Windows did not deliver its initial interface registration callback");
+    std::cout << "PASS: watch fallback, bounded debounce, immediate policy, queued events, and callback lifetime\n";
+    std::cout << "PASS: real Windows interface notification registration, initial callback, and cancellation\n";
+}
 int wmain(int argc, wchar_t** argv) {
     try {
         if (argc < 2) throw std::runtime_error("Usage: app-vpn-guard --once|--watch config.txt | --status | --remove | --probe adapter");
         std::wstring command = argv[1];
+        if (command == L"--self-test-watch" && argc == 2) { selfTestWatch(); return 0; }
         if (command == L"--assert-denied") {
             WSADATA data{};
             check(WSAStartup(MAKEWORD(2,2), &data), "Initialize future-version socket probe");
@@ -381,8 +568,10 @@ int wmain(int argc, wchar_t** argv) {
         if (argc != 3 || (command != L"--once" && command != L"--watch")) throw std::runtime_error("Invalid guard arguments");
         Config config = readConfig(argv[2]);
         auto paths = programs(config);
+        const bool continuous = command == L"--watch";
+        InterfaceChangeWatch changes(continuous);
         UINT64 lastLuid = UINT64_MAX;
-        do {
+        runInterfaceWatch(continuous, [&] {
             try {
                 auto luid = vpnLuid(config.adapter);
                 if (luid != lastLuid) {
@@ -395,9 +584,7 @@ int wmain(int argc, wchar_t** argv) {
                 std::cerr << error.what() << "; existing persistent filters retained\n";
                 throw; // Scheduler restarts with a fresh BFE handle; policy remains persistent.
             }
-            if (command == L"--once") break;
-            Sleep(1000);
-        } while (true);
+        }, [&] { changes.wait(); });
         return 0;
     } catch (const std::exception& error) { std::cerr << error.what() << std::endl; return 1; }
 }
