@@ -27,6 +27,7 @@ function Get-AmneziaSession {
     return [pscustomobject]@{ GuiRunning = $true; Connected = $true; AutoConnect = $true; ServerIndex = -1 }
 }
 function Assert-SafeAmneziaRestart { }
+function Get-PrivacyClientProcessTable { return @() }
 function Test-GuiRunning { return $false }
 function Test-TunnelRunning { return $false }
 $AllowVpnReconnect = $true

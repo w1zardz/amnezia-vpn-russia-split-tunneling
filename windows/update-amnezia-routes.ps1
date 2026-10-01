@@ -81,6 +81,20 @@ $DaemonServiceName = 'AmneziaVPN-service'
 $TunnelServiceName = 'AmneziaWGTunnel$AmneziaVPN'
 $SupportedAppMajor = 5
 
+# One registry for identification, cooperative shutdown and all safety checks.
+# Generic runtimes match only a known vendor installation or Claude CLI command.
+$PrivacyClientRegistry = @(
+    @{ Id = 'claude-cli'; Kind = 'cli'; Names = '^(claude|claude-code)\.exe$'
+       Image = '(?i)\\(?:\.local\\bin|\.claude|claude-code)\\claude(?:-code)?\.exe$|\\node_modules\\@anthropic-ai\\claude-code\\'
+       Command = '(?i)^\s*(?:"[^"]*[\\/]node(?:\.exe)?"|node(?:\.exe)?|[^\s"]*[\\/]node(?:\.exe)?)\s+(?:"[^"]*[\\/]node_modules[\\/]@anthropic-ai[\\/]claude-code[\\/]cli\.js"|[^\s"]*[\\/]node_modules[\\/]@anthropic-ai[\\/]claude-code[\\/]cli\.js)(?:\s|$)' },
+    @{ Id = 'claude-desktop'; Kind = 'desktop'; Names = '^Claude\.exe$'
+       Image = '(?i)^(?:[a-z]:\\Program Files(?: \(x86\))?\\(?:WindowsApps\\(?:Anthropic\.)?Claude_[^\\]+|Claude|AnthropicClaude)|[a-z]:\\Users\\[^\\]+\\AppData\\(?:Local\\(?:AnthropicClaude|Programs\\Claude)|Roaming\\Claude))\\'
+       Command = '' },
+    @{ Id = 'chatgpt-desktop'; Kind = 'desktop'; Names = '^(ChatGPT|Codex)\.exe$'
+       Image = '(?i)^(?:[a-z]:\\Program Files(?: \(x86\))?\\(?:WindowsApps\\OpenAI\.(?:ChatGPT|Codex)[^\\]+|ChatGPT|OpenAI\\(?:ChatGPT|Codex))|[a-z]:\\Users\\[^\\]+\\AppData\\Local\\(?:Programs\\ChatGPT|OpenAI\\(?:ChatGPT|Codex)))\\'
+       Command = '' }
+)
+
 $RouteModeVpnAllExceptSites = 2
 $MaxListBytes = 4194304
 # Шире /12 не пускаем: такая сеть означала бы «пол-интернета мимо VPN».
@@ -104,6 +118,9 @@ $PrivateSubnetRanges = @('10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16')
 $ManagedPath = Join-Path $StateDir 'managed-entries.json'
 $StatusPath = Join-Path $StateDir 'status.json'
 $DeferredPath = Join-Path $StateDir 'deferred-update.json'
+$PrivacyChildrenPath = Join-Path $StateDir 'privacy-client-descendants.json'
+$PrivacyClientDescendants = @{}
+$PrivacyChildrenLoaded = $false
 $ImportPath = Join-Path $StateDir 'amnezia-split-routes.json'
 $JournalPath = Join-Path $StateDir '.registry-transaction.json'
 $BackupDir = Join-Path $StateDir 'backups'
@@ -996,6 +1013,7 @@ function Assert-VpnStopAllowed {
 }
 
 function Assert-AmneziaStopped {
+    Assert-PrivacyClientsStopped
     if ((Test-GuiRunning) -or (Test-TunnelRunning)) {
         throw [AmneziaRouteSync.UpdateDeferredException]::new(
             'Обновление отложено: Amnezia запустилась или подключилась после проверки. Безопасное применение настроек не подтверждено; работающая Amnezia не отключается.')
@@ -1042,6 +1060,7 @@ function Read-RoutingRegistrySnapshot {
 }
 
 function Restore-RoutingRegistrySnapshot($Snapshot) {
+    Assert-PrivacyClientsStopped
     if ($null -eq $Snapshot -or $Snapshot.version -ne 1) { throw 'Неизвестная версия routing Registry backup' }
     $actual = @($Snapshot.values.PSObject.Properties.Name | Sort-Object)
     if (($actual -join ',') -cne (@($RoutingValueNames | Sort-Object) -join ',')) {
@@ -1070,6 +1089,7 @@ function Restore-RoutingRegistrySnapshot($Snapshot) {
 }
 
 function Write-RoutingRegistry($Sites) {
+    Assert-PrivacyClientsStopped
     $key = [Microsoft.Win32.Registry]::CurrentUser.CreateSubKey($RegistryConfSubKey, $true)
     try {
         $key.SetValue('ExceptSites', [AmneziaRouteSync.QtVariantMapCodec]::Encode((ConvertTo-QtMap $Sites)), [Microsoft.Win32.RegistryValueKind]::Binary)
@@ -1149,6 +1169,196 @@ function Test-SitesEqual($Left, $Right) {
 }
 
 # --- процессы, службы, сессия --------------------------------------------------
+
+function Get-PrivacyClientProcessTable {
+    return @(Get-CimInstance -ClassName Win32_Process -ErrorAction Stop)
+}
+
+function Get-UpdaterProcessId { return [Diagnostics.Process]::GetCurrentProcess().Id }
+function Get-UpdaterSessionId { return [Diagnostics.Process]::GetCurrentProcess().SessionId }
+function Get-UpdaterOwnerSid { return [Security.Principal.WindowsIdentity]::GetCurrent().User.Value }
+
+function Get-PrivacyProcessOwnerSid($ProcessRow) {
+    $owner = Invoke-CimMethod -InputObject $ProcessRow -MethodName GetOwnerSid -ErrorAction Stop
+    if ($owner.ReturnValue -ne 0 -or -not $owner.Sid) {
+        throw [AmneziaRouteSync.UpdateDeferredException]::new('Обновление отложено: не удалось проверить владельца процесса приложения; сигнал закрытия не отправлен.')
+    }
+    return [string]$owner.Sid
+}
+
+function Get-PrivacyProcessCreatedAt($ProcessRow) {
+    $created = [DateTime]$ProcessRow.CreationDate
+    if ($created -eq [DateTime]::MinValue) { throw 'Не удалось проверить время создания процесса; применение отменено.' }
+    return $created.ToUniversalTime().ToString('o')
+}
+
+function Read-PrivacyClientDescendants {
+    if ($PrivacyChildrenLoaded) { return }
+    $saved = Read-JsonFile $PrivacyChildrenPath
+    if ($null -ne $saved) {
+        if ($saved.version -ne 1) { throw 'Повреждён снимок дочерних процессов; применение отменено.' }
+        foreach ($entry in @($saved.processes)) {
+            if ([int]$entry.id -le 0 -or -not $entry.created_at -or -not $entry.owner_sid) {
+                throw 'Неполный снимок дочерних процессов; применение отменено.'
+            }
+            $script:PrivacyClientDescendants[[int]$entry.id] = $entry
+        }
+    }
+    $script:PrivacyChildrenLoaded = $true
+}
+
+function Save-PrivacyClientDescendants($ProcessTable, $Clients) {
+    Read-PrivacyClientDescendants
+    $rows = @{}
+    foreach ($row in $ProcessTable) { $rows[[int]$row.ProcessId] = $row }
+    foreach ($id in @($PrivacyClientDescendants.Keys)) {
+        if (-not $rows.ContainsKey($id) -or
+            (Get-PrivacyProcessCreatedAt $rows[$id]) -cne [string]$PrivacyClientDescendants[$id].created_at) {
+            $script:PrivacyClientDescendants.Remove($id)
+        }
+    }
+    $parents = New-Object 'System.Collections.Generic.HashSet[int]'
+    foreach ($client in $Clients) { [void]$parents.Add($client.Id) }
+    $ownerSid = Get-UpdaterOwnerSid
+    $sessionId = Get-UpdaterSessionId
+    do {
+        $added = $false
+        foreach ($row in $ProcessTable) {
+            $id = [int]$row.ProcessId
+            if (-not $parents.Contains([int]$row.ParentProcessId) -or $parents.Contains($id)) { continue }
+            if ([int]$row.SessionId -ne $sessionId -or (Get-PrivacyProcessOwnerSid $row) -cne $ownerSid) { continue }
+            [void]$parents.Add($id)
+            $script:PrivacyClientDescendants[$id] = [ordered]@{
+                id = $id; created_at = (Get-PrivacyProcessCreatedAt $row)
+                owner_sid = $ownerSid; session_id = $sessionId
+            }
+            $added = $true
+        }
+    } while ($added)
+    # Persist identities before asking roots to quit: retries must remember
+    # generic children even after their original parents have disappeared.
+    Write-JsonAtomic $PrivacyChildrenPath ([ordered]@{
+        version = 1; processes = @($PrivacyClientDescendants.Values)
+    })
+}
+
+function Get-PrivacyClientIdentity($ProcessRow) {
+    $image = ([string]$ProcessRow.ExecutablePath).Replace('/', '\')
+    $command = [string]$ProcessRow.CommandLine
+    foreach ($client in $PrivacyClientRegistry) {
+        if (($image -and $image -match $client.Image) -or
+            ($client.Command -and [string]$ProcessRow.Name -match '^node\.exe$' -and $command -match $client.Command)) {
+            return $client
+        }
+    }
+    foreach ($client in $PrivacyClientRegistry) {
+        if ([string]$ProcessRow.Name -match $client.Names) {
+            # Unknown installation or unreadable image: require manual exit;
+            # never send a close signal based solely on a process name.
+            return @{ Id = $client.Id; Kind = 'manual' }
+        }
+    }
+    return $null
+}
+
+function Get-PrivacyClientProcesses($ProcessTable = $null) {
+    if ($null -eq $ProcessTable) { $ProcessTable = @(Get-PrivacyClientProcessTable) }
+    Read-PrivacyClientDescendants
+    $ownerSid = Get-UpdaterOwnerSid
+    $sessionId = Get-UpdaterSessionId
+    foreach ($row in $ProcessTable) {
+        if ([int]$row.SessionId -ne $sessionId) { continue }
+        $client = Get-PrivacyClientIdentity $row
+        $id = [int]$row.ProcessId
+        if ($null -eq $client -and $PrivacyClientDescendants.ContainsKey($id)) {
+            $tracked = $PrivacyClientDescendants[$id]
+            if ([string]$tracked.created_at -ceq (Get-PrivacyProcessCreatedAt $row) -and
+                [string]$tracked.owner_sid -ceq $ownerSid -and [int]$tracked.session_id -eq $sessionId) {
+                $client = @{ Id = 'client-descendant'; Kind = 'descendant' }
+            }
+        }
+        if ($null -ne $client) {
+            if ((Get-PrivacyProcessOwnerSid $row) -cne $ownerSid) { continue }
+            [pscustomobject]@{ Id = [int]$row.ProcessId; ParentId = [int]$row.ParentProcessId
+                Name = [string]$row.Name; Image = [string]$row.ExecutablePath; Client = $client.Id; Kind = $client.Kind
+                CreatedAt = (Get-PrivacyProcessCreatedAt $row) }
+        }
+    }
+}
+
+function Assert-UpdaterOutsidePrivacyClients($ProcessTable, $Clients) {
+    if (@($Clients).Count -eq 0) { return }
+    $rows = @{}
+    foreach ($row in $ProcessTable) { $rows[[int]$row.ProcessId] = $row }
+    $ancestor = Get-UpdaterProcessId
+    if (-not $rows.ContainsKey($ancestor)) {
+        throw [AmneziaRouteSync.UpdateDeferredException]::new('Обновление отложено: не удалось проверить происхождение обновлятора; приложения не закрыты.')
+    }
+    $visited = New-Object 'System.Collections.Generic.HashSet[int]'
+    while ($ancestor -gt 0 -and $rows.ContainsKey($ancestor)) {
+        if (-not $visited.Add($ancestor)) { throw 'Цикл в дереве процессов: применение отменено.' }
+        if (@($Clients | Where-Object { $_.Id -eq $ancestor }).Count -gt 0) {
+            throw [AmneziaRouteSync.UpdateDeferredException]::new('Обновление отложено: обновлятор запущен из Claude или ChatGPT/Codex. Запустите обслуживание отдельно; приложения не закрыты.')
+        }
+        $ancestor = [int]$rows[$ancestor].ParentProcessId
+    }
+}
+
+function Assert-PrivacyClientsStopped {
+    $clients = @(Get-PrivacyClientProcesses)
+    if ($clients.Count -gt 0) {
+        throw [AmneziaRouteSync.UpdateDeferredException]::new(
+            'Обновление отложено: Claude или ChatGPT/Codex ещё работают либо запустились снова. Закройте приложения и Claude CLI; принудительное завершение не используется.')
+    }
+}
+
+function Get-PrivacyClientProcessHandle([int]$ProcessId) {
+    try { return [Diagnostics.Process]::GetProcessById($ProcessId) }
+    catch [ArgumentException] { return $null } # Already exited.
+}
+
+function Assert-PrivacyClientSignalIdentity($Client, $Process) {
+    $rows = @(Get-PrivacyClientProcessTable | Where-Object { [int]$_.ProcessId -eq $Client.Id })
+    $sessionId = Get-UpdaterSessionId
+    $ownerSid = Get-UpdaterOwnerSid
+    if ($rows.Count -ne 1 -or $Process.SessionId -ne $sessionId -or
+        [int]$rows[0].SessionId -ne $sessionId -or
+        (Get-PrivacyProcessOwnerSid $rows[0]) -cne $ownerSid -or
+        (Get-PrivacyProcessCreatedAt $rows[0]) -cne $Client.CreatedAt -or
+        $Process.StartTime.ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ss.ffffffZ') -cne
+            ([DateTime]$Client.CreatedAt).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ss.ffffffZ') -or
+        -not [string]::Equals($Process.Path, $Client.Image, [StringComparison]::OrdinalIgnoreCase)) {
+        throw [AmneziaRouteSync.UpdateDeferredException]::new('Обновление отложено: владелец, сессия или идентичность процесса изменились после проверки; сигнал закрытия не отправлен.')
+    }
+}
+
+function Close-PrivacyClients([ValidateRange(0, 120)][int]$TimeoutSeconds = 15) {
+    $table = @(Get-PrivacyClientProcessTable)
+    $clients = @(Get-PrivacyClientProcesses $table)
+    Assert-UpdaterOutsidePrivacyClients $table $clients
+    if (@($clients | Where-Object { $_.Kind -ne 'desktop' }).Count -gt 0) {
+        throw [AmneziaRouteSync.UpdateDeferredException]::new(
+            'Обновление отложено: сначала завершите Claude CLI, оставшиеся дочерние процессы и приложения с неизвестным путём установки. Остальные приложения не закрыты; принудительное завершение не используется.')
+    }
+    Save-PrivacyClientDescendants $table $clients
+    foreach ($client in $clients) {
+        $process = Get-PrivacyClientProcessHandle $client.Id
+        if ($null -eq $process) { continue }
+        try {
+            # Helpers normally exit with their desktop root. Only window close
+            # is requested; console signals and process termination are avoided.
+            if (-not $process.HasExited -and $process.MainWindowHandle -ne [IntPtr]::Zero) {
+                Assert-PrivacyClientSignalIdentity $client $process
+                [void]$process.CloseMainWindow()
+            }
+        } finally { $process.Dispose() }
+    }
+    $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+    while (@(Get-PrivacyClientProcesses).Count -gt 0 -and [DateTime]::UtcNow -lt $deadline) {
+        Start-Sleep -Milliseconds 250
+    }
+    Assert-PrivacyClientsStopped
+}
 
 function Test-Elevated {
     $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
@@ -1369,6 +1579,7 @@ function Stop-AmneziaGui {
     if ($processes.Count -eq 0) { return }
     # Check at the signal boundary, not only against an earlier session snapshot.
     Assert-VpnStopAllowed
+    Assert-PrivacyClientsStopped
     foreach ($process in $processes) {
         try { [void]$process.CloseMainWindow() } catch { }
     }
@@ -1407,6 +1618,7 @@ function Stop-ServiceHard($Service) {
         throw
     }
     Assert-VpnStopAllowed
+    Assert-PrivacyClientsStopped
     try {
         # Stop-Service сам может ждать бесконечно; ServiceController.Stop только
         # отправляет запрос, а ожидание ниже ограничено нашим таймаутом.
@@ -1432,6 +1644,7 @@ function Stop-ServiceHard($Service) {
 
 function Request-AmneziaDisconnect {
     Assert-VpnStopAllowed
+    Assert-PrivacyClientsStopped
     # The same command as the GUI: the daemon removes exclusion routes from the
     # physical adapter and clears its connection state before deleting the tunnel.
     $pipe = New-Object IO.Pipes.NamedPipeClientStream('.', 'amneziavpn', [IO.Pipes.PipeDirection]::InOut, [IO.Pipes.PipeOptions]::Asynchronous)
@@ -1455,6 +1668,7 @@ function Request-AmneziaDisconnect {
 
 function Stop-AmneziaTunnel {
     Assert-VpnStopAllowed
+    Assert-PrivacyClientsStopped
     # Stopping only the tunnel service leaves the daemon's state and routes on
     # Ethernet alive. Ask the daemon to clean up first; SCM is a fallback.
     [void](Request-AmneziaDisconnect)
@@ -1596,6 +1810,7 @@ function Restore-PendingTransaction([string]$ExePath) {
     # require disconnecting a currently running protected session. Phases that
     # only restore connectivity above must remain recoverable without an opt-in.
     Assert-SafeAmneziaRestart (Get-AmneziaSession)
+    Close-PrivacyClients
     $recoveryFailure = $null
     try {
         if ($AllowVpnReconnect) {
@@ -1662,6 +1877,8 @@ function Invoke-RoutingTransaction([string[]]$Entries, [string]$ExePath, $Domain
                'нужно перезапустить службу AmneziaVPN-service. Запустите PowerShell от имени администратора.')
     }
 
+    Close-PrivacyClients
+
     [IO.Directory]::CreateDirectory($BackupDir) | Out-Null
     Write-JsonAtomic $JournalPath ([ordered]@{
         version = 1
@@ -1706,6 +1923,7 @@ function Invoke-RoutingTransaction([string[]]$Entries, [string]$ExePath, $Domain
             $resolved = $true
         } catch {
             try {
+                Close-PrivacyClients
                 Assert-AmneziaStopped
                 Restore-RoutingRegistrySnapshot (Read-JsonFile $backupPath)
                 Assert-AmneziaStopped

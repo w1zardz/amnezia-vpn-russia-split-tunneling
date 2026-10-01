@@ -28,6 +28,51 @@ function Assert-Deferred([scriptblock]$Action, [string]$Message) {
     Assert-True ($null -ne $failure -and $failure.Exception -is [AmneziaRouteSync.UpdateDeferredException]) $Message
 }
 
+# Every privacy-process boundary is mocked, including existing Registry tests.
+# These tests must never enumerate or close the user's actual desktop clients.
+$script:privacyTable = @()
+$script:privacyCloseSignals = 0
+$script:privacyCloseMode = 'exit'
+$script:privacyHandles = @{}
+$script:privacySignalOwnerMutation = $false
+$script:privacyOwnerFailure = $false
+function Get-PrivacyClientProcessTable { return $script:privacyTable }
+function Get-UpdaterProcessId { return 999 }
+function Get-UpdaterSessionId { return 7 }
+function Get-UpdaterOwnerSid { return 'S-1-5-21-1000' }
+function Get-PrivacyProcessOwnerSid($ProcessRow) {
+    if ($script:privacyOwnerFailure) { throw [AmneziaRouteSync.UpdateDeferredException]::new('Test owner lookup failed') }
+    return $ProcessRow.OwnerSid
+}
+function Get-PrivacyClientProcessHandle([int]$ProcessId) {
+    if (-not $script:privacyHandles.ContainsKey($ProcessId)) { throw 'Test forbids real process handles' }
+    if ($script:privacySignalOwnerMutation) {
+        foreach ($row in $script:privacyTable) { if ($row.ProcessId -eq $ProcessId) { $row.OwnerSid = 'S-1-5-21-2000' } }
+    }
+    return $script:privacyHandles[$ProcessId]
+}
+function New-PrivacyTestRow([int]$Id, [string]$Name, [string]$Image, [string]$Command = '', [int]$Parent = 0,
+    [string]$Owner = 'S-1-5-21-1000', [int]$Session = 7) {
+    return [pscustomobject]@{ ProcessId=$Id; ParentProcessId=$Parent; Name=$Name; ExecutablePath=$Image; CommandLine=$Command
+        OwnerSid=$Owner; SessionId=$Session; CreationDate=[DateTime]'2000-01-01T00:00:00Z' }
+}
+function New-PrivacyTestHandle([int]$Id, [string]$Image, [bool]$Window = $true) {
+    $handle = [pscustomobject]@{ Id=$Id; Path=$Image; HasExited=$false; SessionId=7; StartTime=[DateTime]'2000-01-01T00:00:00Z'
+        MainWindowHandle=$(if ($Window) { [IntPtr]1 } else { [IntPtr]::Zero }) }
+    $handle | Add-Member ScriptMethod CloseMainWindow {
+        $script:privacyCloseSignals++
+        if ($script:privacyCloseMode -eq 'ignore') { return $false }
+        $script:privacyTable = @($script:privacyTable | Where-Object { $_.ProcessId -notin @(11,12) })
+        if ($script:privacyCloseMode -eq 'orphan') {
+            foreach ($row in $script:privacyTable) { if ($row.ProcessId -eq 21) { $row.ParentProcessId = 0 } }
+        }
+        if ($script:privacyCloseMode -eq 'restart') { $script:privacyTable += $script:restartedPrivacyClient }
+        return $true
+    }
+    $handle | Add-Member ScriptMethod Dispose { }
+    return $handle
+}
+
 try {
     Assert-QtCodec
     # This failed with Object[] instead of Byte[] in Windows PowerShell 5.1.
@@ -45,6 +90,85 @@ try {
     $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($RegistryConfSubKey)
     try { Assert-True ($key.GetValue('untouched') -ceq 'sentinel') 'Rollback changed an unrelated value' } finally { $key.Dispose() }
     Write-Host 'PASS: real registry binary backup/restore'
+
+    $updaterRow = New-PrivacyTestRow 999 'powershell.exe' 'C:\Windows\System32\powershell.exe'
+    $privacyFixtureRoot = Join-Path 'C:\Program Files' 'AnthropicClaude'
+    $claudeRow = New-PrivacyTestRow 11 'Claude.exe' (Join-Path $privacyFixtureRoot 'Claude.exe')
+    $helperRow = New-PrivacyTestRow 12 'chrome_crashpad_handler.exe' (Join-Path $privacyFixtureRoot 'chrome_crashpad_handler.exe') '' 11
+    $cliRow = New-PrivacyTestRow 15 'node.exe' 'C:\Program Files\nodejs\node.exe' 'node "C:\Program Files\nodejs\node_modules\@anthropic-ai\claude-code\cli.js"'
+    $script:restartedPrivacyClient = New-PrivacyTestRow 13 'ChatGPT.exe' 'C:\Program Files\WindowsApps\OpenAI.ChatGPT_1_x64\ChatGPT.exe'
+    foreach ($row in @(
+        (New-PrivacyTestRow 20 'node.exe' 'C:\Program Files\nodejs\node.exe' 'node unrelated.js'),
+        (New-PrivacyTestRow 21 'python.exe' 'C:\Python\python.exe' 'python unrelated.py')
+    )) { Assert-True ($null -eq (Get-PrivacyClientIdentity $row)) 'Generic runtime was classified as a protected client' }
+    Assert-True ((Get-PrivacyClientIdentity $cliRow).Kind -eq 'cli') 'Known Claude CLI runtime was missed'
+    Assert-True ((Get-PrivacyClientIdentity $helperRow).Kind -eq 'desktop') 'Vendor-path desktop helper was missed'
+
+    $script:privacyTable = @($updaterRow,
+        (New-PrivacyTestRow 30 'Claude.exe' $claudeRow.ExecutablePath '' 0 'S-1-5-21-2000'),
+        (New-PrivacyTestRow 31 'Claude.exe' $claudeRow.ExecutablePath '' 0 'S-1-5-21-1000' 8))
+    Close-PrivacyClients -TimeoutSeconds 0
+    Assert-True ($script:privacyCloseSignals -eq 0 -and @(Get-PrivacyClientProcesses).Count -eq 0) 'Another owner or session was targeted'
+
+    $script:privacyHandles[11] = New-PrivacyTestHandle 11 $claudeRow.ExecutablePath
+    $script:privacyHandles[12] = New-PrivacyTestHandle 12 $helperRow.ExecutablePath $false
+    $script:privacyTable = @($updaterRow, $claudeRow, $helperRow)
+    Close-PrivacyClients -TimeoutSeconds 0
+    Assert-True ($script:privacyCloseSignals -eq 1 -and @(Get-PrivacyClientProcesses).Count -eq 0) 'Graceful root close did not verify helper exit'
+
+    $script:privacyCloseSignals = 0
+    $script:privacyTable = @($updaterRow, $claudeRow)
+    $originalPrivacyStart = $script:privacyHandles[11].StartTime
+    $script:privacyHandles[11].StartTime = $originalPrivacyStart.AddSeconds(1)
+    Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'Same-image PID reuse bypassed signal identity verification'
+    Assert-True ($script:privacyCloseSignals -eq 0) 'Reused PID received a close signal'
+    $script:privacyHandles[11].StartTime = $originalPrivacyStart
+    $script:privacySignalOwnerMutation = $true
+    Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'Signal boundary accepted a process whose owner changed'
+    Assert-True ($script:privacyCloseSignals -eq 0) 'Foreign owner received a close signal after snapshot'
+    $script:privacySignalOwnerMutation = $false
+    $claudeRow.OwnerSid = 'S-1-5-21-1000'
+    $script:privacyOwnerFailure = $true
+    Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'Owner lookup failure did not refuse application'
+    Assert-True ($script:privacyCloseSignals -eq 0) 'Unverified owner received a close signal'
+    $script:privacyOwnerFailure = $false
+
+    $script:privacyCloseSignals = 0
+    $script:privacyTable = @($updaterRow, $claudeRow, $cliRow)
+    Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'Console Claude CLI did not block unsafe application'
+    Assert-True ($script:privacyCloseSignals -eq 0) 'Desktop was closed before detecting an active Claude CLI'
+    $script:privacyTable = @((New-PrivacyTestRow 999 'powershell.exe' 'C:\Windows\System32\powershell.exe' '' 11), $claudeRow)
+    Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'Updater running inside Claude closed its own ancestor'
+    Assert-True ($script:privacyCloseSignals -eq 0) 'Ancestor protection ran after sending a close signal'
+
+    $script:privacyTable = @($updaterRow, $claudeRow)
+    $script:privacyCloseMode = 'ignore'
+    Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'Uncooperative desktop app did not block application'
+    $script:privacyCloseMode = 'restart'
+    Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'Newly launched client bypassed the post-close check'
+
+    $genericChild = New-PrivacyTestRow 21 'python.exe' 'C:\Python\python.exe' 'python unrelated.py' 11
+    $script:privacyTable = @($updaterRow, $claudeRow, $genericChild)
+    $script:privacyCloseMode = 'orphan'
+    Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'Generic child surviving desktop quit bypassed application guard'
+    Assert-True ($genericChild.ParentProcessId -eq 0 -and @(Get-PrivacyClientProcesses).Count -eq 1) 'Reparented child identity was forgotten'
+    $script:PrivacyClientDescendants = @{}
+    $script:PrivacyChildrenLoaded = $false
+    Assert-Deferred { Assert-PrivacyClientsStopped } 'Retry forgot a surviving descendant after parent exit'
+    $genericChild.CreationDate = $genericChild.CreationDate.AddSeconds(1)
+    Assert-PrivacyClientsStopped
+    $script:privacyCloseMode = 'exit'
+    Close-PrivacyClients -TimeoutSeconds 0
+    Assert-True ($PrivacyClientDescendants.Count -eq 0) 'Reused descendant PID was not pruned'
+    $script:privacyTable = @()
+    $script:privacyCloseMode = 'exit'
+    Write-Host 'PASS: vendor identities, owner/session scope, graceful close, CLI refusal, ancestor protection, PID identity and surviving descendant retry'
+    $closePrivacyReal = ${function:Close-PrivacyClients}
+    $script:privacyCloseAttempts = 0
+    function Close-PrivacyClients([int]$TimeoutSeconds = 15) {
+        $script:privacyCloseAttempts++
+        & $closePrivacyReal -TimeoutSeconds $TimeoutSeconds
+    }
 
     foreach ($bad in @('bad-.example.com', 'ok.-bad.com', 'a..example.com')) {
         Assert-True (-not (Test-Hostname $bad)) "Invalid hostname accepted: $bad"
@@ -225,6 +349,12 @@ try {
     function Get-GuiProcesses { return $guardProcess }
     Assert-Deferred { Stop-AmneziaGui } 'Newly started GUI bypassed the low-level restart guard'
     Assert-True ($script:guiCloseSignals -eq 0) 'GUI close/kill signal preceded the permission check'
+    $AllowVpnReconnect = $true
+    $script:privacyTable = @($updaterRow, $claudeRow)
+    Assert-Deferred { Stop-AmneziaGui } 'Newly launched privacy client bypassed the lower GUI-stop check'
+    Assert-True ($script:guiCloseSignals -eq 0) 'VPN GUI received a close signal while a privacy client was active'
+    $script:privacyTable = @()
+    $AllowVpnReconnect = $false
     ${function:Get-GuiProcesses} = $guardGetGui
     Write-Host 'PASS: low-level GUI/tunnel stop boundaries require explicit permission'
 
@@ -235,7 +365,10 @@ try {
     function Test-GuiRunning { return $false }
     function Test-TunnelRunning { return $false }
     function Test-Elevated { return $true }
-    function Stop-AmneziaGui { $script:stops++ }
+    function Stop-AmneziaGui {
+        Assert-True (@(Get-PrivacyClientProcesses).Count -eq 0) 'VPN was stopped before privacy clients exited'
+        $script:stops++
+    }
     function Stop-AmneziaTunnel { }
     function Start-AmneziaDaemon { }
     $script:stops = 0
@@ -254,15 +387,20 @@ try {
     }
     Write-JsonAtomic $ManagedPath @('example.com','5.255.0.0/16')
     $AllowVpnReconnect = $true
+    $script:privacyTable = @($updaterRow, $claudeRow, $helperRow)
+    $script:privacyCloseSignals = 0
     Assert-Throws { Invoke-RoutingTransaction @('example.com','5.255.0.0/16') 'mock.exe' @{'example.com'=@('1.1.1.1')} } 'Reconnect failure reported success'
+    Assert-True ($script:privacyCloseSignals -eq 1 -and @(Get-PrivacyClientProcesses).Count -eq 0) 'Actual application did not close desktop root/helpers before stopping VPN'
     Assert-True ((Read-JsonFile $JournalPath).phase -ceq 'restoring') 'Reconnect failure lost committed journal'
     $script:restoreFails = $false
     Restore-PendingTransaction 'mock.exe'
     Assert-True (-not (Test-Path -LiteralPath $JournalPath)) 'Recovery left a completed journal'
     Assert-True ((Read-ExceptSites)['example.com'][0] -ceq '1.1.1.1') 'Recovery rolled back a committed update'
     $stopsBefore = $script:stops
+    $privacyCloseBefore = $script:privacyCloseAttempts
     $unchanged = Invoke-RoutingTransaction @('example.com','5.255.0.0/16') 'mock.exe' @{'example.com'=@('1.1.1.1')}
     Assert-True (-not $unchanged.Changed -and $script:stops -eq $stopsBefore) 'Unchanged list restarted VPN'
+    Assert-True ($script:privacyCloseAttempts -eq $privacyCloseBefore) 'Unchanged list attempted to close desktop clients'
     Write-Host 'PASS: reconnect failure, crash recovery, no-op update'
 
     # Every KillSwitch value must stop the transaction BEFORE closing the
@@ -278,6 +416,7 @@ try {
         Assert-True (Test-SitesEqual $protectedSites (Read-ExceptSites)) "$killSwitchValue restart guard changed routes"
         Assert-True ((Get-Content -LiteralPath $ManagedPath -Raw) -ceq $protectedManaged) "$killSwitchValue restart guard changed managed ownership"
         Assert-True (-not (Test-Path -LiteralPath $JournalPath)) "$killSwitchValue restart guard created a transaction"
+        Assert-True ($script:privacyCloseAttempts -eq $privacyCloseBefore) "$killSwitchValue deferred check attempted to close desktop clients"
     }
     $protectedNoOp = Invoke-RoutingTransaction @('example.com','5.255.0.0/16') 'mock.exe' @{'example.com'=@('1.1.1.1')}
     Assert-True (-not $protectedNoOp.Changed -and $script:stops -eq $stopsBefore) 'KillSwitch blocked or restarted a no-op update'
@@ -303,6 +442,15 @@ try {
     Write-JsonAtomic $JournalPath $protectedJournal
     Assert-Throws { Restore-PendingTransaction 'mock.exe' } 'Legacy rollback disconnected a protected VPN'
     Assert-True ($script:stops -eq $stopsBefore -and (Read-JsonFile $JournalPath).phase -eq 'writing') 'Blocked rollback changed the session or journal'
+    $privacyRecoverySession = ${function:Get-AmneziaSession}
+    function Get-AmneziaSession { return [pscustomobject]@{GuiRunning=$false;Connected=$false;AutoConnect=$false;ServerIndex=-1} }
+    $script:privacyTable = @($updaterRow, $cliRow)
+    $privacyRecoverySites = Read-ExceptSites
+    Assert-Deferred { Restore-PendingTransaction 'mock.exe' } 'Partial-write recovery bypassed the active Claude CLI guard'
+    Assert-True ($script:stops -eq $stopsBefore -and (Read-JsonFile $JournalPath).phase -eq 'writing') 'Active CLI recovery stopped VPN or lost its journal'
+    Assert-True (Test-SitesEqual $privacyRecoverySites (Read-ExceptSites)) 'Active CLI recovery wrote Registry before client exit'
+    $script:privacyTable = @()
+    ${function:Get-AmneziaSession} = $privacyRecoverySession
     $protectedJournal.phase = 'restoring'
     Write-JsonAtomic $JournalPath $protectedJournal
     Restore-PendingTransaction 'mock.exe'

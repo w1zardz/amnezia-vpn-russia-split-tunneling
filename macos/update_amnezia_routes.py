@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import argparse
+import ctypes
 import fcntl
 import hashlib
 import ipaddress
@@ -59,6 +60,23 @@ PENDING_FILENAME = ".route-transaction.json"
 HOSTNAME_CHARACTERS = frozenset("abcdefghijklmnopqrstuvwxyz0123456789-.")
 AMNEZIA_GUI_PROCESS = "AmneziaVPN"
 AMNEZIA_TUNNEL_PROCESS = "amneziawg-go"
+# Bundle identities and fallback names live together. Names never authorize a
+# signal: an unverified named process or standalone CLI requires manual closure.
+PROTECTED_CLIENTS = {
+    "com.anthropic.claudefordesktop": frozenset({
+        "Claude", "Claude Helper", "Claude Helper (GPU)",
+        "Claude Helper (Plugin)", "Claude Helper (Renderer)",
+    }),
+    "com.openai.chat": frozenset({"ChatGPT"}),
+    "com.openai.codex": frozenset({
+        "ChatGPT", "Codex", "Codex (Service)", "Codex (Renderer)",
+    }),
+    None: frozenset({"claude"}),
+}
+CLIENT_CLOSE_TIMEOUT = 20.0
+MAX_NODE_ARGUMENT_BYTES = 1_048_576
+CLIENT_TRACKING_FILENAME = "protected-client-processes.json"
+MAX_TRACKED_CLIENT_PROCESSES = 4096
 
 
 class UpdateError(RuntimeError):
@@ -291,6 +309,7 @@ def route_state(preferences: dict[str, Any]) -> dict[str, Any]:
 
 
 def run_helper(helper_path: Path, state_path: Path) -> None:
+    assert_protected_clients_stopped(state_path.parent)
     assert_amnezia_stopped()
     process = subprocess.run(
         [str(helper_path), "--domain", APP_DOMAIN, "--state", str(state_path)],
@@ -301,6 +320,7 @@ def run_helper(helper_path: Path, state_path: Path) -> None:
     )
     if process.returncode != 0:
         raise UpdateError(f"helper не применил routing Preferences: {process.stderr.strip()}")
+    assert_protected_clients_stopped(state_path.parent)
     assert_amnezia_stopped()
 
 
@@ -332,6 +352,357 @@ def wait_for_process(name: str, running: bool, timeout: float) -> bool:
             return True
         time.sleep(0.25)
     return bool(process_ids(name)) is running
+
+
+class ClientProcess(NamedTuple):
+    pid: int
+    parent_pid: int
+    uid: int
+    command: str
+
+
+def client_process_snapshot() -> dict[int, ClientProcess]:
+    """Read executable names only, never prompts, tokens or command arguments."""
+    try:
+        result = subprocess.run(
+            ["/bin/ps", "-ww", "-axo", "pid=,ppid=,uid=,comm="], check=False,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=5,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise UpdateError("не удалось проверить процессы Claude/ChatGPT") from exc
+    if result.returncode != 0:
+        raise UpdateError("не удалось проверить процессы Claude/ChatGPT")
+    processes = {}
+    try:
+        for line in result.stdout.splitlines():
+            if not line.strip():
+                continue
+            pid, parent_pid, uid, command = line.split(None, 3)
+            process = ClientProcess(int(pid), int(parent_pid), int(uid), command)
+            if process.pid <= 0 or process.parent_pid < 0 or process.uid < 0:
+                raise ValueError("invalid process identity")
+            if process.pid in processes:
+                raise ValueError("duplicate process identity")
+            processes[process.pid] = process
+    except ValueError as exc:
+        raise UpdateError("получен неверный список процессов Claude/ChatGPT") from exc
+    return processes
+
+
+def client_executable_path(pid: int) -> Path:
+    """Verify executable identity independently of mutable process titles."""
+    try:
+        library = ctypes.CDLL("/usr/lib/libproc.dylib")
+        function = library.proc_pidpath
+        function.argtypes = [ctypes.c_int, ctypes.c_void_p, ctypes.c_uint32]
+        function.restype = ctypes.c_int
+        buffer = ctypes.create_string_buffer(4096)
+        if function(pid, buffer, len(buffer)) <= 0:
+            raise ValueError("executable path unavailable")
+        path = Path(os.fsdecode(buffer.value))
+        if not path.is_absolute():
+            raise ValueError("non-absolute executable path")
+        return path.resolve()
+    except (OSError, AttributeError, ValueError) as exc:
+        raise UpdateError(
+            "не удалось проверить executable Claude/ChatGPT; закройте клиент вручную"
+        ) from exc
+
+
+def client_bundle_root(path: Path) -> Path | None:
+    parts = path.parts
+    for index, part in enumerate(parts[:-1]):
+        if part.endswith(".app") and parts[index + 1] == "Contents":
+            return Path(*parts[:index + 1])
+    return None
+
+
+def node_process_arguments(pid: int) -> list[str]:
+    """Inspect one verified Node process locally; never log its arguments."""
+    try:
+        library = ctypes.CDLL("/usr/lib/libSystem.B.dylib", use_errno=True)
+        function = library.sysctl
+        function.argtypes = [
+            ctypes.POINTER(ctypes.c_int), ctypes.c_uint, ctypes.c_void_p,
+            ctypes.POINTER(ctypes.c_size_t), ctypes.c_void_p, ctypes.c_size_t,
+        ]
+        function.restype = ctypes.c_int
+        query = (ctypes.c_int * 3)(1, 49, pid)  # CTL_KERN, KERN_PROCARGS2, pid
+        size = ctypes.c_size_t()
+        if function(query, 3, None, ctypes.byref(size), None, 0) != 0:
+            raise ValueError("argument size unavailable")
+        if not 4 < size.value <= MAX_NODE_ARGUMENT_BYTES:
+            raise ValueError("argument buffer outside limit")
+        buffer = ctypes.create_string_buffer(size.value)
+        if function(query, 3, buffer, ctypes.byref(size), None, 0) != 0:
+            raise ValueError("arguments unavailable")
+        data = buffer.raw[:size.value]
+        argc = int.from_bytes(data[:4], sys.byteorder, signed=True)
+        if not 0 < argc <= 16384:
+            raise ValueError("invalid argument count")
+        position = data.index(b"\0", 4) + 1  # Executable path, then null padding.
+        while position < len(data) and data[position] == 0:
+            position += 1
+        arguments = data[position:].split(b"\0", argc)
+        if len(arguments) <= argc:
+            raise ValueError("truncated arguments")
+        return [os.fsdecode(value) for value in arguments[:argc]]
+    except (OSError, AttributeError, ValueError) as exc:
+        raise UpdateError(
+            "не удалось проверить Node-клиент; закройте Claude CLI вручную"
+        ) from exc
+
+
+def node_process_directory(pid: int) -> Path:
+    try:
+        result = subprocess.run(
+            ["/usr/sbin/lsof", "-a", "-p", str(pid), "-d", "cwd", "-Fn"],
+            check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=5,
+        )
+        paths = [line[1:] for line in result.stdout.splitlines() if line.startswith("n")]
+        if result.returncode != 0 or len(paths) != 1 or not Path(paths[0]).is_absolute():
+            raise ValueError("working directory unavailable")
+        return Path(paths[0])
+    except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
+        raise UpdateError("не удалось проверить путь Claude CLI; закройте его вручную") from exc
+
+
+def is_node_claude_cli(pid: int) -> bool:
+    for argument in node_process_arguments(pid)[1:]:
+        candidate = Path(argument)
+        if argument.startswith("-") or candidate.name not in {"cli.js", "claude"}:
+            continue
+        if not candidate.is_absolute():
+            candidate = node_process_directory(pid) / candidate
+        candidate = candidate.resolve()
+        if not (
+            candidate.name == "cli.js" and candidate.parent.name == "claude-code"
+            and candidate.parent.parent.name == "@anthropic-ai"
+        ):
+            continue
+        try:
+            if not candidate.is_file():
+                raise ValueError("CLI entrypoint unavailable")
+            with (candidate.parent / "package.json").open("rb") as source:
+                package = json.load(source)
+            if not isinstance(package, dict) or package.get("name") != "@anthropic-ai/claude-code":
+                raise ValueError("CLI package identity mismatch")
+        except (OSError, ValueError) as exc:
+            raise UpdateError("не удалось проверить identity Claude CLI; закройте его вручную") from exc
+        return True
+    return False
+
+
+def protected_client_processes(
+    processes: dict[int, ClientProcess],
+) -> tuple[set[str], set[int]]:
+    bundle_ids: set[str] = set()
+    client_pids: set[int] = set()
+    names = set().union(*(values for key, values in PROTECTED_CLIENTS.items() if key))
+    bundle_cache: dict[Path | None, str | None] = {}
+    for process in processes.values():
+        if process.uid != os.getuid():
+            continue
+        command = Path(process.command)
+        if command.name in PROTECTED_CLIENTS[None]:
+            raise UpdateError("Claude CLI работает; закройте его вручную перед обновлением")
+        candidate_root = client_bundle_root(command)
+        known_name = command.name in names or (
+            candidate_root is not None and candidate_root.stem in names
+        )
+        if candidate_root is None and not known_name and command.name != "node":
+            continue
+        executable = client_executable_path(process.pid)
+        root = client_bundle_root(executable)
+        if root not in bundle_cache:
+            bundle_id = None
+            if root is not None:
+                try:
+                    with (root / "Contents/Info.plist").open("rb") as source:
+                        document = plistlib.load(source)
+                    if isinstance(document, dict):
+                        identity = document.get("CFBundleIdentifier")
+                        if isinstance(identity, str):
+                            bundle_id = identity
+                except (OSError, ValueError, plistlib.InvalidFileException):
+                    pass
+            bundle_cache[root] = bundle_id
+        bundle_id = bundle_cache[root]
+        if bundle_id in PROTECTED_CLIENTS and bundle_id is not None:
+            bundle_ids.add(bundle_id)
+            client_pids.add(process.pid)
+        elif known_name:
+            raise UpdateError(
+                "не удалось проверить identity Claude/ChatGPT; закройте клиент вручную"
+            )
+        elif executable.name == "node" and is_node_claude_cli(process.pid):
+            raise UpdateError("Claude CLI работает; закройте его вручную перед обновлением")
+    return bundle_ids, client_pids
+
+
+def client_descendants(processes: dict[int, ClientProcess], tracked: set[int]) -> set[int]:
+    descendants = set(tracked)
+    while True:
+        added = {
+            process.pid for process in processes.values()
+            if process.uid == os.getuid() and process.parent_pid in descendants
+        } - descendants
+        if not added:
+            return descendants
+        descendants.update(added)
+
+
+def assert_updater_outside_clients(
+    processes: dict[int, ClientProcess], client_pids: set[int],
+) -> None:
+    pid = os.getpid()
+    if pid not in processes:
+        raise UpdateError("не удалось проверить родителей updater; закрытие клиентов отменено")
+    visited = set()
+    while pid in processes and pid not in visited:
+        if pid in client_pids:
+            raise UpdateError(
+                "updater запущен из Claude/ChatGPT; используйте отдельный Терминал, "
+                "чтобы не закрыть текущую сессию"
+            )
+        visited.add(pid)
+        pid = processes[pid].parent_pid
+    if pid in visited:
+        raise UpdateError("не удалось проверить родителей updater; закрытие клиентов отменено")
+
+
+def client_start_identity(pid: int) -> tuple[int, int, int]:
+    class BSDInfo(ctypes.Structure):
+        # macOS sys/proc_info.h: proc_bsdinfo (PROC_PIDTBSDINFO).
+        _fields_ = [
+            ("identity", ctypes.c_uint32 * 12), ("names", ctypes.c_char * 48),
+            ("stats", ctypes.c_uint32 * 6), ("start_seconds", ctypes.c_uint64),
+            ("start_microseconds", ctypes.c_uint64),
+        ]
+    try:
+        library = ctypes.CDLL("/usr/lib/libproc.dylib")
+        function = library.proc_pidinfo
+        function.argtypes = [
+            ctypes.c_int, ctypes.c_int, ctypes.c_uint64, ctypes.c_void_p, ctypes.c_int,
+        ]
+        function.restype = ctypes.c_int
+        info = BSDInfo()
+        if function(pid, 3, 0, ctypes.byref(info), ctypes.sizeof(info)) != ctypes.sizeof(info):
+            raise ValueError("process start unavailable")
+        if info.identity[3] != pid or info.identity[5] != os.getuid():
+            raise ValueError("process identity changed")
+        return info.identity[5], info.start_seconds, info.start_microseconds
+    except (OSError, AttributeError, ValueError) as exc:
+        raise UpdateError("не удалось проверить время запуска дочернего процесса клиента") from exc
+
+
+def live_client_tracking(
+    processes: dict[int, ClientProcess], records: dict[int, tuple[int, int, int]],
+) -> dict[int, tuple[int, int, int]]:
+    return {
+        pid: identity for pid, identity in records.items()
+        if pid in processes and processes[pid].uid == os.getuid()
+        and client_start_identity(pid) == identity
+    }
+
+
+def load_client_tracking(
+    state_dir: Path, processes: dict[int, ClientProcess],
+) -> dict[int, tuple[int, int, int]]:
+    path = state_dir / CLIENT_TRACKING_FILENAME
+    if not path.exists():
+        return {}
+    try:
+        with path.open("rb") as source:
+            payload = source.read(MAX_NODE_ARGUMENT_BYTES + 1)
+        if len(payload) > MAX_NODE_ARGUMENT_BYTES:
+            raise ValueError("tracking file outside limit")
+        document = json.loads(payload)
+        if not isinstance(document, list) or len(document) > MAX_TRACKED_CLIENT_PROCESSES:
+            raise ValueError("invalid tracking records")
+        records = {}
+        for record in document:
+            if not isinstance(record, dict) or set(record) != {"pid", "uid", "start"}:
+                raise ValueError("invalid tracking identity")
+            pid, uid, start = record["pid"], record["uid"], record["start"]
+            if (type(pid) is not int or pid <= 0 or pid in records
+                    or type(uid) is not int or uid != os.getuid()
+                    or not isinstance(start, list) or len(start) != 2
+                    or any(type(value) is not int or value < 0 for value in start)):
+                raise ValueError("invalid tracking identity")
+            records[pid] = (uid, *start)
+    except (OSError, ValueError, TypeError) as exc:
+        raise UpdateError("повреждён список дочерних процессов Claude/ChatGPT; обновление отменено") from exc
+    return live_client_tracking(processes, records)
+
+
+def save_client_tracking(
+    state_dir: Path, processes: dict[int, ClientProcess],
+    records: dict[int, tuple[int, int, int]], client_pids: set[int],
+) -> dict[int, tuple[int, int, int]]:
+    records = live_client_tracking(processes, records)
+    tracked = client_descendants(processes, set(records) | client_pids)
+    if len(tracked) > MAX_TRACKED_CLIENT_PROCESSES:
+        raise UpdateError("слишком много дочерних процессов Claude/ChatGPT; обновление отменено")
+    for pid in tracked - records.keys():
+        records[pid] = client_start_identity(pid)
+    path = state_dir / CLIENT_TRACKING_FILENAME
+    if records:
+        state_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
+        atomic_write(path, json_bytes([
+            {"pid": pid, "uid": identity[0], "start": list(identity[1:])}
+            for pid, identity in sorted(records.items())
+        ]))
+    else:
+        path.unlink(missing_ok=True)
+    return records
+
+
+def close_protected_clients(state_dir: Path | None = None) -> None:
+    state_dir = STATE_DIR if state_dir is None else state_dir
+    processes = client_process_snapshot()
+    bundle_ids, client_pids = protected_client_processes(processes)
+    records = load_client_tracking(state_dir, processes)
+    tracked = client_descendants(processes, client_pids | set(records))
+    assert_updater_outside_clients(processes, tracked)
+    records = save_client_tracking(state_dir, processes, records, client_pids)
+    for bundle_id in sorted(bundle_ids):
+        script = (
+            f'if application id "{bundle_id}" is running then '
+            f'tell application id "{bundle_id}" to quit'
+        )
+        try:
+            result = subprocess.run(
+                ["/usr/bin/osascript", "-e", script], check=False,
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                text=True, timeout=CLIENT_CLOSE_TIMEOUT,
+            )
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            raise UpdateError("Claude/ChatGPT не закрылись; обновление отменено") from exc
+        if result.returncode != 0:
+            raise UpdateError("Claude/ChatGPT отказались закрыться; обновление отменено")
+    deadline = time.monotonic() + CLIENT_CLOSE_TIMEOUT
+    while True:
+        processes = client_process_snapshot()
+        _, remaining = protected_client_processes(processes)
+        records = save_client_tracking(state_dir, processes, records, remaining)
+        if not remaining and not records:
+            return
+        if time.monotonic() >= deadline:
+            raise UpdateError(
+                "Claude/ChatGPT или их дочерние процессы ещё работают; обновление отменено"
+            )
+        time.sleep(0.25)
+
+
+def assert_protected_clients_stopped(state_dir: Path | None = None) -> None:
+    state_dir = STATE_DIR if state_dir is None else state_dir
+    processes = client_process_snapshot()
+    _, client_pids = protected_client_processes(processes)
+    if client_pids or load_client_tracking(state_dir, processes):
+        raise SessionChanged(
+            "Claude/ChatGPT запущены во время обновления; запись или остановка VPN отменены"
+        )
 
 
 class AmneziaSession(NamedTuple):
@@ -393,13 +764,15 @@ def assert_safe_amnezia_restart(
 
 
 def stop_amnezia(
-    session: AmneziaSession, allow_vpn_reconnect: bool = False
+    session: AmneziaSession, allow_vpn_reconnect: bool = False,
+    state_dir: Path | None = None,
 ) -> None:
     gui_pids = process_ids(AMNEZIA_GUI_PROCESS)
     tunnel_running = bool(process_ids(AMNEZIA_TUNNEL_PROCESS))
     if bool(gui_pids) != session.was_running or tunnel_running != session.was_connected:
         raise SessionChanged("состояние AmneziaVPN изменилось во время подготовки; повторите запуск")
     assert_safe_amnezia_restart(session, allow_vpn_reconnect)
+    assert_protected_clients_stopped(state_dir)
     if tunnel_running and not gui_pids:
         raise UpdateError("AmneziaWG активен без GUI; безопасная запись Preferences невозможна")
     if not gui_pids:
@@ -491,6 +864,7 @@ def apply_preferences(
             "AmneziaVPN открыта без обнаруженного AmneziaWG-туннеля; "
             "обновление отложено до закрытия GUI или подключения AmneziaWG"
         )
+    close_protected_clients(state_dir)
     atomic_write(
         pending_path,
         json_bytes({"phase": "stopping", "session": session_document(session)}),
@@ -500,7 +874,7 @@ def apply_preferences(
     try:
         stop_attempted = True
         try:
-            stop_amnezia(session, allow_vpn_reconnect)
+            stop_amnezia(session, allow_vpn_reconnect, state_dir)
         except SessionChanged:
             stop_attempted = False
             pending_path.unlink()
@@ -621,6 +995,7 @@ def recover_pending_transaction(
         return
 
     assert_safe_amnezia_restart(current_session, allow_vpn_reconnect)
+    close_protected_clients(state_dir)
     recovery_session = current_session if current_session.was_running else saved_session
     rollback_path = state_dir / ".recovery-routing-state.json"
     route_resolved = False
@@ -628,7 +1003,7 @@ def recover_pending_transaction(
     try:
         stop_attempted = True
         try:
-            stop_amnezia(current_session, allow_vpn_reconnect)
+            stop_amnezia(current_session, allow_vpn_reconnect, state_dir)
         except SessionChanged:
             stop_attempted = False
             raise

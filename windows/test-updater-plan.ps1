@@ -17,6 +17,7 @@ function Assert-Throws([scriptblock]$Action, [string]$Message) {
 }
 
 try {
+    function Get-PrivacyClientProcessTable { return @() }
     # Transactions run against an in-memory registry, but the actual ownership
     # file is saved/reloaded across successive runs, including the no-op path.
     $script:sites = @{'5.255.0.0/16'=@(); 'manual.example'=@('9.9.9.9')}
