@@ -40,8 +40,12 @@ function New-ScheduledTaskAction {
 }
 function New-ScheduledTaskTrigger {
     param([switch]$AtLogOn, [string]$User, [switch]$Once, [DateTime]$At,
+        [switch]$Weekly, [int]$WeeksInterval, [string[]]$DaysOfWeek,
         [TimeSpan]$RepetitionInterval, [TimeSpan]$RepetitionDuration)
-    return [pscustomobject]@{ Delay = ''; Interval = $RepetitionInterval }
+    return [pscustomobject]@{
+        Delay = ''; Interval = $RepetitionInterval; AtLogOn = [bool]$AtLogOn
+        Weekly = [bool]$Weekly; WeeksInterval = $WeeksInterval; DaysOfWeek = @($DaysOfWeek); At = $At
+    }
 }
 function New-ScheduledTaskPrincipal { return [pscustomobject]@{ Mock = $true } }
 function New-ScheduledTaskSettingsSet { return [pscustomobject]@{ Mock = $true } }
@@ -110,6 +114,10 @@ function Read-ExceptSites {
 function Invoke-RoutingTransaction([string[]]$Entries, [string]$ExePath, $DomainAddresses = @{}) {
     $desired = Get-DesiredSites (Read-ExceptSites) @(Read-ManagedEntries) $Entries $DomainAddresses
     Write-HandoffEvent 'transaction' @{ count = $Entries.Count; dns_present = ($Entries -contains '8.8.8.8/32'); late_manual = $desired.ContainsKey('late-manual.example') }
+    if ($handoffDefer) {
+        Assert-SafeAmneziaRestart ([pscustomobject]@{GuiRunning=$true;Connected=$true})
+        throw 'Deferred fixture unexpectedly allowed a live restart'
+    }
     return [pscustomobject]@{ Changed = $true; ManualCount = ($desired.Count - $Entries.Count) }
 }
 function Write-RoutingRegistry { throw 'Harness forbids registry writes' }
@@ -155,7 +163,7 @@ $childExit = $LASTEXITCODE
 exit $childExit
 '@
 
-function Invoke-HandoffCase([string]$Name, [int]$CacheHours, [string]$Tamper = '', [string]$ExpectedError = '', [bool]$YouTube = $false) {
+function Invoke-HandoffCase([string]$Name, [int]$CacheHours, [string]$Tamper = '', [string]$ExpectedError = '', [bool]$YouTube = $false, [bool]$Defer = $false) {
     $caseRoot = Join-Path $testRoot $Name
     $sourceDir = Join-Path $caseRoot 'source'
     $tempDir = Join-Path $caseRoot 'temp'
@@ -164,12 +172,19 @@ function Invoke-HandoffCase([string]$Name, [int]$CacheHours, [string]$Tamper = '
     $env:LOCALAPPDATA = Join-Path $caseRoot 'local-app-data'
     $env:TEMP = $tempDir
     $global:AmneziaHandoffMockTask = $null
+    $previousStatus = '{"updated_at":"prior-application","changed":false}'
+    $appliedStatusPath = Join-Path $env:LOCALAPPDATA 'AmneziaRouteSync\status.json'
+    if ($Defer) {
+        [IO.Directory]::CreateDirectory((Split-Path -Parent $appliedStatusPath)) | Out-Null
+        [IO.File]::WriteAllText($appliedStatusPath, $previousStatus, $utf8Bom)
+    }
 
     $fixture = @(0..299 | ForEach-Object { @{ hostname = "domain$_.example"; ip = '' } })
     $fixture += @(0..39 | ForEach-Object { @{ hostname = "5.255.$($_ * 2).0/24"; ip = '' } })
     [IO.File]::WriteAllText((Join-Path $caseRoot 'fixture.json'), ($fixture | ConvertTo-Json -Depth 4), $utf8Bom)
     $hooksPath = Join-Path $caseRoot 'updater-hooks.ps1'
-    [IO.File]::WriteAllText($hooksPath, ('$handoffRoot = ' + (Quote-Literal $caseRoot) + "`r`n" + $updaterHooks), $utf8Bom)
+    [IO.File]::WriteAllText($hooksPath, ('$handoffRoot = ' + (Quote-Literal $caseRoot) + "`r`n" +
+        '$handoffDefer = $' + ([string]$Defer).ToLowerInvariant() + "`r`n" + $updaterHooks), $utf8Bom)
     $marker = '# --- self-test'
     $markerIndex = $updaterText.IndexOf($marker, [StringComparison]::Ordinal)
     Assert-True ($markerIndex -gt 0 -and $markerIndex -eq $updaterText.LastIndexOf($marker, [StringComparison]::Ordinal)) 'Updater injection boundary is ambiguous'
@@ -201,7 +216,7 @@ function Invoke-HandoffCase([string]$Name, [int]$CacheHours, [string]$Tamper = '
 
     $failure = $null
     try {
-        & $installerPath -Source 'https://fixture.invalid/routes.json' -Lite -NoLocalSubnets -AllowVpnReconnect -DnsCacheHours $CacheHours -YouTubeIngestDirect:$YouTube 6>$null
+        & $installerPath -Source 'https://fixture.invalid/routes.json' -Lite -NoLocalSubnets -AllowVpnReconnect:(-not $Defer) -DnsCacheHours $CacheHours -YouTubeIngestDirect:$YouTube 6>$null
     } catch { $failure = $_ }
     $events = @(Get-Content -LiteralPath (Join-Path $caseRoot 'events.jsonl') -Encoding UTF8 | ForEach-Object { $_ | ConvertFrom-Json })
     $launches = @($events | Where-Object { $_.kind -eq 'launch' })
@@ -219,6 +234,13 @@ function Invoke-HandoffCase([string]$Name, [int]$CacheHours, [string]$Tamper = '
     Assert-True ($saved.youtube_ingest_direct -eq $YouTube) "$Name preflight lost the YouTube profile"
     Assert-True (($saved.dns.addresses.PSObject.Properties.Name -contains 'a.rtmps.youtube.com') -eq $YouTube) "$Name preflight lost YouTube DNS"
     Assert-True ($null -ne $global:AmneziaHandoffMockTask) "$Name did not register the mocked task"
+    $taskTriggers = @($global:AmneziaHandoffMockTask.Triggers)
+    Assert-True ($taskTriggers.Count -eq 1) "$Name registered extra background triggers"
+    $weeklyTrigger = $taskTriggers[0]
+    Assert-True ($weeklyTrigger.Weekly -and $weeklyTrigger.WeeksInterval -eq 1 -and
+        -not $weeklyTrigger.AtLogOn -and $weeklyTrigger.Interval -eq [TimeSpan]::Zero) "$Name did not schedule weekly updates without a logon trigger"
+    Assert-True (($weeklyTrigger.DaysOfWeek -join ',') -ceq 'Sunday' -and
+        $weeklyTrigger.At.Hour -eq 12 -and $weeklyTrigger.At.Minute -eq 0) "$Name changed the weekly maintenance time"
     $taskArguments = [string]$global:AmneziaHandoffMockTask.Actions[0].Arguments
     Assert-True ($taskArguments -match ('(?:^|\s)-DnsCacheHours ' + $CacheHours + '(?:\s|$)')) "$Name task lost the cache policy"
     Assert-True ($taskArguments -notmatch '-PreparedPlanPath|-AllowVpnReconnect' -and -not $taskArguments.Contains([string]$applyLaunch.data.prepared_path)) "$Name persisted a one-time argument in the task"
@@ -236,15 +258,28 @@ function Invoke-HandoffCase([string]$Name, [int]$CacheHours, [string]$Tamper = '
         Assert-True ($transactions.Count -eq 1 -and $transactions[0].data.dns_present -and $transactions[0].data.late_manual) "$Name lost DNS or manual edits made after preflight"
         Assert-True (@($events | Where-Object { $_.kind -eq 'registry-read' -and $_.mode -eq 'dry-run' -and -not $_.data.late_manual }).Count -gt 0) "$Name did not read original registry state during preflight"
         Assert-True (@($events | Where-Object { $_.kind -eq 'registry-read' -and $_.mode -eq 'apply' -and $_.data.late_manual }).Count -gt 0) "$Name reused preflight registry state"
-        $status = Get-Content -LiteralPath (Join-Path $env:LOCALAPPDATA 'AmneziaRouteSync\status.json') -Raw -Encoding UTF8 | ConvertFrom-Json
-        Assert-True ($status.dns_cache_hours -eq $CacheHours) "$Name status lost cache policy"
-        Assert-True ($status.youtube_ingest_direct -eq $YouTube) "$Name status lost the YouTube profile"
+        $deferredPath = Join-Path $env:LOCALAPPDATA 'AmneziaRouteSync\deferred-update.json'
+        if ($Defer) {
+            Assert-True ([IO.File]::ReadAllText($appliedStatusPath, [Text.Encoding]::UTF8) -ceq $previousStatus) "$Name changed the previous applied status during deferral"
+            $deferred = Get-Content -LiteralPath $deferredPath -Raw -Encoding UTF8 | ConvertFrom-Json
+            Assert-True ($deferred.entry_count -gt 0 -and @($deferred.entries).Count -eq $deferred.entry_count -and
+                $deferred.reason.Contains('Обновление отложено')) "$Name lost its deferred route snapshot"
+            Assert-True (-not (Test-Path -LiteralPath (Join-Path $env:LOCALAPPDATA 'AmneziaRouteSync\amnezia-split-routes.json'))) "$Name published an unapplied import as applied"
+            $applyExit = @($events | Where-Object { $_.kind -eq 'exit' -and $_.mode -eq 'apply' })[0]
+            Assert-True ($applyExit.data.code -eq 0) "$Name reported intentional deferral as a failure"
+        } else {
+            $status = Get-Content -LiteralPath $appliedStatusPath -Raw -Encoding UTF8 | ConvertFrom-Json
+            Assert-True ($status.dns_cache_hours -eq $CacheHours) "$Name status lost cache policy"
+            Assert-True ($status.youtube_ingest_direct -eq $YouTube) "$Name status lost the YouTube profile"
+            Assert-True (-not (Test-Path -LiteralPath $deferredPath)) "$Name left a stale deferred marker after application"
+        }
     }
     Write-Host "PASS: $Name; one source fetch, one DNS pass, validated handoff, isolated scheduled arguments"
 }
 
 try {
     Invoke-HandoffCase 'fresh-install' 6
+    Invoke-HandoffCase 'deferred-active' 6 '' '' $false $true
     Invoke-HandoffCase 'cache-disabled' 0
     Invoke-HandoffCase 'youtube-ingest' 6 '' '' $true
     Invoke-HandoffCase 'reject-youtube-mismatch' 6 'youtube' 'не соответствует параметрам' $true

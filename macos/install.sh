@@ -169,7 +169,7 @@ fi
 install -m 600 "${STAGING_DIR}/launch-agent.plist" "${LAUNCH_AGENT}"
 
 launchctl bootstrap "${GUI_DOMAIN}" "${LAUNCH_AGENT}"
-# Bootstrap уже мог запустить RunAtLoad job. С этого момента нельзя удалять agent/helper:
+# Bootstrap уже мог запустить recovery job. С этого момента нельзя удалять agent/helper:
 # они нужны для автоматического восстановления pending-транзакции.
 INSTALL_COMPLETE=1
 trap - ERR
@@ -203,6 +203,6 @@ if ! grep -q 'last exit code = 0' <<<"${AGENT_STATE}"; then
 fi
 
 echo "Установлено: ${LAUNCH_AGENT}"
-echo "Обновление: при входе в macOS и каждые 6 часов"
+echo "Обновление: раз в неделю, воскресенье 12:00 по местному времени"
 echo "Статус: launchctl print ${SERVICE_TARGET}"
-echo "Новые маршруты подхвачены после безопасного перезапуска AmneziaVPN"
+echo "Работающая Amnezia не отключается; изменённый список применяется при закрытых GUI и туннеле"

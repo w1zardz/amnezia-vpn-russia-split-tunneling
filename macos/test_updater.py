@@ -5,6 +5,7 @@ from copy import deepcopy
 import importlib.util
 import io
 import json
+import plistlib
 from pathlib import Path
 import tempfile
 import unittest
@@ -48,13 +49,17 @@ class ManagedRouteReplacementTests(unittest.TestCase):
         stack.enter_context(patch.object(
             updater, "export_preferences", side_effect=lambda: (b"", deepcopy(self.preferences))
         ))
-        stack.enter_context(patch.object(
+        self.inspect = stack.enter_context(patch.object(
             updater, "inspect_amnezia", return_value=updater.AmneziaSession(True, True, True, 2)
         ))
+        self.real_stop = updater.stop_amnezia
+        self.real_relaunch = updater.relaunch_amnezia
         self.stop = stack.enter_context(patch.object(updater, "stop_amnezia"))
         self.relaunch = stack.enter_context(patch.object(updater, "relaunch_amnezia"))
+        self.real_helper = updater.run_helper
         self.helper = stack.enter_context(patch.object(updater, "run_helper", side_effect=self.apply_state))
         self.download = stack.enter_context(patch.object(updater, "download_list"))
+        stack.enter_context(patch.object(updater, "process_ids", return_value=[]))
 
     def apply_state(self, helper_path, state_path):
         state = json.loads(state_path.read_text(encoding="utf-8"))
@@ -65,12 +70,13 @@ class ManagedRouteReplacementTests(unittest.TestCase):
         ):
             self.preferences[preference_key] = state[state_key]
 
-    def run_update(self, domains, cidrs, with_domains=False):
+    def run_update(self, domains, cidrs, with_domains=False, allow_vpn_reconnect=True):
         self.download.return_value = (domains, cidrs)
         self.assertEqual(updater.update(
             state_dir=self.state_dir,
             source="https://example.com/routes.json",
             with_domains=with_domains,
+            allow_vpn_reconnect=allow_vpn_reconnect,
         ), 0)
 
     def read_json(self, filename):
@@ -159,6 +165,140 @@ class ManagedRouteReplacementTests(unittest.TestCase):
                 self.assertEqual(status["entry_count"], len(cidrs))
                 self.assertEqual(status["cidr_count"], len(cidrs))
                 self.assertEqual(status["manual_entries_preserved"], 1)
+
+    def test_active_vpn_defers_without_changing_applied_files_or_preferences(self):
+        self.run_update([], ["8.8.8.0/24"])
+        before_preferences = deepcopy(self.preferences)
+        before_files = {path.name: path.read_bytes() for path in self.state_dir.iterdir()}
+        for mock in (self.stop, self.relaunch, self.helper):
+            mock.reset_mock()
+
+        for session in (
+            updater.AmneziaSession(True, True, True, 2),
+            updater.AmneziaSession(True, False, True, 2),
+            updater.AmneziaSession(False, True, True, 2),
+        ):
+            with self.subTest(session=session):
+                self.inspect.return_value = session
+                self.run_update([], ["9.9.9.0/24"], allow_vpn_reconnect=False)
+                self.assertEqual(self.preferences, before_preferences)
+                for name, contents in before_files.items():
+                    self.assertEqual((self.state_dir / name).read_bytes(), contents)
+                deferred = self.read_json("deferred-update.json")
+                self.assertTrue(deferred["deferred"])
+                self.assertEqual(deferred["entries"], ["9.9.9.0/24"])
+                self.assertFalse((self.state_dir / updater.PENDING_FILENAME).exists())
+                self.stop.assert_not_called()
+                self.relaunch.assert_not_called()
+                self.helper.assert_not_called()
+
+    def test_closed_amnezia_applies_default_update_and_clears_deferral(self):
+        self.run_update([], ["8.8.8.0/24"], allow_vpn_reconnect=False)
+        self.inspect.return_value = updater.AmneziaSession(False, False, True, 2)
+        with patch.object(updater, "stop_amnezia", wraps=self.real_stop), \
+             patch.object(updater, "relaunch_amnezia", wraps=self.real_relaunch), \
+             patch.object(updater, "process_ids", return_value=[]), \
+             patch.object(updater.os, "kill") as kill, \
+             patch.object(updater.subprocess, "run") as run:
+            self.run_update([], ["9.9.9.0/24"], allow_vpn_reconnect=False)
+        kill.assert_not_called()
+        run.assert_not_called()
+        self.assertEqual(self.read_json("managed-cidrs.json"), ["9.9.9.0/24"])
+        self.assertFalse((self.state_dir / "deferred-update.json").exists())
+
+    def test_unchanged_list_with_live_vpn_passes_without_permission(self):
+        self.run_update([], ["8.8.8.0/24"])
+        for mock in (self.stop, self.relaunch, self.helper):
+            mock.reset_mock()
+        self.run_update([], ["8.8.8.0/24"], allow_vpn_reconnect=False)
+        self.stop.assert_not_called()
+        self.relaunch.assert_not_called()
+        self.helper.assert_not_called()
+
+    def test_partial_recovery_cannot_stop_live_vpn_and_keeps_journal(self):
+        self.state_dir.mkdir()
+        pending_path = self.state_dir / updater.PENDING_FILENAME
+        journal = updater.json_bytes({
+            "phase": "writing",
+            "session": updater.session_document(self.inspect.return_value),
+            "previous_managed": [], "desired_managed": ["8.8.8.0/24"],
+            "previous_state": {"sites": {}, "mode": 2, "enabled": True},
+            "desired_state": {"sites": {"8.8.8.0/24": []}, "mode": 2, "enabled": True},
+        })
+        pending_path.write_bytes(journal)
+        with self.assertRaises(updater.UpdateDeferred):
+            updater.recover_pending_transaction(
+                Path("unused"), self.state_dir, self.state_dir / "managed-cidrs.json"
+            )
+        self.assertEqual(pending_path.read_bytes(), journal)
+        self.stop.assert_not_called()
+        self.relaunch.assert_not_called()
+        self.helper.assert_not_called()
+
+    def test_stop_guard_and_session_race_prevent_signals(self):
+        session = updater.AmneziaSession(True, True, True, 2)
+        with patch.object(updater, "stop_amnezia", wraps=self.real_stop) as stop, \
+             patch.object(updater, "process_ids", return_value=[123]), \
+             patch.object(updater.os, "kill") as kill:
+            with self.assertRaises(updater.UpdateDeferred):
+                stop(session)
+            with self.assertRaises(updater.SessionChanged):
+                stop(updater.AmneziaSession(False, False, True, 2))
+        kill.assert_not_called()
+
+    def test_gui_start_after_session_check_preserves_recovery_journal(self):
+        self.inspect.return_value = updater.AmneziaSession(False, False, True, 2)
+        original_preferences = deepcopy(self.preferences)
+        # The initial check and stop see an offline session. GUI starts at write time.
+        with patch.object(updater, "process_ids", return_value=[123]), \
+             patch.object(updater, "run_helper", wraps=self.real_helper), \
+             patch.object(updater.subprocess, "run") as run, \
+             patch.object(updater.os, "kill") as kill:
+            with self.assertRaises(updater.UpdateError):
+                self.run_update([], ["9.9.9.0/24"], allow_vpn_reconnect=False)
+        self.assertEqual(self.preferences, original_preferences)
+        self.assertTrue((self.state_dir / updater.PENDING_FILENAME).exists())
+        self.assertFalse((self.state_dir / "status.json").exists())
+        kill.assert_not_called()
+        run.assert_not_called()
+
+    def test_helper_detects_gui_start_during_write(self):
+        with patch.object(updater, "process_ids", side_effect=[[], [], [123]]), \
+             patch.object(updater.subprocess, "run") as run:
+            run.return_value.returncode = 0
+            with self.assertRaises(updater.SessionChanged):
+                self.real_helper(Path("test-helper"), Path("test-state"))
+        run.assert_called_once()
+
+    def test_gui_start_after_forward_write_blocks_rollback_and_keeps_journal(self):
+        self.inspect.return_value = updater.AmneziaSession(False, False, True, 2)
+
+        def race_after_write(helper_path, state_path):
+            if self.helper.call_count == 1:
+                self.apply_state(helper_path, state_path)
+                raise updater.SessionChanged("GUI started during write")
+            with patch.object(updater, "process_ids", return_value=[123]):
+                self.real_helper(helper_path, state_path)
+
+        self.helper.side_effect = race_after_write
+        with self.assertRaisesRegex(updater.UpdateError, "journal сохранён"):
+            self.run_update([], ["9.9.9.0/24"], allow_vpn_reconnect=False)
+        journal = self.read_json(updater.PENDING_FILENAME)
+        self.assertEqual(journal["phase"], "writing")
+        self.assertEqual(journal["previous_state"]["sites"], self.manual)
+        self.assertEqual(updater.route_state(self.preferences), journal["desired_state"])
+        self.assertFalse((self.state_dir / "status.json").exists())
+
+
+class SchedulerTests(unittest.TestCase):
+    def test_weekly_schedule_has_no_login_or_reconnect_permission(self):
+        template_path = Path(__file__).with_name("io.github.amnezia-route-sync.plist.template")
+        template = plistlib.loads(template_path.read_bytes())
+        self.assertFalse(template["RunAtLoad"])
+        self.assertNotIn("StartInterval", template)
+        self.assertEqual(template["StartCalendarInterval"], {"Weekday": 0, "Hour": 12, "Minute": 0})
+        self.assertNotIn("--allow-vpn-reconnect", template["ProgramArguments"])
+        self.assertEqual(template["KeepAlive"]["PathState"], {"__PENDING_PATH__": True})
 
 
 if __name__ == "__main__":

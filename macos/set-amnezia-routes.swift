@@ -46,6 +46,25 @@ func setOrRemove(_ value: Any?, key: String, defaults: UserDefaults) {
     }
 }
 
+func assertAmneziaStopped() {
+    for name in ["AmneziaVPN", "amneziawg-go"] {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/pgrep")
+        process.arguments = ["-x", name]
+        process.standardOutput = FileHandle.nullDevice
+        process.standardError = FileHandle.nullDevice
+        do {
+            try process.run()
+            process.waitUntilExit()
+        } catch {
+            fail("cannot check whether Amnezia is stopped")
+        }
+        guard process.terminationReason == .exit && process.terminationStatus == 1 else {
+            fail("Amnezia is running or process state is unknown; refusing routing write")
+        }
+    }
+}
+
 let arguments = parseArguments()
 let state = loadState(arguments.statePath)
 guard let sites = state["sites"] as? [String: Any] else {
@@ -54,6 +73,7 @@ guard let sites = state["sites"] as? [String: Any] else {
 guard sites.count <= 4096 else {
     fail("refusing suspicious ExceptSites count: \(sites.count)")
 }
+assertAmneziaStopped()
 guard let defaults = UserDefaults(suiteName: arguments.domain) else {
     fail("cannot open UserDefaults suite \(arguments.domain)")
 }
@@ -64,6 +84,7 @@ setOrRemove(state["enabled"], key: "Conf.sitesSplitTunnelingEnabled", defaults: 
 guard defaults.synchronize() else {
     fail("NSUserDefaults synchronize failed")
 }
+assertAmneziaStopped()
 
 guard let verifiedSites = defaults.dictionary(forKey: "Conf.ExceptSites"),
       NSDictionary(dictionary: verifiedSites).isEqual(to: sites) else {

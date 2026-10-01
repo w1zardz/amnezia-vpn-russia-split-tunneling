@@ -15,8 +15,8 @@
 
 Незавершённая запись журналируется и откатывается при следующем запуске.
 
-При включённом KillSwitch автоматическое закрытие работающей Amnezia запрещено:
-штатное отключение снимает его защиту. -AllowVpnReconnect разрешает такой
+Автоматическое закрытие работающей Amnezia запрещено независимо от KillSwitch:
+штатное отключение может открыть прямой интернет. -AllowVpnReconnect разрешает такой
 перезапуск только для текущего запуска и допускает трафик без VPN в этот период.
 #>
 
@@ -103,6 +103,7 @@ $PrivateSubnetRanges = @('10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16')
 
 $ManagedPath = Join-Path $StateDir 'managed-entries.json'
 $StatusPath = Join-Path $StateDir 'status.json'
+$DeferredPath = Join-Path $StateDir 'deferred-update.json'
 $ImportPath = Join-Path $StateDir 'amnezia-split-routes.json'
 $JournalPath = Join-Path $StateDir '.registry-transaction.json'
 $BackupDir = Join-Path $StateDir 'backups'
@@ -124,6 +125,9 @@ using System.Linq;
 using System.Text;
 
 namespace AmneziaRouteSync {
+    public sealed class UpdateDeferredException : InvalidOperationException {
+        public UpdateDeferredException(string message) : base(message) { }
+    }
     public static class QtVariantMapCodec {
         private const UInt32 QVariantMap = 8;
         private const UInt32 QString = 10;
@@ -971,22 +975,31 @@ function Read-RoutingScalars {
 
 function Assert-SafeAmneziaRestart($Session) {
     if (-not ($Session.GuiRunning -or $Session.Connected)) { return }
-    $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($RegistryConfSubKey, $false)
-    # Missing or unrecognized settings cannot establish that the user disabled
-    # protection. Never turn an uncertain setting into permission to disconnect.
-    $killSwitch = $null
-    try {
-        if ($null -ne $key) { $killSwitch = $key.GetValue('killSwitchEnabled', $null) }
-    } finally { if ($null -ne $key) { $key.Dispose() } }
-    if ([string]$killSwitch -in @('false', '0')) { return }
+    # A disabled KillSwitch is not permission to expose direct Internet access.
+    # Every live session requires an explicit opt-in for this invocation only.
     if ($AllowVpnReconnect) {
         Write-Warning 'Разрешён перезапуск Amnezia: штатное отключение снимает KillSwitch. До восстановления VPN возможен прямой трафик.'
         return
     }
-    throw ('Обновление отложено: Amnezia работает, а KillSwitch включён или его состояние неизвестно. ' +
-           'Штатное отключение снимает защиту; updater не будет закрывать GUI и туннель. ' +
+    throw [AmneziaRouteSync.UpdateDeferredException]::new(
+           'Обновление отложено: Amnezia работает. Автоматическое переподключение запрещено независимо от KillSwitch. ' +
+           'Штатное отключение может открыть прямой интернет; updater не будет закрывать GUI и туннель. ' +
            'Для разового осознанного переподключения используйте -AllowVpnReconnect после подготовки независимой защиты. ' +
            'Этот флаг сам не блокирует трафик без VPN.')
+}
+
+function Assert-VpnStopAllowed {
+    if (-not $AllowVpnReconnect) {
+        throw [AmneziaRouteSync.UpdateDeferredException]::new(
+            'Обновление отложено: остановка GUI, туннеля или службы Amnezia требует разового -AllowVpnReconnect.')
+    }
+}
+
+function Assert-AmneziaStopped {
+    if ((Test-GuiRunning) -or (Test-TunnelRunning)) {
+        throw [AmneziaRouteSync.UpdateDeferredException]::new(
+            'Обновление отложено: Amnezia запустилась или подключилась после проверки. Безопасное применение настроек не подтверждено; работающая Amnezia не отключается.')
+    }
 }
 
 function ConvertTo-QtMap($Sites) {
@@ -1354,6 +1367,8 @@ function ConvertFrom-SessionDocument($Value) {
 function Stop-AmneziaGui {
     $processes = @(Get-GuiProcesses)
     if ($processes.Count -eq 0) { return }
+    # Check at the signal boundary, not only against an earlier session snapshot.
+    Assert-VpnStopAllowed
     foreach ($process in $processes) {
         try { [void]$process.CloseMainWindow() } catch { }
     }
@@ -1391,6 +1406,7 @@ function Stop-ServiceHard($Service) {
         if (Test-ServiceMissingError $_.Exception) { return $true }
         throw
     }
+    Assert-VpnStopAllowed
     try {
         # Stop-Service сам может ждать бесконечно; ServiceController.Stop только
         # отправляет запрос, а ожидание ниже ограничено нашим таймаутом.
@@ -1415,6 +1431,7 @@ function Stop-ServiceHard($Service) {
 }
 
 function Request-AmneziaDisconnect {
+    Assert-VpnStopAllowed
     # The same command as the GUI: the daemon removes exclusion routes from the
     # physical adapter and clears its connection state before deleting the tunnel.
     $pipe = New-Object IO.Pipes.NamedPipeClientStream('.', 'amneziavpn', [IO.Pipes.PipeDirection]::InOut, [IO.Pipes.PipeOptions]::Asynchronous)
@@ -1437,6 +1454,7 @@ function Request-AmneziaDisconnect {
 }
 
 function Stop-AmneziaTunnel {
+    Assert-VpnStopAllowed
     # Stopping only the tunnel service leaves the daemon's state and routes on
     # Ethernet alive. Ask the daemon to clean up first; SCM is a fallback.
     [void](Request-AmneziaDisconnect)
@@ -1580,9 +1598,13 @@ function Restore-PendingTransaction([string]$ExePath) {
     Assert-SafeAmneziaRestart (Get-AmneziaSession)
     $recoveryFailure = $null
     try {
-        Stop-AmneziaGui
-        if ($session.Connected) { Stop-AmneziaTunnel }
+        if ($AllowVpnReconnect) {
+            Stop-AmneziaGui
+            if ($session.Connected) { Stop-AmneziaTunnel }
+        }
+        Assert-AmneziaStopped
         Restore-RoutingRegistrySnapshot (Read-JsonFile $backupPath)
+        Assert-AmneziaStopped
         Write-JsonAtomic $ManagedPath @($journal.previous_managed | ForEach-Object { [string]$_ })
         Write-JsonAtomic $JournalPath ([ordered]@{ version = 1; phase = 'restoring'; session = (ConvertTo-SessionDocument $session) })
     } catch {
@@ -1651,12 +1673,13 @@ function Invoke-RoutingTransaction([string[]]$Entries, [string]$ExePath, $Domain
     $resolved = $false
     $transactionFailure = $null
     try {
-        if (-not $NoRestart) {
+        if (-not $NoRestart -and ($session.GuiRunning -or $session.Connected)) {
             $stopAttempted = $true
             Stop-AmneziaGui
             if ($session.Connected) { Stop-AmneziaTunnel }
         }
 
+        Assert-AmneziaStopped
         # После выхода GUI кэш QSettings уже на диске — перечитываем факт.
         $current = Read-ExceptSites
         $desired = Get-DesiredSites $current $previousManaged $Entries $DomainAddresses
@@ -1674,14 +1697,18 @@ function Invoke-RoutingTransaction([string[]]$Entries, [string]$ExePath, $Domain
             desired_managed  = $ownedEntries
         })
 
+        Assert-AmneziaStopped
         try {
             Write-RoutingRegistry $desired
+            Assert-AmneziaStopped
             Assert-RoutingRegistry $desired
             Write-JsonAtomic $ManagedPath $ownedEntries
             $resolved = $true
         } catch {
             try {
+                Assert-AmneziaStopped
                 Restore-RoutingRegistrySnapshot (Read-JsonFile $backupPath)
+                Assert-AmneziaStopped
                 Write-JsonAtomic $ManagedPath @($previousManaged)
                 $resolved = $true
             } catch {
@@ -2140,7 +2167,20 @@ try {
         version = 1; updated_at = $dns.Cache.updated_at; domains = @($list.Domains)
         addresses = $dns.Addresses; last_known_addresses = $plan.DomainAddresses
     })
-    $result = Invoke-RoutingTransaction $entries $exePath
+    try {
+        $result = Invoke-RoutingTransaction $entries $exePath
+    } catch [AmneziaRouteSync.UpdateDeferredException] {
+        # Intentional deferral is successful maintenance, not a failed task.
+        # Applied status stays untouched; recovery errors above still fail closed.
+        Write-JsonAtomic $DeferredPath ([ordered]@{
+            version = 1; source = $Source; reason = $_.Exception.Message
+            entry_count = $entries.Count; entries = @($entries)
+            deferred_at = [DateTime]::UtcNow.ToString('o')
+        })
+        Write-Host $_.Exception.Message
+        Write-Host "Проверенный список отложен: $DeferredPath. VPN и последний успешный status.json сохранены."
+        exit 0
+    }
 
     Write-TextAtomic $ImportPath $text
     Write-JsonAtomic $StatusPath ([ordered]@{
@@ -2163,6 +2203,7 @@ try {
         youtube_ingest_addresses = $youTubeAddresses
         updated_at               = [DateTime]::UtcNow.ToString('o')
     })
+    if (Test-Path -LiteralPath $DeferredPath) { Remove-Item -LiteralPath $DeferredPath -Force }
 
     if ($result.Changed) {
         Write-Host ("AmneziaVPN обновлена: $($entries.Count) записей, сохранено ручных записей: $($result.ManualCount). " +

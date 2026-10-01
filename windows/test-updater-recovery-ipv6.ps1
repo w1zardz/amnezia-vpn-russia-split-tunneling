@@ -27,6 +27,9 @@ function Get-AmneziaSession {
     return [pscustomobject]@{ GuiRunning = $true; Connected = $true; AutoConnect = $true; ServerIndex = -1 }
 }
 function Assert-SafeAmneziaRestart { }
+function Test-GuiRunning { return $false }
+function Test-TunnelRunning { return $false }
+$AllowVpnReconnect = $true
 function Get-Process { return @() }
 function Test-Elevated { return $true }
 function Stop-AmneziaGui {
@@ -217,6 +220,23 @@ try {
     $recoveredManaged = Read-JsonFile $ManagedPath
     Assert-True ((@($recoveredManaged) -join ',') -ceq '1.1.1.1/32') 'Recovery lost previous ownership'
     Write-Host 'PASS: interrupted transaction recovery restores VPN despite stop, registry, managed-state and journal failures'
+
+    # A stale offline preflight must not let recovery stop a newly started GUI
+    # or restore a Registry snapshot while that new client is running.
+    $originalGetSession = ${function:Get-AmneziaSession}
+    function Get-AmneziaSession { return [pscustomobject]@{GuiRunning=$false;Connected=$false;AutoConnect=$false;ServerIndex=-1} }
+    Initialize-RecoveryCase 'recovery-startup'
+    $AllowVpnReconnect = $false
+    function Test-GuiRunning { return $true }
+    $startupFailure = $null
+    try { Restore-PendingTransaction 'mock.exe' } catch { $startupFailure = $_ }
+    Assert-True ($null -ne $startupFailure -and $startupFailure.Exception -is [AmneziaRouteSync.UpdateDeferredException]) 'Recovery accepted a GUI that appeared after preflight'
+    Assert-True ($script:stopAttempts -eq 0 -and $script:rollbackAttempts -eq 0) 'Recovery stopped or wrote behind a newly running GUI'
+    Assert-True ((Read-JsonFile $JournalPath).phase -ceq 'writing') 'Recovery startup race lost its journal'
+    ${function:Get-AmneziaSession} = $originalGetSession
+    function Test-GuiRunning { return $false }
+    $AllowVpnReconnect = $true
+    Write-Host 'PASS: recovery startup race preserves the new GUI, Registry and journal'
 
     Reset-IPv6Case
     $aliases = Get-TunnelAliases

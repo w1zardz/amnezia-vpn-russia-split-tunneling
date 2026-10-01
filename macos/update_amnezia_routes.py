@@ -5,9 +5,10 @@
 и публикует в dist/ и в GitHub Releases. По умолчанию берётся сборка без доменов
 (amnezia-ru-direct-ip.json): macOS-клиент маршрутизирует только IP, домены он
 молча игнорирует, поэтому из любого источника они отбрасываются, если не задан
---with-domains. Скрипт скачивает список, проверяет и
-записывает в Preferences AmneziaVPN через helper, аккуратно останавливая и
-возвращая GUI с туннелем. Незавершённая запись восстанавливается из журнала.
+--with-domains. Скрипт скачивает список и проверяет его. Пока GUI или туннель
+работают, применение откладывается без отключения VPN. Переподключение возможно
+только с разовым --allow-vpn-reconnect. Незавершённая запись восстанавливается
+из журнала.
 """
 
 from __future__ import annotations
@@ -62,6 +63,10 @@ AMNEZIA_TUNNEL_PROCESS = "amneziawg-go"
 
 class UpdateError(RuntimeError):
     pass
+
+
+class UpdateDeferred(UpdateError):
+    """Применение требует остановки работающей Amnezia и ожидает обслуживания."""
 
 
 class SessionChanged(UpdateError):
@@ -286,6 +291,7 @@ def route_state(preferences: dict[str, Any]) -> dict[str, Any]:
 
 
 def run_helper(helper_path: Path, state_path: Path) -> None:
+    assert_amnezia_stopped()
     process = subprocess.run(
         [str(helper_path), "--domain", APP_DOMAIN, "--state", str(state_path)],
         check=False,
@@ -295,6 +301,15 @@ def run_helper(helper_path: Path, state_path: Path) -> None:
     )
     if process.returncode != 0:
         raise UpdateError(f"helper не применил routing Preferences: {process.stderr.strip()}")
+    assert_amnezia_stopped()
+
+
+def assert_amnezia_stopped() -> None:
+    if process_ids(AMNEZIA_GUI_PROCESS) or process_ids(AMNEZIA_TUNNEL_PROCESS):
+        raise SessionChanged(
+            "AmneziaVPN запущена во время записи; запись или rollback отложены, "
+            "работающее приложение не отключается"
+        )
 
 
 def process_ids(name: str) -> list[int]:
@@ -365,11 +380,26 @@ def load_session(value: Any) -> AmneziaSession:
     return session
 
 
-def stop_amnezia(session: AmneziaSession) -> None:
+def assert_safe_amnezia_restart(
+    session: AmneziaSession, allow_vpn_reconnect: bool = False
+) -> None:
+    if not allow_vpn_reconnect and (session.was_running or session.was_connected):
+        raise UpdateDeferred(
+            "Обновление отложено: AmneziaVPN или туннель работают. "
+            "Автоматическое отключение VPN запрещено. "
+            "Для разового обслуживания с независимой блокировкой сети "
+            "используйте --allow-vpn-reconnect."
+        )
+
+
+def stop_amnezia(
+    session: AmneziaSession, allow_vpn_reconnect: bool = False
+) -> None:
     gui_pids = process_ids(AMNEZIA_GUI_PROCESS)
     tunnel_running = bool(process_ids(AMNEZIA_TUNNEL_PROCESS))
     if bool(gui_pids) != session.was_running or tunnel_running != session.was_connected:
         raise SessionChanged("состояние AmneziaVPN изменилось во время подготовки; повторите запуск")
+    assert_safe_amnezia_restart(session, allow_vpn_reconnect)
     if tunnel_running and not gui_pids:
         raise UpdateError("AmneziaWG активен без GUI; безопасная запись Preferences невозможна")
     if not gui_pids:
@@ -436,6 +466,7 @@ def apply_preferences(
     previous_managed: list[str],
     cidrs: list[str],
     replace_all: bool = False,
+    allow_vpn_reconnect: bool = False,
 ) -> tuple[bool, int]:
     _, preferences = export_preferences()
     current_state = route_state(preferences)
@@ -454,6 +485,7 @@ def apply_preferences(
 
     pending_path = state_dir / PENDING_FILENAME
     session = inspect_amnezia(preferences)
+    assert_safe_amnezia_restart(session, allow_vpn_reconnect)
     if session.was_running and not session.was_connected:
         raise UpdateError(
             "AmneziaVPN открыта без обнаруженного AmneziaWG-туннеля; "
@@ -468,7 +500,7 @@ def apply_preferences(
     try:
         stop_attempted = True
         try:
-            stop_amnezia(session)
+            stop_amnezia(session, allow_vpn_reconnect)
         except SessionChanged:
             stop_attempted = False
             pending_path.unlink()
@@ -537,7 +569,10 @@ def apply_preferences(
     return True, manual_count
 
 
-def recover_pending_transaction(helper_path: Path, state_dir: Path, managed_path: Path) -> None:
+def recover_pending_transaction(
+    helper_path: Path, state_dir: Path, managed_path: Path,
+    allow_vpn_reconnect: bool = False,
+) -> None:
     pending_path = state_dir / PENDING_FILENAME
     if not pending_path.exists():
         return
@@ -585,6 +620,7 @@ def recover_pending_transaction(helper_path: Path, state_dir: Path, managed_path
         print("Отменена незавершённая routing-транзакция")
         return
 
+    assert_safe_amnezia_restart(current_session, allow_vpn_reconnect)
     recovery_session = current_session if current_session.was_running else saved_session
     rollback_path = state_dir / ".recovery-routing-state.json"
     route_resolved = False
@@ -592,7 +628,7 @@ def recover_pending_transaction(helper_path: Path, state_dir: Path, managed_path
     try:
         stop_attempted = True
         try:
-            stop_amnezia(current_session)
+            stop_amnezia(current_session, allow_vpn_reconnect)
         except SessionChanged:
             stop_attempted = False
             raise
@@ -737,6 +773,7 @@ def update(
     source: str = LIST_FULL,
     replace_all: bool = False,
     with_domains: bool = False,
+    allow_vpn_reconnect: bool = False,
 ) -> int:
     if sys.platform != "darwin":
         raise UpdateError("скрипт предназначен только для macOS")
@@ -754,7 +791,7 @@ def update(
             except BlockingIOError as exc:
                 raise UpdateError("другой updater ещё работает") from exc
             recover_pending_transaction(
-                helper_path, state_dir, state_dir / "managed-cidrs.json"
+                helper_path, state_dir, state_dir / "managed-cidrs.json", allow_vpn_reconnect
             )
         print("Recovery завершён; незавершённых routing-транзакций нет")
         return 0
@@ -789,7 +826,7 @@ def update(
 
         managed_path = state_dir / "managed-cidrs.json"
         # Recovery не зависит от сети: сначала обязательно вернуть VPN/session.
-        recover_pending_transaction(helper_path, state_dir, managed_path)
+        recover_pending_transaction(helper_path, state_dir, managed_path, allow_vpn_reconnect)
         domains, cidrs = download_list(source)
         skipped_domains = 0
         if not with_domains:
@@ -803,9 +840,22 @@ def update(
             + (f", пропущено доменов: {skipped_domains}" if skipped_domains else "")
         )
         previous_managed = load_string_list(managed_path)
-        changed, manual_count = apply_preferences(
-            helper_path, state_dir, managed_path, previous_managed, entries, replace_all
-        )
+        try:
+            changed, manual_count = apply_preferences(
+                helper_path, state_dir, managed_path, previous_managed, entries,
+                replace_all, allow_vpn_reconnect
+            )
+        except UpdateDeferred as exc:
+            # Не путать скачанный снимок с применённым списком или transaction journal.
+            atomic_write(state_dir / "deferred-update.json", json_bytes({
+                "deferred": True,
+                "source": source,
+                "entries": entries,
+                "checked_at": datetime.now(timezone.utc).isoformat(),
+                "reason": str(exc),
+            }))
+            print(str(exc))
+            return 0
 
         import_payload = [{"hostname": value, "ip": ""} for value in entries]
         atomic_write(state_dir / "amnezia-split-routes.json", json_bytes(import_payload))
@@ -820,12 +870,14 @@ def update(
             "updated_at": datetime.now(timezone.utc).isoformat(),
         }
         atomic_write(state_dir / "status.json", json_bytes(status))
+        (state_dir / "deferred-update.json").unlink(missing_ok=True)
 
     if changed:
         print(
             f"AmneziaVPN обновлена: {len(entries)} записей, "
             f"сохранено ручных записей: {manual_count}. "
-            "GUI и AmneziaWG безопасно перезапущены."
+            + ("GUI и AmneziaWG перезапущены по разовому разрешению."
+               if allow_vpn_reconnect else "VPN не переподключался.")
         )
     else:
         print(f"AmneziaVPN уже содержит актуальные {len(entries)} записей")
@@ -853,6 +905,10 @@ def main() -> int:
         help="записывать и домены из списка (macOS-клиент Amnezia их игнорирует)",
     )
     parser.add_argument("--recover-only", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument(
+        "--allow-vpn-reconnect", action="store_true",
+        help="разово разрешить переподключение VPN; требует независимой блокировки сети",
+    )
     parser.add_argument("--state-dir", type=Path, default=STATE_DIR, help=argparse.SUPPRESS)
     arguments = parser.parse_args()
     source = arguments.source or (LIST_LITE if arguments.lite else LIST_FULL)
@@ -864,6 +920,7 @@ def main() -> int:
             source=source,
             replace_all=arguments.replace_all,
             with_domains=arguments.with_domains,
+            allow_vpn_reconnect=arguments.allow_vpn_reconnect,
         )
     except UpdateError as exc:
         print(f"ОШИБКА: {exc}", file=sys.stderr)

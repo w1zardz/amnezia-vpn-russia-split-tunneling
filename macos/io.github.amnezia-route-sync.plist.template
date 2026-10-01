@@ -10,7 +10,7 @@
         <string>__UPDATE_SCRIPT__</string>
     </array>
     <key>RunAtLoad</key>
-    <true/>
+    <false/>
     <key>KeepAlive</key>
     <dict>
         <key>PathState</key>
@@ -19,8 +19,15 @@
             <true/>
         </dict>
     </dict>
-    <key>StartInterval</key>
-    <integer>21600</integer>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Weekday</key>
+        <integer>0</integer>
+        <key>Hour</key>
+        <integer>12</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
     <key>ProcessType</key>
     <string>Background</string>
     <key>LowPriorityIO</key>

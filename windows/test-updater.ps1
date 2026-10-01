@@ -22,6 +22,11 @@ function Assert-Throws([scriptblock]$Action, [string]$Message) {
     try { & $Action } catch { $thrown = $true }
     Assert-True $thrown $Message
 }
+function Assert-Deferred([scriptblock]$Action, [string]$Message) {
+    $failure = $null
+    try { & $Action } catch { $failure = $_ }
+    Assert-True ($null -ne $failure -and $failure.Exception -is [AmneziaRouteSync.UpdateDeferredException]) $Message
+}
 
 try {
     Assert-QtCodec
@@ -199,12 +204,29 @@ try {
     }
     function Test-TunnelRunning { return $script:raceTunnelRunning }
     function Get-TunnelService { throw 'SCM was used after the daemon already disconnected' }
+    Assert-Deferred { Stop-AmneziaTunnel } 'Low-level tunnel stop bypassed explicit permission'
+    Assert-True ($script:disconnectRequests -eq 0 -and $script:raceTunnelRunning) 'Blocked tunnel stop sent a disconnect request'
+    $AllowVpnReconnect = $true
     Stop-AmneziaTunnel
     Assert-True ($script:disconnectRequests -eq 1) 'Daemon cleanup was not requested'
     ${function:Get-TunnelService} = $raceGetTunnel
     ${function:Request-AmneziaDisconnect} = $raceDisconnect
     ${function:Test-TunnelRunning} = $raceRunning
+    $AllowVpnReconnect = $false
     Write-Host 'PASS: disconnect cleans daemon state before stopping services'
+
+    # A GUI that appears after an offline snapshot cannot receive even a close
+    # signal from the lower stop boundary without the one-time opt-in.
+    $guardGetGui = ${function:Get-GuiProcesses}
+    $script:guiCloseSignals = 0
+    $guardProcess = [pscustomobject]@{}
+    $guardProcess | Add-Member ScriptMethod CloseMainWindow { $script:guiCloseSignals++; return $true }
+    $guardProcess | Add-Member ScriptMethod Kill { $script:guiCloseSignals++ }
+    function Get-GuiProcesses { return $guardProcess }
+    Assert-Deferred { Stop-AmneziaGui } 'Newly started GUI bypassed the low-level restart guard'
+    Assert-True ($script:guiCloseSignals -eq 0) 'GUI close/kill signal preceded the permission check'
+    ${function:Get-GuiProcesses} = $guardGetGui
+    Write-Host 'PASS: low-level GUI/tunnel stop boundaries require explicit permission'
 
     # All process/service functions below are mocks. Transactions still exercise
     # the real codec, temporary HKCU data, journal, and managed-entry files.
@@ -231,6 +253,7 @@ try {
         if ($script:restoreFails) { throw 'Simulated reconnect failure' }
     }
     Write-JsonAtomic $ManagedPath @('example.com','5.255.0.0/16')
+    $AllowVpnReconnect = $true
     Assert-Throws { Invoke-RoutingTransaction @('example.com','5.255.0.0/16') 'mock.exe' @{'example.com'=@('1.1.1.1')} } 'Reconnect failure reported success'
     Assert-True ((Read-JsonFile $JournalPath).phase -ceq 'restoring') 'Reconnect failure lost committed journal'
     $script:restoreFails = $false
@@ -242,30 +265,35 @@ try {
     Assert-True (-not $unchanged.Changed -and $script:stops -eq $stopsBefore) 'Unchanged list restarted VPN'
     Write-Host 'PASS: reconnect failure, crash recovery, no-op update'
 
-    # Enabled/unknown KillSwitch must stop the transaction BEFORE closing the
+    # Every KillSwitch value must stop the transaction BEFORE closing the
     # GUI, disconnecting, writing settings, or creating a recovery journal.
+    $AllowVpnReconnect = $false
     $protectedSites = Read-ExceptSites
     $protectedManaged = (Get-Content -LiteralPath $ManagedPath -Raw)
-    $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($RegistryConfSubKey, $true)
-    try { $key.SetValue('killSwitchEnabled', 'true') } finally { $key.Dispose() }
-    Assert-Throws { Invoke-RoutingTransaction @('new.example') 'mock.exe' } 'KillSwitch allowed an automatic reconnect'
-    Assert-True ($script:stops -eq $stopsBefore) 'KillSwitch guard ran after stopping the GUI'
-    Assert-True (Test-SitesEqual $protectedSites (Read-ExceptSites)) 'KillSwitch guard changed routes'
-    Assert-True ((Get-Content -LiteralPath $ManagedPath -Raw) -ceq $protectedManaged) 'KillSwitch guard changed managed ownership'
-    Assert-True (-not (Test-Path -LiteralPath $JournalPath)) 'KillSwitch guard created a transaction'
+    foreach ($killSwitchValue in @('true', 'false', '0', 'unknown')) {
+        $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($RegistryConfSubKey, $true)
+        try { $key.SetValue('killSwitchEnabled', $killSwitchValue) } finally { $key.Dispose() }
+        Assert-Deferred { Invoke-RoutingTransaction @('new.example') 'mock.exe' } "$killSwitchValue allowed an automatic reconnect"
+        Assert-True ($script:stops -eq $stopsBefore) "$killSwitchValue restart guard ran after stopping the GUI"
+        Assert-True (Test-SitesEqual $protectedSites (Read-ExceptSites)) "$killSwitchValue restart guard changed routes"
+        Assert-True ((Get-Content -LiteralPath $ManagedPath -Raw) -ceq $protectedManaged) "$killSwitchValue restart guard changed managed ownership"
+        Assert-True (-not (Test-Path -LiteralPath $JournalPath)) "$killSwitchValue restart guard created a transaction"
+    }
     $protectedNoOp = Invoke-RoutingTransaction @('example.com','5.255.0.0/16') 'mock.exe' @{'example.com'=@('1.1.1.1')}
     Assert-True (-not $protectedNoOp.Changed -and $script:stops -eq $stopsBefore) 'KillSwitch blocked or restarted a no-op update'
 
     $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($RegistryConfSubKey, $true)
     try { $key.DeleteValue('killSwitchEnabled') } finally { $key.Dispose() }
     Assert-Throws { Assert-SafeAmneziaRestart (Get-AmneziaSession) } 'Missing KillSwitch setting permitted a disconnect'
+    Assert-Throws { Assert-SafeAmneziaRestart ([pscustomobject]@{GuiRunning=$true;Connected=$false}) } 'Running GUI without a tunnel bypassed the restart guard'
+    Assert-Throws { Assert-SafeAmneziaRestart ([pscustomobject]@{GuiRunning=$false;Connected=$true}) } 'Running tunnel without a GUI bypassed the restart guard'
     Assert-SafeAmneziaRestart ([pscustomobject]@{GuiRunning=$false;Connected=$false})
     $AllowVpnReconnect = $true
     Assert-SafeAmneziaRestart (Get-AmneziaSession)
     $AllowVpnReconnect = $false
 
     # A legacy writing journal cannot bypass the guard. A restoring journal
-    # only brings the VPN back, so it must still recover with KillSwitch enabled.
+    # only brings the VPN back, so it must still recover without a restart opt-in.
     $protectedBackup = Join-Path $testRoot 'protected-routing-backup.json'
     Write-JsonAtomic $protectedBackup (Read-RoutingRegistrySnapshot)
     $protectedJournal = [ordered]@{
@@ -281,10 +309,71 @@ try {
     Assert-True (-not (Test-Path -LiteralPath $JournalPath)) 'KillSwitch prevented restoring connectivity'
     $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($RegistryConfSubKey, $true)
     try { $key.SetValue('killSwitchEnabled', 'false') } finally { $key.Dispose() }
-    Write-Host 'PASS: KillSwitch blocks automatic disconnect, allows no-op and reconnect-only recovery'
+    Write-Host 'PASS: every live session blocks automatic disconnect regardless of KillSwitch; no-op and reconnect-only recovery remain allowed'
+
+    # The session is offline at preflight, then starts while the first journal is
+    # being saved. No stale snapshot may authorize stops or a registry write.
+    $guardGetSession = ${function:Get-AmneziaSession}
+    $guardWriteJson = ${function:Write-JsonAtomic}
+    $script:lateGuiRunning = $false
+    $script:lateTunnelRunning = $false
+    function Get-AmneziaSession { return [pscustomobject]@{GuiRunning=$false;Connected=$false;AutoConnect=$false;ServerIndex=-1} }
+    function Test-GuiRunning { return $script:lateGuiRunning }
+    function Test-TunnelRunning { return $script:lateTunnelRunning }
+    function Write-JsonAtomic([string]$Path, $Value) {
+        & $guardWriteJson $Path $Value
+        if ($Path -ceq $JournalPath -and $Value.phase -eq 'stopping') {
+            if ($script:lateArrival -eq 'gui') { $script:lateGuiRunning = $true }
+            else { $script:lateTunnelRunning = $true }
+        }
+    }
+    foreach ($lateArrival in @('gui', 'tunnel')) {
+        $script:lateArrival = $lateArrival
+        $script:lateGuiRunning = $false
+        $script:lateTunnelRunning = $false
+        $raceSites = Read-ExceptSites
+        $raceManaged = Get-Content -LiteralPath $ManagedPath -Raw
+        $raceStops = $script:stops
+        Assert-Deferred { Invoke-RoutingTransaction @('new.example') 'mock.exe' } "$lateArrival startup race was accepted"
+        Assert-True ($script:stops -eq $raceStops) "$lateArrival startup race stopped a new session"
+        Assert-True (Test-SitesEqual $raceSites (Read-ExceptSites)) "$lateArrival startup race changed registry routes"
+        Assert-True ((Get-Content -LiteralPath $ManagedPath -Raw) -ceq $raceManaged) "$lateArrival startup race changed ownership"
+        Assert-True ((Read-JsonFile $JournalPath).phase -ceq 'stopping') "$lateArrival startup race lost its untouched recovery journal"
+        Remove-Item -LiteralPath $JournalPath -Force
+    }
+    ${function:Write-JsonAtomic} = $guardWriteJson
+
+    # Startup during a Registry write is detected before ownership/status can be
+    # committed. Rollback must not write behind the newly running client's back.
+    $guardWriteRegistry = ${function:Write-RoutingRegistry}
+    function Write-RoutingRegistry($Sites) {
+        & $guardWriteRegistry $Sites
+        $script:lateGuiRunning = $true
+    }
+    $script:lateGuiRunning = $false
+    $script:lateTunnelRunning = $false
+    $raceSites = Read-ExceptSites
+    $raceManaged = Get-Content -LiteralPath $ManagedPath -Raw
+    $raceStops = $script:stops
+    $lateWriteFailure = $null
+    try { $null = Invoke-RoutingTransaction @('new.example') 'mock.exe' }
+    catch { $lateWriteFailure = $_ }
+    Assert-True ($null -ne $lateWriteFailure -and $lateWriteFailure.Exception.Message.Contains('rollback')) 'Startup during write falsely reported success'
+    Assert-True ($script:stops -eq $raceStops) 'Startup during write stopped the new GUI'
+    Assert-True ((Get-Content -LiteralPath $ManagedPath -Raw) -ceq $raceManaged) 'Startup during write committed unapplied ownership'
+    Assert-True ((Read-JsonFile $JournalPath).phase -ceq 'writing') 'Startup during write lost its recoverable snapshot'
+    ${function:Write-RoutingRegistry} = $guardWriteRegistry
+    $script:lateGuiRunning = $false
+    Write-RoutingRegistry $raceSites
+    Remove-Item -LiteralPath $JournalPath -Force
+    ${function:Get-AmneziaSession} = $guardGetSession
+    function Test-GuiRunning { return $false }
+    function Test-TunnelRunning { return $false }
+    Write-Host 'PASS: GUI/tunnel startup after preflight does not stop a new session or write routes'
 
     # Simulate a failed write, including a failed reconnect after rollback.
     $writeRegistry = ${function:Write-RoutingRegistry}
+    $AllowVpnReconnect = $true
     function Write-RoutingRegistry($Sites) { throw 'Simulated write failure' }
     $script:restoreFails = $true
     Assert-Throws { Invoke-RoutingTransaction @('new.example') 'mock.exe' @{'new.example'=@('9.9.9.9')} } 'Write failure reported success'
@@ -302,6 +391,7 @@ try {
     Assert-True (-not (Test-Path -LiteralPath $JournalPath)) 'Preflight guard created a journal'
 
     ${function:Restore-AmneziaSession} = $restoreSession
+    $AllowVpnReconnect = $false
     $script:started = $false
     $script:startArguments = @()
     function Test-GuiRunning { return $script:started }

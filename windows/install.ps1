@@ -4,8 +4,8 @@
 
 .DESCRIPTION
 Копирует updater в %LOCALAPPDATA%\AmneziaRouteSync, прогоняет self-test и dry-run
-и только после успешной проверки регистрирует Scheduled Task: обновление при входе
-в систему и каждые 6 часов.
+и только после успешной проверки регистрирует Scheduled Task: обновление раз
+в неделю, в воскресенье в 12:00 по местному времени.
 
 Задача регистрируется с наивысшими правами: чтобы применить новый список без
 перезагрузки Windows, updater отключает туннель через демон, а при сбое может
@@ -137,17 +137,9 @@ try {
     if ($updaterArgumentText) { $taskArgumentText = "$taskArgumentText $updaterArgumentText" }
     $action = New-ScheduledTaskAction -Execute $PowerShellExe -Argument $taskArgumentText -WorkingDirectory $InstallDir
     $user = $identity.Name
-    # Без задержки задача стартует одновременно с автозапуском самой AmneziaVPN и
-    # перезапускает AmneziaVPN-service прямо посреди её подключения: приложение
-    # остаётся в трее с бесконечным «подключением». Три минуты дают Amnezia
-    # подняться и подключиться до того, как updater тронет службу.
-    $logonTrigger = New-ScheduledTaskTrigger -AtLogOn -User $user
-    $logonTrigger.Delay = 'PT3M'
-    $triggers = @(
-        $logonTrigger,
-        (New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(5) `
-            -RepetitionInterval (New-TimeSpan -Hours 6) -RepetitionDuration (New-TimeSpan -Days 3650))
-    )
+    # The installer performs its initial run below. Background updates have one
+    # weekly trigger and never compete with VPN startup at logon.
+    $triggers = @((New-ScheduledTaskTrigger -Weekly -WeeksInterval 1 -DaysOfWeek Sunday -At '12:00'))
     $taskPrincipal = New-ScheduledTaskPrincipal -UserId $user -LogonType Interactive -RunLevel Highest
     $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries `
         -StartWhenAvailable -MultipleInstances IgnoreNew `
@@ -179,11 +171,14 @@ try {
     }
 
     Write-Host "Установлено: $InstalledScript"
-    Write-Host 'Обновление: при входе в Windows и каждые 6 часов.'
+    if (Test-Path -LiteralPath (Join-Path $InstallDir 'deferred-update.json')) {
+        Write-Host 'Первичное применение отложено: VPN работает. Установка завершена; проверенный список сохранён в deferred-update.json.'
+    }
+    Write-Host 'Обновление: раз в неделю, в воскресенье в 12:00 по местному времени.'
     if ($YouTubeIngestDirect) {
         Write-Host 'YouTube ingest direct включён. Перед эфиром: updater -TestYouTubeIngest; OBS: YouTube - RTMPS, IPv4 Only.'
     }
-    Write-Host 'При включённом KillSwitch работающая Amnezia автоматически не переподключается: применение изменённого списка откладывается.'
+    Write-Host 'Работающая Amnezia автоматически не переподключается независимо от KillSwitch: применение изменённого списка откладывается.'
     Write-Host "Статус: Get-ScheduledTask -TaskName '$TaskName'"
     Write-Host "Результат последнего запуска: Get-Content `"$InstallDir\status.json`""
 } catch {
