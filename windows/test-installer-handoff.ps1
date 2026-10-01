@@ -41,9 +41,10 @@ function New-ScheduledTaskAction {
 function New-ScheduledTaskTrigger {
     param([switch]$AtLogOn, [string]$User, [switch]$Once, [DateTime]$At,
         [switch]$Weekly, [int]$WeeksInterval, [string[]]$DaysOfWeek,
-        [TimeSpan]$RepetitionInterval, [TimeSpan]$RepetitionDuration)
+        [TimeSpan]$RepetitionInterval = [TimeSpan]::Zero, [TimeSpan]$RepetitionDuration)
     return [pscustomobject]@{
         Delay = ''; Interval = $RepetitionInterval; AtLogOn = [bool]$AtLogOn
+        RepetitionIntervalSet = $PSBoundParameters.ContainsKey('RepetitionInterval')
         Weekly = [bool]$Weekly; WeeksInterval = $WeeksInterval; DaysOfWeek = @($DaysOfWeek); At = $At
     }
 }
@@ -238,7 +239,8 @@ function Invoke-HandoffCase([string]$Name, [int]$CacheHours, [string]$Tamper = '
     Assert-True ($taskTriggers.Count -eq 1) "$Name registered extra background triggers"
     $weeklyTrigger = $taskTriggers[0]
     Assert-True ($weeklyTrigger.Weekly -and $weeklyTrigger.WeeksInterval -eq 1 -and
-        -not $weeklyTrigger.AtLogOn -and $weeklyTrigger.Interval -eq [TimeSpan]::Zero) "$Name did not schedule weekly updates without a logon trigger"
+        -not $weeklyTrigger.AtLogOn -and -not $weeklyTrigger.RepetitionIntervalSet -and
+        $weeklyTrigger.Interval -eq [TimeSpan]::Zero) "$Name did not schedule weekly updates without a logon trigger"
     Assert-True (($weeklyTrigger.DaysOfWeek -join ',') -ceq 'Sunday' -and
         $weeklyTrigger.At.Hour -eq 12 -and $weeklyTrigger.At.Minute -eq 0) "$Name changed the weekly maintenance time"
     $taskArguments = [string]$global:AmneziaHandoffMockTask.Actions[0].Arguments

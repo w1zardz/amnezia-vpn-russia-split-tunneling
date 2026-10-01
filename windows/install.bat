@@ -28,8 +28,9 @@ if not exist "%INSTALLER%" goto failed
 powershell -NoProfile -ExecutionPolicy Bypass -File "%INSTALLER%"
 if errorlevel 1 goto failed
 echo.
-echo Готово: российские сайты идут напрямую, остальное — через VPN.
-echo Список обновляется сам при входе в Windows и каждые 6 часов.
+echo Автообновление установлено. Результат проверки и применения указан выше.
+echo При работающей Amnezia изменённый список откладывается без переподключения VPN.
+echo Расписание: раз в неделю, в воскресенье в 12:00 по местному времени.
 goto end
 
 :failed

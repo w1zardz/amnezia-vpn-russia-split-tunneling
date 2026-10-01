@@ -7,7 +7,7 @@
 ### Установка скриптом на Windows и macOS
 
 **Windows:** [install-windows.bat](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling/releases/latest/download/install-windows.bat). **macOS:** [install-macos.zip](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling/releases/latest/download/install-macos.zip), распакуйте и запустите `install-macos.command`.
-Скрипт сам добавляет список и обновляет его каждые 6 часов, сохраняя ручные записи. При изменении списка VPN переподключается. Для своего сервера подписка Premium не нужна. [Пошаговая установка](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling#установка-скрипта-с-автообновлением).
+Скрипт проверяет список при установке и раз в неделю, в воскресенье в 12:00 по местному времени, сохраняя ручные записи. При работающей Amnezia применение изменённого списка откладывается без отключения VPN независимо от KillSwitch. Установка может завершиться успешно с отложенным применением; результат указан в выводе команды. Для своего сервера подписка Premium не нужна. [Пошаговая установка](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling#установка-скрипта-с-автообновлением).
 
 ### Состав файлов, которые используют скрипты
 
