@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "updated": "2026-10-01",
+  "updated": "2026-10-02",
   "source": "Team Cymru bulk whois + RIPEstat announced-prefixes",
-  "prefix_count": 1000,
+  "prefix_count": 999,
   "external_count": 0,
   "external_domains": 0,
-  "resolved_domains": 1043,
-  "catalog_domains": 1116,
+  "resolved_domains": 1070,
+  "catalog_domains": 1146,
   "prefixes": {
     "5.61.16.0/21": {
       "asn": 47764,
@@ -466,15 +466,6 @@
       "source": "dns"
     },
     "46.235.184.89/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "46.235.184.95/32": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
@@ -1561,15 +1552,6 @@
       ],
       "source": "dns"
     },
-    "84.201.167.166/32": {
-      "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
     "84.201.172.233/32": {
       "asn": 200350,
       "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
@@ -1889,6 +1871,7 @@
       "as_name": "VKONTAKTE-SPB-AS - LLC VK, RU",
       "cc": "RU",
       "services": [
+        "rustore",
         "vk",
         "vk-cdn",
         "vk-messenger",
@@ -2078,6 +2061,7 @@
       "cc": "RU",
       "services": [
         "mailru",
+        "rustore",
         "vk",
         "vk-cdn",
         "vk-extra",
@@ -2136,6 +2120,7 @@
       "as_name": "VK-AS - LLC VK, RU",
       "cc": "RU",
       "services": [
+        "rustore",
         "vk-cdn",
         "vk-extra"
       ],
@@ -2274,6 +2259,15 @@
       "cc": "RU",
       "services": [
         "food"
+      ],
+      "source": "dns"
+    },
+    "91.200.28.169/32": {
+      "asn": 43776,
+      "as_name": "RELSOFTCOM-NET - Relsoft communications Ltd., RU",
+      "cc": "RU",
+      "services": [
+        "paymaster"
       ],
       "source": "dns"
     },
@@ -2672,6 +2666,15 @@
       ],
       "source": "dns"
     },
+    "91.227.52.169/32": {
+      "asn": 56806,
+      "as_name": "ascom4s - JSC Computing Forces, RU",
+      "cc": "RU",
+      "services": [
+        "paymaster"
+      ],
+      "source": "dns"
+    },
     "91.230.107.0/24": {
       "asn": 57073,
       "as_name": "Wildberries",
@@ -2807,6 +2810,15 @@
       ],
       "source": "dns"
     },
+    "91.240.87.158/32": {
+      "asn": 29182,
+      "as_name": "RU-JSCIOT - JSC IOT, RU",
+      "cc": "RU",
+      "services": [
+        "game-servers"
+      ],
+      "source": "dns"
+    },
     "91.242.33.35/32": {
       "asn": 56864,
       "as_name": "WELLSERVER-AS - Xeon LLC, RU",
@@ -2847,15 +2859,6 @@
       "cc": "RU",
       "services": [
         "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "93.93.91.107/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
       ],
       "source": "dns"
     },
@@ -2959,15 +2962,6 @@
       ],
       "source": "dns"
     },
-    "94.79.51.135/32": {
-      "asn": 8901,
-      "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
-      "cc": "RU",
-      "services": [
-        "mos"
-      ],
-      "source": "dns"
-    },
     "94.79.51.184/32": {
       "asn": 8901,
       "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
@@ -3000,8 +2994,7 @@
       "as_name": "VK-AS - LLC VK, RU",
       "cc": "RU",
       "services": [
-        "mailru",
-        "vk-extra"
+        "mailru"
       ],
       "source": "asn"
     },
@@ -3251,6 +3244,7 @@
         "classifieds",
         "game-ru",
         "mailru",
+        "rustore",
         "vk-extra",
         "vk-music",
         "vk-play"
@@ -3665,15 +3659,6 @@
       ],
       "source": "dns"
     },
-    "95.181.182.185/32": {
-      "asn": 210756,
-      "as_name": "EdgeCenterLLC - EdgeCenter LLC, RU",
-      "cc": "RU",
-      "services": [
-        "avito"
-      ],
-      "source": "dns"
-    },
     "95.213.0.0/17": {
       "asn": 47541,
       "as_name": "VK — VKONTAKTE-SPB (сайт, видео, клипы)",
@@ -3995,6 +3980,15 @@
       "services": [],
       "source": "asn"
     },
+    "132.243.178.72/32": {
+      "asn": 51115,
+      "as_name": "HLL-AS - HLL LLC, RU",
+      "cc": "RU",
+      "services": [
+        "misc-extra"
+      ],
+      "source": "dns"
+    },
     "135.106.182.253/32": {
       "asn": 50340,
       "as_name": "SELECTEL-MSK - JSC Selectel, RU",
@@ -4117,6 +4111,15 @@
       "cc": "RU",
       "services": [
         "booking"
+      ],
+      "source": "dns"
+    },
+    "158.160.155.216/32": {
+      "asn": 200350,
+      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
+      "cc": "RU",
+      "services": [
+        "misc-extra"
       ],
       "source": "dns"
     },
@@ -4563,15 +4566,6 @@
       "cc": "RU",
       "services": [
         "rutube"
-      ],
-      "source": "dns"
-    },
-    "178.248.233.20/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
       ],
       "source": "dns"
     },
@@ -7272,16 +7266,8 @@
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "health-extra"
-      ],
-      "source": "dns"
-    },
-    "195.209.81.131/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
+        "health-extra",
+        "misc-extra"
       ],
       "source": "dns"
     },
@@ -7369,15 +7355,6 @@
       "source": "dns"
     },
     "195.209.88.127/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "brokers"
-      ],
-      "source": "dns"
-    },
-    "195.209.90.117/32": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
@@ -7483,6 +7460,15 @@
       ],
       "source": "asn"
     },
+    "212.11.155.134/32": {
+      "asn": 8901,
+      "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
+      "cc": "RU",
+      "services": [
+        "mos"
+      ],
+      "source": "dns"
+    },
     "212.11.155.165/32": {
       "asn": 8901,
       "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
@@ -7507,6 +7493,15 @@
       "cc": "RU",
       "services": [
         "gov-extra"
+      ],
+      "source": "dns"
+    },
+    "212.41.28.68/32": {
+      "asn": 49505,
+      "as_name": "SELECTEL - JSC Selectel, RU",
+      "cc": "RU",
+      "services": [
+        "game-servers"
       ],
       "source": "dns"
     },
@@ -7841,6 +7836,24 @@
       ],
       "source": "dns"
     },
+    "212.193.147.201/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "shops"
+      ],
+      "source": "dns"
+    },
+    "212.193.147.203/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "shops"
+      ],
+      "source": "dns"
+    },
     "212.193.152.39/32": {
       "asn": 204878,
       "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
@@ -7874,6 +7887,15 @@
       "cc": "RU",
       "services": [
         "mobile"
+      ],
+      "source": "dns"
+    },
+    "212.193.152.96/32": {
+      "asn": 204878,
+      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "gosuslugi"
       ],
       "source": "dns"
     },
@@ -8026,7 +8048,8 @@
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "health-extra"
+        "health-extra",
+        "misc-extra"
       ],
       "source": "dns"
     },
@@ -8066,6 +8089,15 @@
       ],
       "source": "dns"
     },
+    "212.193.156.251/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "gosuslugi"
+      ],
+      "source": "dns"
+    },
     "212.193.157.40/32": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
@@ -8090,15 +8122,6 @@
       "cc": "RU",
       "services": [
         "delivery-extra"
-      ],
-      "source": "dns"
-    },
-    "212.193.157.189/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
       ],
       "source": "dns"
     },
@@ -8181,15 +8204,6 @@
       "services": [],
       "source": "asn"
     },
-    "213.24.64.17/32": {
-      "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
-      "cc": "RU",
-      "services": [
-        "nalog"
-      ],
-      "source": "dns"
-    },
     "213.24.64.140/32": {
       "asn": 12389,
       "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
@@ -8226,25 +8240,7 @@
       ],
       "source": "dns"
     },
-    "213.24.64.175/32": {
-      "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
-      "cc": "RU",
-      "services": [
-        "nalog"
-      ],
-      "source": "dns"
-    },
     "213.24.64.178/32": {
-      "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
-      "cc": "RU",
-      "services": [
-        "nalog"
-      ],
-      "source": "dns"
-    },
-    "213.24.64.181/32": {
       "asn": 12389,
       "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
       "cc": "RU",
