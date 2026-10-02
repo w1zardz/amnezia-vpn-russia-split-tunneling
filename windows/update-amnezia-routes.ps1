@@ -1194,14 +1194,39 @@ function Get-PrivacyProcessCreatedAt($ProcessRow) {
 
 function Read-PrivacyClientDescendants {
     if ($PrivacyChildrenLoaded) { return }
+    $script:PrivacyClientDescendants = @{}
     $saved = Read-JsonFile $PrivacyChildrenPath
     if ($null -ne $saved) {
         if ($saved.version -ne 1) { throw 'Повреждён снимок дочерних процессов; применение отменено.' }
         foreach ($entry in @($saved.processes)) {
-            if ([int]$entry.id -le 0 -or -not $entry.created_at -or -not $entry.owner_sid) {
+            foreach ($field in @('id','created_at','owner_sid','session_id')) {
+                if ($entry.PSObject.Properties.Name -notcontains $field) { throw 'Неполный снимок дочерних процессов; применение отменено.' }
+            }
+            $validId = ($entry.id -is [int] -or $entry.id -is [long]) -and
+                $entry.id -gt 0 -and $entry.id -le [int]::MaxValue
+            $validSession = ($entry.session_id -is [int] -or $entry.session_id -is [long]) -and
+                $entry.session_id -ge 0 -and $entry.session_id -le [int]::MaxValue
+            $created = [DateTime]::MinValue
+            if ($entry.created_at -is [DateTime]) {
+                # PowerShell 7 ConvertFrom-Json materializes ISO timestamps;
+                # comparing its culture-formatted string would lose identity.
+                $created = $entry.created_at
+                $validDate = $created -ne [DateTime]::MinValue -and $created.Kind -ne [DateTimeKind]::Unspecified
+            } else {
+                $validDate = $entry.created_at -is [string] -and $entry.created_at -match '(?:Z|[+-][0-9]{2}:[0-9]{2})$' -and
+                    [DateTime]::TryParseExact($entry.created_at, 'o',
+                        [Globalization.CultureInfo]::InvariantCulture, [Globalization.DateTimeStyles]::RoundtripKind, [ref]$created) -and
+                    $created.Kind -ne [DateTimeKind]::Unspecified
+            }
+            if (-not $validId -or -not $validSession -or -not $validDate -or
+                [string]$entry.owner_sid -notmatch '^S-1-(?:[0-9]+-)*[0-9]+$' -or
+                $PrivacyClientDescendants.ContainsKey([int]$entry.id)) {
                 throw 'Неполный снимок дочерних процессов; применение отменено.'
             }
-            $script:PrivacyClientDescendants[[int]$entry.id] = $entry
+            $script:PrivacyClientDescendants[[int]$entry.id] = [ordered]@{
+                id = [int]$entry.id; created_at = $created.ToUniversalTime().ToString('o')
+                owner_sid = [string]$entry.owner_sid; session_id = [int]$entry.session_id
+            }
         }
     }
     $script:PrivacyChildrenLoaded = $true

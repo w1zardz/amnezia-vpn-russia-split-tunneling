@@ -155,11 +155,36 @@ try {
     $script:PrivacyClientDescendants = @{}
     $script:PrivacyChildrenLoaded = $false
     Assert-Deferred { Assert-PrivacyClientsStopped } 'Retry forgot a surviving descendant after parent exit'
+    Assert-True ($PrivacyClientDescendants[21].created_at -is [string] -and
+        $PrivacyClientDescendants[21].created_at -ceq (Get-PrivacyProcessCreatedAt $genericChild)) 'Reloaded descendant timestamp was not normalized to canonical UTC'
     $genericChild.CreationDate = $genericChild.CreationDate.AddSeconds(1)
     Assert-PrivacyClientsStopped
     $script:privacyCloseMode = 'exit'
     Close-PrivacyClients -TimeoutSeconds 0
     Assert-True ($PrivacyClientDescendants.Count -eq 0) 'Reused descendant PID was not pruned'
+    Write-TextAtomic $PrivacyChildrenPath '{broken'
+    $script:PrivacyChildrenLoaded = $false
+    Assert-Throws { Assert-PrivacyClientsStopped } 'Malformed descendant state did not fail closed'
+    Write-TextAtomic $PrivacyChildrenPath '{"version":1,"processes":[{"id":21,"created_at":"bad","owner_sid":"S-1-5-21-1000","session_id":7}]}'
+    Assert-Throws { Assert-PrivacyClientsStopped } 'Invalid descendant creation identity did not fail closed'
+    foreach ($numericCase in @(
+        @{id=21.6;session=7}, @{id='21';session=7}, @{id=$true;session=7},
+        @{id=[long]2147483648;session=7}, @{id=21;session=7.6},
+        @{id=21;session='7'}, @{id=21;session=$true}, @{id=21;session=[long]2147483648}
+    )) {
+        Write-JsonAtomic $PrivacyChildrenPath @{version=1;processes=@(@{
+            id=$numericCase.id;session_id=$numericCase.session;owner_sid='S-1-5-21-1000'
+            created_at='2000-01-01T00:00:00.0000000Z'
+        })}
+        $script:PrivacyChildrenLoaded = $false
+        Assert-Throws { Assert-PrivacyClientsStopped } 'Non-integer or out-of-range descendant metadata was coerced'
+    }
+    Write-TextAtomic $PrivacyChildrenPath '{"version":1,"processes":[{"id":21,"created_at":"2000-01-01T00:00:00.0000000","owner_sid":"S-1-5-21-1000","session_id":7}]}'
+    $script:PrivacyChildrenLoaded = $false
+    Assert-Throws { Assert-PrivacyClientsStopped } 'Descendant timestamp without timezone did not fail closed'
+    Remove-Item -LiteralPath $PrivacyChildrenPath -Force
+    $script:PrivacyClientDescendants = @{}
+    $script:PrivacyChildrenLoaded = $false
     $script:privacyTable = @()
     $script:privacyCloseMode = 'exit'
     Write-Host 'PASS: vendor identities, owner/session scope, graceful close, CLI refusal, ancestor protection, PID identity and surviving descendant retry'
@@ -167,7 +192,8 @@ try {
     $script:privacyCloseAttempts = 0
     function Close-PrivacyClients([int]$TimeoutSeconds = 15) {
         $script:privacyCloseAttempts++
-        & $closePrivacyReal -TimeoutSeconds $TimeoutSeconds
+        # Synthetic processes do not need a real-time grace period.
+        & $closePrivacyReal -TimeoutSeconds 0
     }
 
     foreach ($bad in @('bad-.example.com', 'ok.-bad.com', 'a..example.com')) {
@@ -402,6 +428,21 @@ try {
     Assert-True (-not $unchanged.Changed -and $script:stops -eq $stopsBefore) 'Unchanged list restarted VPN'
     Assert-True ($script:privacyCloseAttempts -eq $privacyCloseBefore) 'Unchanged list attempted to close desktop clients'
     Write-Host 'PASS: reconnect failure, crash recovery, no-op update'
+
+    $script:privacyTable = @($updaterRow, $claudeRow, $genericChild)
+    $genericChild.ParentProcessId = 11
+    $script:privacyCloseMode = 'orphan'
+    $orphanSites = Read-ExceptSites
+    $orphanManaged = Get-Content -LiteralPath $ManagedPath -Raw
+    $orphanStops = $script:stops
+    Assert-Deferred { Invoke-RoutingTransaction @('new.example') 'mock.exe' } 'Application accepted a generic descendant surviving root quit'
+    Assert-True ($script:stops -eq $orphanStops -and (Test-SitesEqual $orphanSites (Read-ExceptSites))) 'Surviving generic child allowed VPN stop or Registry write'
+    Assert-True ((Get-Content -LiteralPath $ManagedPath -Raw) -ceq $orphanManaged -and
+        -not (Test-Path -LiteralPath $JournalPath)) 'Surviving generic child changed ownership or transaction journal'
+    $script:privacyTable = @()
+    $script:privacyCloseMode = 'exit'
+    Close-PrivacyClients -TimeoutSeconds 0
+    $privacyCloseBefore = $script:privacyCloseAttempts
 
     # Every KillSwitch value must stop the transaction BEFORE closing the
     # GUI, disconnecting, writing settings, or creating a recovery journal.
