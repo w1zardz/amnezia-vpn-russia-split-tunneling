@@ -104,7 +104,7 @@
 - Нашли отсутствующий сайт или проблему? [Создайте issue](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling/issues/new): укажите ОС, версию AmneziaVPN, режим и домен. **Не прикладывайте VPN-ключи, профили или приватные адреса.**
 - Добавить сервис: [формат каталога и команды сборки](docs/guide.md#свои-домены-и-сети). Общие вопросы — в [Discussions](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling/discussions).
 
-[Подробная инструкция и FAQ](docs/guide.md) · [Источники данных](NOTICE.md) · [Сообщить об уязвимости](SECURITY.md) · [Лицензия MIT](LICENSE).
+[Объявление и памятка](https://github.com/w1zardz/amnezia-vpn-russia-split-tunneling/discussions/4) · [Подробная инструкция и FAQ](docs/guide.md) · [Источники данных](NOTICE.md) · [Сообщить об уязвимости](SECURITY.md) · [Лицензия MIT](LICENSE).
 
 Проект независимый, не связан с Amnezia. Результат зависит от клиента, сети и адресов сервиса.
 
