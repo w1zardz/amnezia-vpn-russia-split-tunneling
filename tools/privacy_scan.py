@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import re
 import sys
 from pathlib import Path
@@ -27,6 +28,11 @@ TEXT_SUFFIXES = {
     ".template",
 }
 SKIP_DIRS = {".git"}
+# Проверенные медиа для README: публикуются только с этим содержимым.
+REVIEWED_BINARY_FILES = {
+    "docs/media/split-tunneling-demo.gif": "b91e0241a05312a765a6fd7c7f9c5675122d83ed410d646276f46f478dc08f5b",
+    "docs/media/split-tunneling-demo.mp4": "d55f1e0e0877ebafc02ec0c3323dd159290c28d8a741be35437f833e26610945",
+}
 FORBIDDEN_EXACT_FILES = {"config/protected-ips.json"}
 FORBIDDEN_PATTERNS = {
     "absolute user path": re.compile(r"(?:/(?:Users|home)/|[A-Za-z]:\\(?:Users)\\)[^/\\\s]+"),
@@ -63,6 +69,10 @@ def main() -> int:
             continue
         if any(pattern.search(relative) for pattern in FORBIDDEN_FILE_PATTERNS):
             findings.append(f"forbidden file: {relative}")
+            continue
+        if relative in REVIEWED_BINARY_FILES:
+            if hashlib.sha256(path.read_bytes()).hexdigest() != REVIEWED_BINARY_FILES[relative]:
+                findings.append(f"reviewed binary file changed: {relative}")
             continue
         if path.suffix.lower() not in TEXT_SUFFIXES:
             findings.append(f"unreviewed binary file must not be published: {relative}")
