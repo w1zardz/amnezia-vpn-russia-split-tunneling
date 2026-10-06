@@ -1,31 +1,31 @@
 {
   "built": "2026-10-06",
   "selection_policy": "reviewed-catalog",
-  "services": 64,
-  "core_services": 50,
-  "domains": 1146,
-  "cidrs": 911,
-  "addresses": 478930,
-  "entries": 2057,
-  "lite_domains": 693,
-  "lite_cidrs": 597,
-  "lite_entries": 1290,
-  "ip_entries": 911,
+  "services": 65,
+  "core_services": 51,
+  "domains": 1149,
+  "cidrs": 913,
+  "addresses": 478932,
+  "entries": 2062,
+  "lite_domains": 696,
+  "lite_cidrs": 599,
+  "lite_entries": 1295,
+  "ip_entries": 913,
   "routing": {
     "full": {
-      "candidates": 2347,
-      "unique": 1329,
-      "compacted": 911,
-      "redundant": 1436
+      "candidates": 2352,
+      "unique": 1331,
+      "compacted": 913,
+      "redundant": 1439
     },
     "lite": {
-      "candidates": 1604,
-      "unique": 935,
-      "compacted": 597,
-      "redundant": 1007
+      "candidates": 1609,
+      "unique": 937,
+      "compacted": 599,
+      "redundant": 1010
     }
   },
-  "allowed_ips": 8195,
+  "allowed_ips": 8221,
   "prefix_snapshot": 1074,
   "personal_domains": 0,
   "personal_cidrs": 0,
@@ -33,15 +33,15 @@
   "external_domains_dropped": 0,
   "external_roots": 0,
   "external_roots_dropped": 0,
-  "domains_with_ips": 966,
-  "lite_domains_with_ips": 595,
+  "domains_with_ips": 969,
+  "lite_domains_with_ips": 598,
   "sha256": {
-    "amnezia-ru-direct.json": "c25a360d6102f9eaab16584f597f25bc10086a1a1726ba225565c5e2de4c832b",
-    "amnezia-ru-direct-lite.json": "c962435bf033ee10dd02849aa9abc1590811caceb1ece1124a8cbc675fc677f1",
-    "amnezia-ru-direct-ip.json": "184a9428030c143a04490f7e1b536c3a2ff7eb7f2fc56aa7c64d842aa8126002",
-    "ru-direct-domains.txt": "7fce112e866c3a5a702d908934aad68d8501ed0269cdb6bc983b9574976477ff",
-    "ru-direct-ipv4.txt": "7efc4ce1ef8fd5711bfe16b52e8d0aab1d1ece0e49976959afcfdd74847159ef",
-    "wg-allowed-ips.txt": "496a63626f0f53a287ee0dbf5b9b04163711f7267c18d0656126bdcdfd0af28b",
-    "happ-ru-direct.json": "ac296ac2a5a9bb7420736ef2188b302cc46110f222a08d2fa14d9a05bacd79ad"
+    "amnezia-ru-direct.json": "41778b1ad32606b96341e9d2804f6907c0d7ba1a0d43d454fefeae5256cd8b19",
+    "amnezia-ru-direct-lite.json": "926a7cfd4db4ca1f230774607e7ae256bd57353730e88543453d2333c7ad328e",
+    "amnezia-ru-direct-ip.json": "dae59fea8d8068cfdae35c6766d1531fd7afac9242e5e2b2fc6eca4ad61eb918",
+    "ru-direct-domains.txt": "5975e930263b4847576ee73b491c55e3ae7d7abe5864a975ff8fc90d73903cbb",
+    "ru-direct-ipv4.txt": "d22d622e6e61baa01f454d5f739761ef71ed5e3e721ea6ba714479cbe134c02f",
+    "wg-allowed-ips.txt": "686ab3697e3e78f7c8f552fb0cd6c5f1eeacc4f22463aed86b6e5708ef6b417a",
+    "happ-ru-direct.json": "2ad6a26e4f5384b5429b73a595805d8410c68bedcda5016a1751ac46f20b0451"
   }
 }

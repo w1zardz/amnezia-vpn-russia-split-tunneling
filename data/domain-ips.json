@@ -2,8 +2,8 @@
   "version": 1,
   "updated": "2026-10-06",
   "asn_table": "https://iptoasn.com/data/ip2asn-v4.tsv.gz",
-  "resolved": 1073,
-  "total": 1146,
+  "resolved": 1076,
+  "total": 1149,
   "domains": {
     "100ballnik.com": [
       "185.178.208.151"
@@ -156,6 +156,9 @@
       "104.26.7.129",
       "172.67.73.142"
     ],
+    "api.arsen-support.ru": [
+      "178.20.44.248"
+    ],
     "api.avito.ru": [
       "176.114.120.2",
       "176.114.122.2",
@@ -223,6 +226,9 @@
     ],
     "argumentiru.com": [
       "77.244.222.74"
+    ],
+    "arsen-support.ru": [
+      "95.163.239.81"
     ],
     "asna.ru": [
       "185.163.159.166"
@@ -440,6 +446,9 @@
       "104.26.10.221",
       "104.26.11.221",
       "172.67.73.25"
+    ],
+    "centrifugo.arsen-support.ru": [
+      "178.20.44.248"
     ],
     "championat.com": [
       "81.19.86.0",

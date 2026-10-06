@@ -54,6 +54,7 @@ anywayanyday.com
 api-eu.grnd.gg
 api-test-eu.grnd.gg
 api-test.grnd.gg
+api.arsen-support.ru
 api.avito.ru
 api.cdngrand.com
 api.grnd.game
@@ -70,6 +71,7 @@ arbitr.ru
 arena1005.grnd.gg
 argumenti.ru
 argumentiru.com
+arsen-support.ru
 asna.ru
 astral.ru
 astralinux.ru
@@ -141,6 +143,7 @@ cdn1.ozone.ru
 cdn2.ozone.ru
 cdngrand.com
 cdntest.grnd.gg
+centrifugo.arsen-support.ru
 championat.com
 chizhik.ru
 cian.ru
