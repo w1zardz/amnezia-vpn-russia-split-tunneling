@@ -1,32 +1,32 @@
 {
-  "built": "2026-10-05",
+  "built": "2026-10-06",
   "selection_policy": "reviewed-catalog",
   "services": 64,
   "core_services": 50,
   "domains": 1146,
-  "cidrs": 909,
-  "addresses": 478928,
-  "entries": 2055,
+  "cidrs": 911,
+  "addresses": 478930,
+  "entries": 2057,
   "lite_domains": 693,
   "lite_cidrs": 597,
   "lite_entries": 1290,
-  "ip_entries": 909,
+  "ip_entries": 911,
   "routing": {
     "full": {
-      "candidates": 2348,
-      "unique": 1336,
-      "compacted": 909,
-      "redundant": 1439
+      "candidates": 2347,
+      "unique": 1329,
+      "compacted": 911,
+      "redundant": 1436
     },
     "lite": {
-      "candidates": 1611,
-      "unique": 944,
+      "candidates": 1604,
+      "unique": 935,
       "compacted": 597,
-      "redundant": 1014
+      "redundant": 1007
     }
   },
-  "allowed_ips": 8178,
-  "prefix_snapshot": 1068,
+  "allowed_ips": 8195,
+  "prefix_snapshot": 1074,
   "personal_domains": 0,
   "personal_cidrs": 0,
   "external_domains": 0,
@@ -36,12 +36,12 @@
   "domains_with_ips": 966,
   "lite_domains_with_ips": 595,
   "sha256": {
-    "amnezia-ru-direct.json": "88eda2c9795a0faf306bc68d47a8f98c412b0e2f9123acf36f87ec0625c0e6bf",
-    "amnezia-ru-direct-lite.json": "9aa23e658702ffe066a51a4a3305b78f22cf7940e511e90baedc8b875d463609",
-    "amnezia-ru-direct-ip.json": "8dcaae47f672e4a98ac39f9da79c219942998986ca0890c5cb32d157886c6cd2",
+    "amnezia-ru-direct.json": "c25a360d6102f9eaab16584f597f25bc10086a1a1726ba225565c5e2de4c832b",
+    "amnezia-ru-direct-lite.json": "c962435bf033ee10dd02849aa9abc1590811caceb1ece1124a8cbc675fc677f1",
+    "amnezia-ru-direct-ip.json": "184a9428030c143a04490f7e1b536c3a2ff7eb7f2fc56aa7c64d842aa8126002",
     "ru-direct-domains.txt": "7fce112e866c3a5a702d908934aad68d8501ed0269cdb6bc983b9574976477ff",
-    "ru-direct-ipv4.txt": "2b2ce2cb323cd2c840698a9dd1e7e48cf88e82792c7a615fb174c33f2eb1da4f",
-    "wg-allowed-ips.txt": "bf6d1e234d6f7c40dfbf4dbebd5dce85d2f7354eb18e2e5b3d40ac7d6548c51c",
-    "happ-ru-direct.json": "2ac12686d4eef81786d48c88aee3ba3d2d4b34bd9bbc1c4e26d479a391d3df42"
+    "ru-direct-ipv4.txt": "7efc4ce1ef8fd5711bfe16b52e8d0aab1d1ece0e49976959afcfdd74847159ef",
+    "wg-allowed-ips.txt": "496a63626f0f53a287ee0dbf5b9b04163711f7267c18d0656126bdcdfd0af28b",
+    "happ-ru-direct.json": "ac296ac2a5a9bb7420736ef2188b302cc46110f222a08d2fa14d9a05bacd79ad"
   }
 }
