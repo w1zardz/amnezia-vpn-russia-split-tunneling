@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "updated": "2026-10-08",
+  "updated": "2026-10-09",
   "source": "Team Cymru bulk whois + RIPEstat announced-prefixes",
   "prefix_count": 1076,
   "external_count": 0,
   "external_domains": 0,
-  "resolved_domains": 1075,
+  "resolved_domains": 1074,
   "catalog_domains": 1149,
   "prefixes": {
     "5.61.16.0/21": {
@@ -564,15 +564,6 @@
       ],
       "source": "dns"
     },
-    "46.235.184.152/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
     "46.235.184.195/32": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
@@ -708,6 +699,15 @@
       ],
       "source": "dns"
     },
+    "46.235.188.152/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "gosuslugi"
+      ],
+      "source": "dns"
+    },
     "46.235.188.172/32": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
@@ -753,12 +753,12 @@
       ],
       "source": "dns"
     },
-    "51.250.48.131/32": {
+    "51.250.48.3/32": {
       "asn": 200350,
       "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
       "cc": "RU",
       "services": [
-        "avia"
+        "jobs"
       ],
       "source": "dns"
     },
@@ -768,15 +768,6 @@
       "cc": "RU",
       "services": [
         "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "51.250.102.195/32": {
-      "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
       ],
       "source": "dns"
     },
@@ -1917,15 +1908,6 @@
       ],
       "source": "dns"
     },
-    "86.109.210.185/32": {
-      "asn": 29648,
-      "as_name": "COMLINE-AS - PJSC MegaFon, RU",
-      "cc": "RU",
-      "services": [
-        "telecom-extra"
-      ],
-      "source": "dns"
-    },
     "87.226.155.117/32": {
       "asn": 12389,
       "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
@@ -1983,7 +1965,6 @@
       "as_name": "VKONTAKTE-SPB-AS - LLC VK, RU",
       "cc": "RU",
       "services": [
-        "rustore",
         "vk",
         "vk-cdn",
         "vk-messenger",
@@ -2407,6 +2388,15 @@
       "cc": "RU",
       "services": [
         "food"
+      ],
+      "source": "dns"
+    },
+    "91.206.127.19/32": {
+      "asn": 201706,
+      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "cc": "RU",
+      "services": [
+        "other-banks"
       ],
       "source": "dns"
     },
@@ -3049,30 +3039,12 @@
       ],
       "source": "dns"
     },
-    "93.88.179.201/32": {
-      "asn": 5468,
-      "as_name": "UrFU - UrFU, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
     "93.91.8.37/32": {
       "asn": 31430,
       "as_name": "TEL-NET-AS - OOO Suntel, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "93.93.91.107/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
       ],
       "source": "dns"
     },
@@ -3201,8 +3173,7 @@
       "as_name": "VK-AS - LLC VK, RU",
       "cc": "RU",
       "services": [
-        "mailru",
-        "vk-extra"
+        "mailru"
       ],
       "source": "asn"
     },
@@ -4601,6 +4572,13 @@
       ],
       "source": "dns"
     },
+    "160.5.208.0/20": {
+      "asn": 47764,
+      "as_name": "VK — VK-AS (Mail.ru, OK, MAX, Сферум)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "161.104.46.191/32": {
       "asn": 50340,
       "as_name": "SELECTEL-MSK - JSC Selectel, RU",
@@ -4611,6 +4589,13 @@
       "source": "dns"
     },
     "161.104.104.0/21": {
+      "asn": 47764,
+      "as_name": "VK — VK-AS (Mail.ru, OK, MAX, Сферум)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "168.113.128.0/20": {
       "asn": 47764,
       "as_name": "VK — VK-AS (Mail.ru, OK, MAX, Сферум)",
       "cc": "RU",
@@ -4775,6 +4760,15 @@
         "ok"
       ],
       "source": "asn"
+    },
+    "178.72.176.230/32": {
+      "asn": 49505,
+      "as_name": "SELECTEL - JSC Selectel, RU",
+      "cc": "RU",
+      "services": [
+        "misc-extra"
+      ],
+      "source": "dns"
     },
     "178.130.128.0/23": {
       "asn": 43399,
@@ -4981,15 +4975,6 @@
       "cc": "RU",
       "services": [
         "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.168/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "jobs"
       ],
       "source": "dns"
     },
@@ -5278,15 +5263,6 @@
       "cc": "RU",
       "services": [
         "health-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.236.146/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "cloud-extra"
       ],
       "source": "dns"
     },
@@ -5796,15 +5772,6 @@
       "cc": "RU",
       "services": [
         "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "185.65.149.69/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "streaming"
       ],
       "source": "dns"
     },
@@ -6673,7 +6640,7 @@
       ],
       "source": "dns"
     },
-    "185.179.144.43/32": {
+    "185.179.146.43/32": {
       "asn": 24823,
       "as_name": "VTB-BANK-AS - VTB Bank (Public Joint-Stock Company), RU",
       "cc": "RU",
@@ -7069,6 +7036,15 @@
       ],
       "source": "dns"
     },
+    "193.168.47.254/32": {
+      "asn": 198610,
+      "as_name": "BEGET-AS - Beget LLC, RU",
+      "cc": "RU",
+      "services": [
+        "cloud-extra"
+      ],
+      "source": "dns"
+    },
     "193.200.10.123/32": {
       "asn": 42231,
       "as_name": "PRSBM-AS - PJSC Promsvyazbank, RU",
@@ -7250,15 +7226,6 @@
       "cc": "RU",
       "services": [
         "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "194.149.71.26/32": {
-      "asn": 3267,
-      "as_name": "IDDQD-AS - IDDQD-AS, RU",
-      "cc": "RU",
-      "services": [
-        "gov-extra"
       ],
       "source": "dns"
     },
@@ -8385,6 +8352,24 @@
       ],
       "source": "dns"
     },
+    "212.193.147.201/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "shops"
+      ],
+      "source": "dns"
+    },
+    "212.193.147.203/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "shops"
+      ],
+      "source": "dns"
+    },
     "212.193.152.39/32": {
       "asn": 204878,
       "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
@@ -9132,6 +9117,15 @@
       "cc": "RU",
       "services": [
         "misc-extra"
+      ],
+      "source": "dns"
+    },
+    "217.195.76.247/32": {
+      "asn": 59722,
+      "as_name": "ROSSIA-AIRLINES-AS - JSC ROSSIYA-AIRLINES, RU",
+      "cc": "RU",
+      "services": [
+        "avia"
       ],
       "source": "dns"
     },
