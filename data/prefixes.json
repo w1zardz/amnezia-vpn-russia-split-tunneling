@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "updated": "2026-10-09",
+  "updated": "2026-10-10",
   "source": "Team Cymru bulk whois + RIPEstat announced-prefixes",
-  "prefix_count": 1076,
+  "prefix_count": 1075,
   "external_count": 0,
   "external_domains": 0,
-  "resolved_domains": 1074,
+  "resolved_domains": 1075,
   "catalog_domains": 1149,
   "prefixes": {
     "5.61.16.0/21": {
@@ -699,7 +699,7 @@
       ],
       "source": "dns"
     },
-    "46.235.188.152/32": {
+    "46.235.188.171/32": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
@@ -1908,6 +1908,15 @@
       ],
       "source": "dns"
     },
+    "86.109.210.185/32": {
+      "asn": 29648,
+      "as_name": "COMLINE-AS - PJSC MegaFon, RU",
+      "cc": "RU",
+      "services": [
+        "telecom-extra"
+      ],
+      "source": "dns"
+    },
     "87.226.155.117/32": {
       "asn": 12389,
       "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
@@ -3048,6 +3057,15 @@
       ],
       "source": "dns"
     },
+    "93.93.91.107/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "shops"
+      ],
+      "source": "dns"
+    },
     "93.95.101.202/32": {
       "asn": 48347,
       "as_name": "MTW-AS - MTW-AS, RU",
@@ -3173,7 +3191,8 @@
       "as_name": "VK-AS - LLC VK, RU",
       "cc": "RU",
       "services": [
-        "mailru"
+        "mailru",
+        "vk-extra"
       ],
       "source": "asn"
     },
@@ -3847,15 +3866,6 @@
       ],
       "source": "dns"
     },
-    "95.181.182.185/32": {
-      "asn": 210756,
-      "as_name": "EdgeCenterLLC - EdgeCenter LLC, RU",
-      "cc": "RU",
-      "services": [
-        "avito"
-      ],
-      "source": "dns"
-    },
     "95.213.0.0/17": {
       "asn": 47541,
       "as_name": "VK — VKONTAKTE-SPB (сайт, видео, клипы)",
@@ -4434,13 +4444,6 @@
       "source": "asn"
     },
     "151.236.107.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.109.0/24": {
       "asn": 57363,
       "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
       "cc": "RU",
@@ -5775,6 +5778,15 @@
       ],
       "source": "dns"
     },
+    "185.65.149.69/32": {
+      "asn": 51115,
+      "as_name": "HLL-AS - HLL LLC, RU",
+      "cc": "RU",
+      "services": [
+        "streaming"
+      ],
+      "source": "dns"
+    },
     "185.65.149.115/32": {
       "asn": 51115,
       "as_name": "HLL-AS - HLL LLC, RU",
@@ -6640,7 +6652,7 @@
       ],
       "source": "dns"
     },
-    "185.179.146.43/32": {
+    "185.179.144.43/32": {
       "asn": 24823,
       "as_name": "VTB-BANK-AS - VTB Bank (Public Joint-Stock Company), RU",
       "cc": "RU",
@@ -8349,24 +8361,6 @@
       "cc": "RU",
       "services": [
         "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "212.193.147.201/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "212.193.147.203/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
       ],
       "source": "dns"
     },
