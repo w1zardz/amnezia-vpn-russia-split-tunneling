@@ -1,5 +1,5 @@
 {
-  "built": "2026-10-13",
+  "built": "2026-10-14",
   "selection_policy": "reviewed-catalog",
   "services": 65,
   "core_services": 51,
@@ -19,13 +19,13 @@
       "redundant": 1456
     },
     "lite": {
-      "candidates": 1635,
+      "candidates": 1634,
       "unique": 958,
       "compacted": 613,
-      "redundant": 1022
+      "redundant": 1021
     }
   },
-  "allowed_ips": 8396,
+  "allowed_ips": 8390,
   "prefix_snapshot": 1078,
   "personal_domains": 0,
   "personal_cidrs": 0,
@@ -33,15 +33,15 @@
   "external_domains_dropped": 0,
   "external_roots": 0,
   "external_roots_dropped": 0,
-  "domains_with_ips": 969,
-  "lite_domains_with_ips": 598,
+  "domains_with_ips": 968,
+  "lite_domains_with_ips": 597,
   "sha256": {
-    "amnezia-ru-direct.json": "dea562f839faf43837e0574cc9d258416e9afda961bd516b709181193d93165f",
-    "amnezia-ru-direct-lite.json": "58d1404ebc46bb11cfdd00218877c0354da82922485d07575fbe3b5734d0e93c",
-    "amnezia-ru-direct-ip.json": "2954acee326da98f05625fdf9163cc3792667f3cbbb44079f72bdefee72ac991",
+    "amnezia-ru-direct.json": "27ca7a74eec0c2e89b7904344d73548ef6e7c62b15d1af92ee0eafc4a1b3bb65",
+    "amnezia-ru-direct-lite.json": "c0546cdddbf357d70143c92b1ed78185b7dc8bddaad506647cb80bcd88ec1ebd",
+    "amnezia-ru-direct-ip.json": "c8e9d4da4272440fb3c7ae365b74111fadc0f25c9a5677eab988cf22f73a1a76",
     "ru-direct-domains.txt": "5975e930263b4847576ee73b491c55e3ae7d7abe5864a975ff8fc90d73903cbb",
-    "ru-direct-ipv4.txt": "e7de8497cca1d9b6e1f0e5c88de7e5a982fce126221d9cc9ab408f56261fb248",
-    "wg-allowed-ips.txt": "415dec17987ac4df59c62e5738185a0580ce5218a8724e30f723679973b798d8",
-    "happ-ru-direct.json": "2168f442e73769baa0f876f3e4844668394fdafbcd742ad446196451190dbbb7"
+    "ru-direct-ipv4.txt": "c24c3a33300d2ff8e9f81aef075b4d0ae7c19eca4592853aef59ba0d3180026b",
+    "wg-allowed-ips.txt": "444cd2075716d66d690b2d92ec184a2efaba9fe6f62eab665c4563a6f78d8993",
+    "happ-ru-direct.json": "9673edee156345675396f239b7c9cea3b55169a032fd210663cf9a581194f295"
   }
 }
