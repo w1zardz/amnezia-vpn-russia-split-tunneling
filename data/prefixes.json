@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "updated": "2026-10-14",
+  "updated": "2026-10-15",
   "source": "Team Cymru bulk whois + RIPEstat announced-prefixes",
-  "prefix_count": 1078,
+  "prefix_count": 1085,
   "external_count": 0,
   "external_domains": 0,
-  "resolved_domains": 1072,
+  "resolved_domains": 1073,
   "catalog_domains": 1149,
   "prefixes": {
     "5.61.16.0/21": {
@@ -443,6 +443,24 @@
       ],
       "source": "dns"
     },
+    "46.29.118.72/32": {
+      "asn": 199669,
+      "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
+      "cc": "RU",
+      "services": [
+        "misc-extra"
+      ],
+      "source": "dns"
+    },
+    "46.29.118.125/32": {
+      "asn": 199669,
+      "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
+      "cc": "RU",
+      "services": [
+        "misc-extra"
+      ],
+      "source": "dns"
+    },
     "46.42.185.0/24": {
       "asn": 57363,
       "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
@@ -546,7 +564,7 @@
       ],
       "source": "dns"
     },
-    "46.235.184.95/32": {
+    "46.235.184.101/32": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
@@ -555,7 +573,16 @@
       ],
       "source": "dns"
     },
-    "46.235.184.101/32": {
+    "46.235.184.118/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "gosuslugi"
+      ],
+      "source": "dns"
+    },
+    "46.235.184.152/32": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
@@ -582,15 +609,6 @@
       ],
       "source": "dns"
     },
-    "46.235.185.88/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
     "46.235.185.248/32": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
@@ -610,6 +628,15 @@
       "source": "dns"
     },
     "46.235.186.102/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "shops"
+      ],
+      "source": "dns"
+    },
+    "46.235.186.153/32": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
@@ -663,6 +690,15 @@
       ],
       "source": "dns"
     },
+    "46.235.188.75/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "nalog"
+      ],
+      "source": "dns"
+    },
     "46.235.188.79/32": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
@@ -682,6 +718,24 @@
       "source": "dns"
     },
     "46.235.188.129/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "gosuslugi"
+      ],
+      "source": "dns"
+    },
+    "46.235.188.133/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "shops"
+      ],
+      "source": "dns"
+    },
+    "46.235.188.152/32": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
@@ -1881,6 +1935,15 @@
       ],
       "source": "dns"
     },
+    "86.109.210.185/32": {
+      "asn": 29648,
+      "as_name": "COMLINE-AS - PJSC MegaFon, RU",
+      "cc": "RU",
+      "services": [
+        "telecom-extra"
+      ],
+      "source": "dns"
+    },
     "87.226.155.117/32": {
       "asn": 12389,
       "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
@@ -2217,7 +2280,25 @@
       ],
       "source": "dns"
     },
+    "91.109.201.87/32": {
+      "asn": 199669,
+      "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
+      "cc": "RU",
+      "services": [
+        "misc-extra"
+      ],
+      "source": "dns"
+    },
     "91.109.201.105/32": {
+      "asn": 199669,
+      "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
+      "cc": "RU",
+      "services": [
+        "misc-extra"
+      ],
+      "source": "dns"
+    },
+    "91.109.202.4/32": {
       "asn": 199669,
       "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
       "cc": "RU",
@@ -3927,9 +4008,11 @@
     },
     "109.207.2.0/24": {
       "asn": 196747,
-      "as_name": "Электронное правительство (Госуслуги)",
+      "as_name": "Electronic-government - PJSC Rostelecom, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "gosuslugi"
+      ],
       "source": "asn"
     },
     "109.207.8.0/24": {
@@ -4547,6 +4630,15 @@
       "cc": "RU",
       "services": [],
       "source": "asn"
+    },
+    "168.113.255.156/32": {
+      "asn": 208677,
+      "as_name": "CLOUDRU-AS - _Cloud Technologies_ LLC trading as Cloud.ru, RU",
+      "cc": "RU",
+      "services": [
+        "game-ru"
+      ],
+      "source": "dns"
     },
     "176.53.226.158/32": {
       "asn": 50340,
@@ -6718,6 +6810,15 @@
       ],
       "source": "dns"
     },
+    "185.207.2.153/32": {
+      "asn": 203714,
+      "as_name": "LLCFlex-AS - LLC Flex, RU",
+      "cc": "RU",
+      "services": [
+        "misc-extra"
+      ],
+      "source": "dns"
+    },
     "185.215.4.13/32": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
@@ -7738,7 +7839,8 @@
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "health-extra"
+        "health-extra",
+        "misc-extra"
       ],
       "source": "dns"
     },
@@ -7757,16 +7859,6 @@
       "cc": "RU",
       "services": [
         "shops"
-      ],
-      "source": "dns"
-    },
-    "195.209.81.215/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "health-extra",
-        "misc-extra"
       ],
       "source": "dns"
     },
@@ -8343,15 +8435,6 @@
       ],
       "source": "dns"
     },
-    "212.193.14.82/32": {
-      "asn": 48282,
-      "as_name": "VDSINA-AS - Hosting technology LTD, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
     "212.193.69.18/32": {
       "asn": 5468,
       "as_name": "UrFU - UrFU, RU",
@@ -8478,15 +8561,6 @@
       ],
       "source": "dns"
     },
-    "212.193.153.45/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
     "212.193.153.124/32": {
       "asn": 204878,
       "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
@@ -8573,8 +8647,7 @@
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "health-extra",
-        "misc-extra"
+        "health-extra"
       ],
       "source": "dns"
     },
@@ -8863,15 +8936,6 @@
         "gibdd",
         "gosuslugi",
         "gov-extra"
-      ],
-      "source": "dns"
-    },
-    "213.59.253.8/32": {
-      "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
       ],
       "source": "dns"
     },
