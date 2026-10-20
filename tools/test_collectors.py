@@ -38,9 +38,15 @@ class RouteLoadTests(unittest.TestCase):
         prefixes = builder.curated_prefixes(catalog.load_prefixes(),
                                             set(refresh.load_asn_expand()))
         for tiers in (catalog.TIERS, ('core',)):
-            _domains, cidrs = builder.build(services, prefixes, tiers)
+            domains, cidrs = builder.build(services, prefixes, tiers)
+            arena_domains = {f'arena{index}.{zone}' for index in (1, 2, 3)
+                             for zone in ('grnd.game', 'grnd.gg')}
+            arena_domains.add('arena1005.grnd.gg')
+            self.assertTrue(arena_domains.issubset(domains))
             networks = [ipaddress.ip_network(value) for value in cidrs]
             for value in ('91.240.87.158', '143.20.177.3', '104.26.13.47',
+                          '80.66.82.63', '80.66.82.71', '80.66.82.80',
+                          '80.66.82.81', '135.106.182.253',
                           '87.251.65.29', '185.169.132.163', '90.156.232.47',
                           '90.156.232.221', '95.163.58.192', '95.163.58.194',
                           '95.163.58.213', '95.163.60.61', '95.163.60.63'):

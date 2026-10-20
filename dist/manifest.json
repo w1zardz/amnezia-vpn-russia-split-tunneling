@@ -3,26 +3,26 @@
   "selection_policy": "reviewed-catalog",
   "services": 65,
   "core_services": 51,
-  "domains": 1149,
+  "domains": 1155,
   "cidrs": 945,
   "addresses": 487924,
-  "entries": 2094,
-  "lite_domains": 696,
+  "entries": 2100,
+  "lite_domains": 702,
   "lite_cidrs": 625,
-  "lite_entries": 1321,
+  "lite_entries": 1327,
   "ip_entries": 945,
   "routing": {
     "full": {
-      "candidates": 2400,
-      "unique": 1362,
+      "candidates": 2408,
+      "unique": 1364,
       "compacted": 945,
-      "redundant": 1455
+      "redundant": 1463
     },
     "lite": {
-      "candidates": 1648,
-      "unique": 966,
+      "candidates": 1656,
+      "unique": 968,
       "compacted": 625,
-      "redundant": 1023
+      "redundant": 1031
     }
   },
   "allowed_ips": 8392,
@@ -33,15 +33,15 @@
   "external_domains_dropped": 0,
   "external_roots": 0,
   "external_roots_dropped": 0,
-  "domains_with_ips": 969,
-  "lite_domains_with_ips": 598,
+  "domains_with_ips": 975,
+  "lite_domains_with_ips": 604,
   "sha256": {
-    "amnezia-ru-direct.json": "1bfc073945f9c0ac9ed4ba87d589fcaeffe047b0313743c0b0a0da44f56a4c4f",
-    "amnezia-ru-direct-lite.json": "9b217fe1006d8f67add38fce2068325f60cb4e502ff59e0071965c607d59274c",
+    "amnezia-ru-direct.json": "dab2d8d5c644ee9756e82afa011c29a21fb79db278386b2a0a93131784e70e3a",
+    "amnezia-ru-direct-lite.json": "fc0a7bd73127992032e940656b9710329060f0cf1f791c7b12f90046b80382b0",
     "amnezia-ru-direct-ip.json": "c4c4d4f1ef17ca933eeff1256bc0e51237dd459ac075708e5242eb4e28cf6bb5",
-    "ru-direct-domains.txt": "5975e930263b4847576ee73b491c55e3ae7d7abe5864a975ff8fc90d73903cbb",
+    "ru-direct-domains.txt": "a6d9c1a9c61669dda0b57b949e4218c85b63b5f3189dcad91e4787f670a2bade",
     "ru-direct-ipv4.txt": "39cb0aea53545d983f10e50203e498efebbfd122086a9f67b4a5e4809ec9f36e",
     "wg-allowed-ips.txt": "36cc2e0cb5d5ccc797fdba63fe3e7788c3985516de6c14077a72942504a1cb2f",
-    "happ-ru-direct.json": "02b392db4a528c1e466d7101467226cc9d3bbcb4d2da0551ff20fb0f5ea1aefe"
+    "happ-ru-direct.json": "168a0ba59998b8d2a27b598a0ff322a8f732be91708d35c7fd3344652650b260"
   }
 }

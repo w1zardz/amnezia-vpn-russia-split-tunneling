@@ -2,8 +2,8 @@
   "version": 1,
   "updated": "2026-10-20",
   "asn_table": "https://iptoasn.com/data/ip2asn-v4.tsv.gz",
-  "resolved": 1076,
-  "total": 1149,
+  "resolved": 1082,
+  "total": 1155,
   "domains": {
     "100ballnik.com": [
       "185.178.208.151"
@@ -222,8 +222,28 @@
     "arbitr.ru": [
       "95.167.220.237"
     ],
+    "arena1.grnd.game": [
+      "80.66.82.80"
+    ],
+    "arena1.grnd.gg": [
+      "80.66.82.80"
+    ],
     "arena1005.grnd.gg": [
       "135.106.182.253"
+    ],
+    "arena2.grnd.game": [
+      "80.66.82.81"
+    ],
+    "arena2.grnd.gg": [
+      "80.66.82.81"
+    ],
+    "arena3.grnd.game": [
+      "80.66.82.63",
+      "80.66.82.71"
+    ],
+    "arena3.grnd.gg": [
+      "80.66.82.63",
+      "80.66.82.71"
     ],
     "argumenti.ru": [
       "109.234.158.166"

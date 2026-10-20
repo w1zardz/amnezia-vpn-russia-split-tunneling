@@ -68,7 +68,13 @@ api.vk.ru
 apps.rustore.ru
 apteka.ru
 arbitr.ru
+arena1.grnd.game
+arena1.grnd.gg
 arena1005.grnd.gg
+arena2.grnd.game
+arena2.grnd.gg
+arena3.grnd.game
+arena3.grnd.gg
 argumenti.ru
 argumentiru.com
 arsen-support.ru
