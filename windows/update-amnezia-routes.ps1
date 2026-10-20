@@ -1308,11 +1308,13 @@ function Get-PrivacyClientProcesses($ProcessTable = $null) {
             }
         }
         if ($null -ne $client) {
-            if ((Get-PrivacyProcessOwnerSid $row) -cne $ownerSid) { continue }
             # Explicit, per-invocation consent only. Unknown installations and
             # previously tracked generic descendants still require manual exit.
+            # Exempt processes receive no signals, so do not query their owner:
+            # a short-lived Codex helper may already have exited after the snapshot.
             if ($KeepCodexOpen -and $AllowVpnReconnect -and
                 $client.Id -eq 'chatgpt-desktop' -and $client.Kind -eq 'desktop') { continue }
+            if ((Get-PrivacyProcessOwnerSid $row) -cne $ownerSid) { continue }
             [pscustomobject]@{ Id = [int]$row.ProcessId; ParentId = [int]$row.ParentProcessId
                 Name = [string]$row.Name; Image = [string]$row.ExecutablePath; Client = $client.Id; Kind = $client.Kind
                 CreatedAt = (Get-PrivacyProcessCreatedAt $row) }

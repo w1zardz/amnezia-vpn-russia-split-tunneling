@@ -148,8 +148,10 @@ try {
     $KeepCodexOpen = $true
     Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'KeepCodexOpen alone bypassed reconnect consent'
     $AllowVpnReconnect = $true
+    $script:privacyOwnerFailure = $true
     Close-PrivacyClients -TimeoutSeconds 0
     Assert-PrivacyClientsStopped
+    $script:privacyOwnerFailure = $false
     Assert-True ($script:privacyCloseSignals -eq 0 -and $script:privacyTable.Count -eq 3) 'Explicit keep-open mode closed Codex or its CLI'
     $script:privacyTable += $claudeRow
     Assert-Deferred { Assert-PrivacyClientsStopped } 'Codex permission also exempted Claude'
