@@ -141,6 +141,26 @@ try {
     Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'Updater running inside Claude closed its own ancestor'
     Assert-True ($script:privacyCloseSignals -eq 0) 'Ancestor protection ran after sending a close signal'
 
+    $openAiRow = New-PrivacyTestRow 40 'ChatGPT.exe' 'C:\Program Files\WindowsApps\OpenAI.Codex_1_x64\app\ChatGPT.exe'
+    $openAiCliRow = New-PrivacyTestRow 41 'codex.exe' 'C:\Program Files\OpenAI\Codex\bin\codex.exe' '' 40
+    $script:privacyTable = @((New-PrivacyTestRow 999 'powershell.exe' 'C:\Windows\System32\powershell.exe' '' 41), $openAiRow, $openAiCliRow)
+    Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'Default mode allowed an active Codex ancestor'
+    $KeepCodexOpen = $true
+    Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'KeepCodexOpen alone bypassed reconnect consent'
+    $AllowVpnReconnect = $true
+    Close-PrivacyClients -TimeoutSeconds 0
+    Assert-PrivacyClientsStopped
+    Assert-True ($script:privacyCloseSignals -eq 0 -and $script:privacyTable.Count -eq 3) 'Explicit keep-open mode closed Codex or its CLI'
+    $script:privacyTable += $claudeRow
+    Assert-Deferred { Assert-PrivacyClientsStopped } 'Codex permission also exempted Claude'
+    $script:privacyTable = @($updaterRow, (New-PrivacyTestRow 42 'codex.exe' 'C:\Unknown\codex.exe'))
+    Assert-Deferred { Assert-PrivacyClientsStopped } 'Codex permission exempted an unverified installation'
+    $KeepCodexOpen = $false
+    $AllowVpnReconnect = $false
+    $script:privacyTable = @($updaterRow, $openAiRow)
+    Assert-Deferred { Assert-PrivacyClientsStopped } 'Keep-open consent survived a later ordinary invocation'
+    Write-Host 'PASS: explicit Codex keep-open consent, unchanged Claude and default guards'
+
     $script:privacyTable = @($updaterRow, $claudeRow)
     $script:privacyCloseMode = 'ignore'
     Assert-Deferred { Close-PrivacyClients -TimeoutSeconds 0 } 'Uncooperative desktop app did not block application'

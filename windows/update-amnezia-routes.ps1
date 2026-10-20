@@ -32,6 +32,7 @@ param(
     [switch]$ReplaceAll,
     [switch]$NoRestart,
     [switch]$AllowVpnReconnect,
+    [switch]$KeepCodexOpen,
     [switch]$SelfTest,
     [switch]$Status,
     [switch]$RecoverOnly,
@@ -48,6 +49,10 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
+
+if ($KeepCodexOpen -and -not $AllowVpnReconnect) {
+    throw '-KeepCodexOpen требует разового -AllowVpnReconnect: во время переподключения Codex/ChatGPT может выйти в сеть напрямую.'
+}
 
 if ($TestYouTubeIngest -and ($DryRun -or $SelfTest -or $Status -or $RecoverOnly -or $PreparedPlanPath)) {
     throw '-TestYouTubeIngest — отдельная диагностика без изменения настроек.'
@@ -1304,6 +1309,10 @@ function Get-PrivacyClientProcesses($ProcessTable = $null) {
         }
         if ($null -ne $client) {
             if ((Get-PrivacyProcessOwnerSid $row) -cne $ownerSid) { continue }
+            # Explicit, per-invocation consent only. Unknown installations and
+            # previously tracked generic descendants still require manual exit.
+            if ($KeepCodexOpen -and $AllowVpnReconnect -and
+                $client.Id -eq 'chatgpt-desktop' -and $client.Kind -eq 'desktop') { continue }
             [pscustomobject]@{ Id = [int]$row.ProcessId; ParentId = [int]$row.ParentProcessId
                 Name = [string]$row.Name; Image = [string]$row.ExecutablePath; Client = $client.Id; Kind = $client.Kind
                 CreatedAt = (Get-PrivacyProcessCreatedAt $row) }
@@ -1358,6 +1367,9 @@ function Assert-PrivacyClientSignalIdentity($Client, $Process) {
 }
 
 function Close-PrivacyClients([ValidateRange(0, 120)][int]$TimeoutSeconds = 15) {
+    if ($KeepCodexOpen -and $AllowVpnReconnect) {
+        Write-Warning 'Разово разрешено оставить Codex/ChatGPT открытым. До восстановления VPN его трафик может идти напрямую.'
+    }
     $table = @(Get-PrivacyClientProcessTable)
     $clients = @(Get-PrivacyClientProcesses $table)
     Assert-UpdaterOutsidePrivacyClients $table $clients
