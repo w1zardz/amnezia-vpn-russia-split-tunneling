@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "updated": "2026-10-27",
+  "updated": "2026-10-28",
   "source": "Team Cymru bulk whois + RIPEstat announced-prefixes",
-  "prefix_count": 1099,
+  "prefix_count": 1102,
   "external_count": 0,
   "external_domains": 0,
-  "resolved_domains": 1077,
+  "resolved_domains": 1078,
   "catalog_domains": 1155,
   "prefixes": {
     "5.61.16.0/21": {
       "asn": 47764,
-      "as_name": "VK-AS - LLC VK, RU",
+      "as_name": "VK-AS, RU",
       "cc": "RU",
       "services": [
         "ok"
@@ -40,7 +40,7 @@
     },
     "5.188.57.75/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -49,7 +49,7 @@
     },
     "5.188.118.51/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -58,7 +58,7 @@
     },
     "5.188.140.0/22": {
       "asn": 47764,
-      "as_name": "VK-AS - LLC VK, RU",
+      "as_name": "VK-AS, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -67,7 +67,7 @@
     },
     "5.188.161.116/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -76,7 +76,7 @@
     },
     "5.188.161.118/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -92,7 +92,7 @@
     },
     "31.31.196.17/32": {
       "asn": 197695,
-      "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
+      "as_name": "AS-REG, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -101,7 +101,7 @@
     },
     "31.31.197.32/32": {
       "asn": 197695,
-      "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
+      "as_name": "AS-REG, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -110,7 +110,7 @@
     },
     "31.31.199.181/32": {
       "asn": 197695,
-      "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
+      "as_name": "AS-REG, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -119,7 +119,7 @@
     },
     "31.31.205.163/32": {
       "asn": 197695,
-      "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
+      "as_name": "AS-REG, RU",
       "cc": "RU",
       "services": [
         "banks-extra",
@@ -143,7 +143,7 @@
     },
     "31.130.143.0/24": {
       "asn": 207986,
-      "as_name": "OZON-BANK-AS - LLC OZON BANK, RU",
+      "as_name": "OZON-BANK-AS, RU",
       "cc": "RU",
       "services": [
         "ozon"
@@ -152,7 +152,7 @@
     },
     "31.130.149.151/32": {
       "asn": 9123,
-      "as_name": "TimeWeb-AS - JSC _TIMEWEB_, RU",
+      "as_name": "TIMEWEB-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -161,7 +161,7 @@
     },
     "31.177.76.32/32": {
       "asn": 48287,
-      "as_name": "RU-CENTER - JSC _RU-CENTER_, RU",
+      "as_name": "RU-CENTER, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -170,7 +170,7 @@
     },
     "31.177.80.32/32": {
       "asn": 48287,
-      "as_name": "RU-CENTER - JSC _RU-CENTER_, RU",
+      "as_name": "RU-CENTER, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -200,7 +200,7 @@
     },
     "31.186.102.100/32": {
       "asn": 50340,
-      "as_name": "SELECTEL-MSK - JSC Selectel, RU",
+      "as_name": "SELECTEL-MSK, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -209,7 +209,7 @@
     },
     "37.130.193.75/32": {
       "asn": 34545,
-      "as_name": "MTSLink - Webinar Tehnologii OOO, RU",
+      "as_name": "MTSLINK, RU",
       "cc": "RU",
       "services": [
         "telecom-extra"
@@ -225,7 +225,7 @@
     },
     "37.139.38.178/32": {
       "asn": 216236,
-      "as_name": "Novofon-AS - NOVOFON-OS LLC, RU",
+      "as_name": "NOVOFON-AS, RU",
       "cc": "RU",
       "services": [
         "isp"
@@ -234,7 +234,7 @@
     },
     "37.139.38.212/32": {
       "asn": 216236,
-      "as_name": "Novofon-AS - NOVOFON-OS LLC, RU",
+      "as_name": "NOVOFON-AS, RU",
       "cc": "RU",
       "services": [
         "isp"
@@ -250,7 +250,7 @@
     },
     "37.140.192.41/32": {
       "asn": 197695,
-      "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
+      "as_name": "AS-REG, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -259,34 +259,16 @@
     },
     "37.220.161.51/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "avia"
       ],
       "source": "dns"
     },
-    "37.220.161.124/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "37.220.161.127/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
     "37.220.161.200/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "mobile"
@@ -295,7 +277,7 @@
     },
     "37.220.161.212/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "mobile"
@@ -304,7 +286,7 @@
     },
     "37.220.161.219/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "mobile"
@@ -313,7 +295,16 @@
     },
     "37.220.161.222/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
+      "cc": "RU",
+      "services": [
+        "gosuslugi"
+      ],
+      "source": "dns"
+    },
+    "37.220.161.236/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -322,7 +313,7 @@
     },
     "37.220.161.237/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "mobile"
@@ -331,7 +322,7 @@
     },
     "37.220.161.251/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "mobile"
@@ -340,16 +331,16 @@
     },
     "37.220.162.232/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
       ],
       "source": "dns"
     },
-    "37.220.163.9/32": {
+    "37.220.163.4/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "avia"
@@ -358,7 +349,7 @@
     },
     "37.220.163.23/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "mobile"
@@ -367,7 +358,7 @@
     },
     "37.220.163.129/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -376,7 +367,7 @@
     },
     "37.220.163.130/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -385,16 +376,16 @@
     },
     "37.220.163.151/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
       ],
       "source": "dns"
     },
-    "37.220.163.152/32": {
+    "37.220.163.156/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -403,7 +394,7 @@
     },
     "45.67.58.34/32": {
       "asn": 198610,
-      "as_name": "BEGET-AS - Beget LLC, RU",
+      "as_name": "BEGET-AS, RU",
       "cc": "RU",
       "services": [
         "post"
@@ -419,7 +410,7 @@
     },
     "45.130.41.212/32": {
       "asn": 198610,
-      "as_name": "BEGET-AS - Beget LLC, RU",
+      "as_name": "BEGET-AS, RU",
       "cc": "RU",
       "services": [
         "isp"
@@ -435,7 +426,7 @@
     },
     "45.155.105.30/32": {
       "asn": 208178,
-      "as_name": "NLR - Federal State Institution _National Library of Russia (NLR)_, RU",
+      "as_name": "NLR, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -444,7 +435,7 @@
     },
     "46.17.203.154/32": {
       "asn": 49675,
-      "as_name": "SKBKONTUR-AS - SKB Kontur Production JSC, RU",
+      "as_name": "SKBKONTUR-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -453,7 +444,7 @@
     },
     "46.17.206.11/32": {
       "asn": 49675,
-      "as_name": "SKBKONTUR-AS - SKB Kontur Production JSC, RU",
+      "as_name": "SKBKONTUR-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -462,7 +453,7 @@
     },
     "46.28.16.112/32": {
       "asn": 51309,
-      "as_name": "Interfax - Joint Stock Company Interfax, RU",
+      "as_name": "INTERFAX, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -471,7 +462,7 @@
     },
     "46.28.18.15/32": {
       "asn": 51309,
-      "as_name": "Interfax - Joint Stock Company Interfax, RU",
+      "as_name": "INTERFAX, RU",
       "cc": "RU",
       "services": [
         "banks-extra",
@@ -481,7 +472,7 @@
     },
     "46.29.118.72/32": {
       "asn": 199669,
-      "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
+      "as_name": "ATLEX-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -490,7 +481,7 @@
     },
     "46.29.118.125/32": {
       "asn": 199669,
-      "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
+      "as_name": "ATLEX-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -534,7 +525,7 @@
     },
     "46.61.214.90/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -543,7 +534,7 @@
     },
     "46.148.228.50/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -552,7 +543,7 @@
     },
     "46.148.232.104/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "vk-extra"
@@ -568,7 +559,7 @@
     },
     "46.174.49.199/32": {
       "asn": 197309,
-      "as_name": "RS-Media-ru - RS-Media LLC, RU",
+      "as_name": "RS-MEDIA-, RU",
       "cc": "RU",
       "services": [
         "game-servers"
@@ -584,7 +575,7 @@
     },
     "46.235.184.68/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "avia"
@@ -593,25 +584,25 @@
     },
     "46.235.184.84/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
       ],
       "source": "dns"
     },
-    "46.235.184.89/32": {
+    "46.235.184.118/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
       ],
       "source": "dns"
     },
-    "46.235.184.101/32": {
+    "46.235.184.195/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -620,7 +611,7 @@
     },
     "46.235.184.197/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -629,7 +620,7 @@
     },
     "46.235.184.211/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -638,16 +629,34 @@
     },
     "46.235.185.73/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "avia"
       ],
       "source": "dns"
     },
+    "46.235.185.169/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS NGENIX, RU",
+      "cc": "RU",
+      "services": [
+        "gosuslugi"
+      ],
+      "source": "dns"
+    },
     "46.235.186.41/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
+      "cc": "RU",
+      "services": [
+        "avia"
+      ],
+      "source": "dns"
+    },
+    "46.235.186.66/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "avia"
@@ -656,7 +665,7 @@
     },
     "46.235.186.67/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "avia"
@@ -665,7 +674,7 @@
     },
     "46.235.186.77/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -674,7 +683,7 @@
     },
     "46.235.186.102/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -683,7 +692,7 @@
     },
     "46.235.186.153/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -692,7 +701,7 @@
     },
     "46.235.186.164/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -701,7 +710,7 @@
     },
     "46.235.186.234/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -710,7 +719,7 @@
     },
     "46.235.186.238/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -719,7 +728,7 @@
     },
     "46.235.186.249/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -728,7 +737,7 @@
     },
     "46.235.186.254/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -737,7 +746,7 @@
     },
     "46.235.188.74/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -746,7 +755,7 @@
     },
     "46.235.188.75/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -755,7 +764,7 @@
     },
     "46.235.188.79/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -764,7 +773,7 @@
     },
     "46.235.188.94/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -773,34 +782,43 @@
     },
     "46.235.188.133/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
       ],
       "source": "dns"
     },
+    "46.235.188.171/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS NGENIX, RU",
+      "cc": "RU",
+      "services": [
+        "gosuslugi"
+      ],
+      "source": "dns"
+    },
     "46.235.188.172/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
       ],
       "source": "dns"
     },
-    "46.235.189.44/32": {
+    "46.235.188.251/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
       ],
       "source": "dns"
     },
-    "46.235.189.64/32": {
+    "46.235.189.7/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -809,7 +827,7 @@
     },
     "46.235.189.201/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -818,7 +836,7 @@
     },
     "51.250.120.146/32": {
       "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
+      "as_name": "YANDEXCLOUD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -827,7 +845,7 @@
     },
     "51.250.123.126/32": {
       "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
+      "as_name": "YANDEXCLOUD, RU",
       "cc": "RU",
       "services": [
         "classifieds"
@@ -836,7 +854,7 @@
     },
     "51.250.126.110/32": {
       "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
+      "as_name": "YANDEXCLOUD, RU",
       "cc": "RU",
       "services": [
         "yandex-auto"
@@ -845,7 +863,7 @@
     },
     "62.33.186.12/32": {
       "asn": 20485,
-      "as_name": "TRANSTELECOM - Joint Stock Company TransTeleCom, RU",
+      "as_name": "TRANSTELECOM Moscow, Russia, RU",
       "cc": "RU",
       "services": [
         "isp"
@@ -854,7 +872,7 @@
     },
     "62.109.11.76/32": {
       "asn": 29182,
-      "as_name": "RU-JSCIOT - JSC IOT, RU",
+      "as_name": "RU-JSCIOT, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -863,7 +881,7 @@
     },
     "62.109.21.200/32": {
       "asn": 29182,
-      "as_name": "RU-JSCIOT - JSC IOT, RU",
+      "as_name": "RU-JSCIOT, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -872,7 +890,7 @@
     },
     "62.148.128.5/32": {
       "asn": 15468,
-      "as_name": "IDDQD-AS - IDDQD-AS, RU",
+      "as_name": "KLGELECS-AS PJSC Rostelecom. Kaluga branch, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -888,7 +906,7 @@
     },
     "77.105.159.134/32": {
       "asn": 208349,
-      "as_name": "O2CLOUDRU - O2 Cloud LLC, RU",
+      "as_name": "O2CLOUD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -911,7 +929,7 @@
     },
     "77.220.220.0/24": {
       "asn": 207353,
-      "as_name": "Ruform - Ruform LLC, RU",
+      "as_name": "RUFORM, RU",
       "cc": "RU",
       "services": [
         "rutube"
@@ -934,7 +952,7 @@
     },
     "77.222.40.132/32": {
       "asn": 44112,
-      "as_name": "SWEB-AS - SpaceWeb Ltd, RU",
+      "as_name": "SWEB-AS, RU",
       "cc": "RU",
       "services": [
         "cloud-extra"
@@ -943,7 +961,7 @@
     },
     "77.244.222.74/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -952,25 +970,16 @@
     },
     "78.40.217.75/32": {
       "asn": 9123,
-      "as_name": "TimeWeb-AS - JSC _TIMEWEB_, RU",
+      "as_name": "TIMEWEB-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
       ],
       "source": "dns"
     },
-    "78.41.110.46/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
     "78.41.110.103/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -979,16 +988,25 @@
     },
     "78.41.110.143/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "mobile"
       ],
       "source": "dns"
     },
+    "78.41.110.157/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS NGENIX, RU",
+      "cc": "RU",
+      "services": [
+        "gosuslugi"
+      ],
+      "source": "dns"
+    },
     "78.41.110.211/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -997,7 +1015,7 @@
     },
     "78.41.110.215/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -1006,7 +1024,7 @@
     },
     "78.41.110.216/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -1015,7 +1033,7 @@
     },
     "78.41.110.238/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "avia"
@@ -1024,7 +1042,7 @@
     },
     "78.41.111.11/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -1033,7 +1051,7 @@
     },
     "78.41.111.34/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "mobile"
@@ -1042,7 +1060,7 @@
     },
     "78.41.111.154/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "mobile"
@@ -1051,7 +1069,7 @@
     },
     "78.41.111.199/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -1060,7 +1078,7 @@
     },
     "78.41.111.224/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "avia"
@@ -1069,7 +1087,7 @@
     },
     "78.108.80.125/32": {
       "asn": 43362,
-      "as_name": "MAJORDOMO - Hosting Ltd, RU",
+      "as_name": "MAJORDOMO, RU",
       "cc": "RU",
       "services": [
         "vk-play"
@@ -1078,7 +1096,7 @@
     },
     "78.155.198.17/32": {
       "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
+      "as_name": "HLL-AS, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -1087,7 +1105,7 @@
     },
     "78.155.198.20/32": {
       "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
+      "as_name": "HLL-AS, RU",
       "cc": "RU",
       "services": [
         "booking"
@@ -1096,7 +1114,7 @@
     },
     "78.155.198.133/32": {
       "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
+      "as_name": "HLL-AS, RU",
       "cc": "RU",
       "services": [
         "booking"
@@ -1175,7 +1193,7 @@
     },
     "79.137.183.0/24": {
       "asn": 47541,
-      "as_name": "VKONTAKTE-SPB-AS - LLC VK, RU",
+      "as_name": "VKONTAKTE-SPB-AS vk.com, RU",
       "cc": "RU",
       "services": [
         "sferum"
@@ -1191,7 +1209,7 @@
     },
     "79.143.30.16/32": {
       "asn": 50340,
-      "as_name": "SELECTEL-MSK - JSC Selectel, RU",
+      "as_name": "SELECTEL-MSK, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1221,7 +1239,7 @@
     },
     "80.67.43.0/24": {
       "asn": 57629,
-      "as_name": "IVI-RU - LLC IVI.RU, RU",
+      "as_name": "IVI-, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -1230,7 +1248,7 @@
     },
     "80.68.253.14/32": {
       "asn": 20848,
-      "as_name": "ROSBUSINESSCONSULTING-AS - ROSBUSINESSCONSULTING JSC, RU",
+      "as_name": "ROSBUSINESSCONSULTING-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1239,7 +1257,7 @@
     },
     "80.247.40.24/32": {
       "asn": 25292,
-      "as_name": "VGTRK-AS - Federal State Unitary Enterprise _The Russian Television and Radio Broadcasting Company_, RU",
+      "as_name": "VGTRK-AS, RU",
       "cc": "RU",
       "services": [
         "media-extra"
@@ -1248,7 +1266,7 @@
     },
     "80.250.169.2/32": {
       "asn": 3267,
-      "as_name": "IDDQD-AS - IDDQD-AS, RU",
+      "as_name": "NIKS, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -1257,7 +1275,7 @@
     },
     "81.19.72.0/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1266,7 +1284,7 @@
     },
     "81.19.72.1/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1275,7 +1293,7 @@
     },
     "81.19.72.2/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1284,7 +1302,7 @@
     },
     "81.19.72.12/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1293,7 +1311,7 @@
     },
     "81.19.72.13/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1302,7 +1320,7 @@
     },
     "81.19.72.14/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1311,7 +1329,7 @@
     },
     "81.19.72.15/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1320,7 +1338,7 @@
     },
     "81.19.72.32/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1329,7 +1347,7 @@
     },
     "81.19.72.33/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1338,7 +1356,7 @@
     },
     "81.19.72.34/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1347,7 +1365,7 @@
     },
     "81.19.82.0/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1356,7 +1374,7 @@
     },
     "81.19.82.1/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1365,7 +1383,7 @@
     },
     "81.19.82.2/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1374,7 +1392,7 @@
     },
     "81.19.86.0/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1383,7 +1401,7 @@
     },
     "81.19.86.1/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1392,7 +1410,7 @@
     },
     "81.19.86.2/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1401,7 +1419,7 @@
     },
     "81.19.92.84/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1410,7 +1428,7 @@
     },
     "81.19.92.85/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1419,7 +1437,7 @@
     },
     "81.19.92.86/32": {
       "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
+      "as_name": "RAMBLER-TELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1428,7 +1446,7 @@
     },
     "81.22.46.142/32": {
       "asn": 212136,
-      "as_name": "NUBES - NUBES LLC, RU",
+      "as_name": "NUBES, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1437,7 +1455,7 @@
     },
     "81.26.191.59/32": {
       "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
+      "as_name": "YANDEXCLOUD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1446,7 +1464,7 @@
     },
     "81.30.199.238/32": {
       "asn": 24955,
-      "as_name": "UBN-AS - JSC _Ufanet_, RU",
+      "as_name": "UBN-AS, RU",
       "cc": "RU",
       "services": [
         "isp"
@@ -1455,7 +1473,7 @@
     },
     "81.161.98.78/32": {
       "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
+      "as_name": "HLL-AS, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -1464,7 +1482,7 @@
     },
     "81.177.122.5/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1473,7 +1491,7 @@
     },
     "81.177.164.124/32": {
       "asn": 8342,
-      "as_name": "RTCOMM-AS - JSC RTComm.RU, RU",
+      "as_name": "RTCOMM-AS, RU",
       "cc": "RU",
       "services": [
         "classifieds"
@@ -1482,7 +1500,7 @@
     },
     "81.177.220.114/32": {
       "asn": 50340,
-      "as_name": "SELECTEL-MSK - JSC Selectel, RU",
+      "as_name": "SELECTEL-MSK, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1505,7 +1523,7 @@
     },
     "82.146.55.15/32": {
       "asn": 29182,
-      "as_name": "RU-JSCIOT - JSC IOT, RU",
+      "as_name": "RU-JSCIOT, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1514,7 +1532,7 @@
     },
     "82.147.65.36/32": {
       "asn": 204738,
-      "as_name": "AS-ETAGI - OOO _Etazhi-Zapadnaya Sibir_, RU",
+      "as_name": "AS-ETAGI, RU",
       "cc": "RU",
       "services": [
         "classifieds"
@@ -1523,7 +1541,7 @@
     },
     "82.202.162.159/32": {
       "asn": 29182,
-      "as_name": "RU-JSCIOT - JSC IOT, RU",
+      "as_name": "RU-JSCIOT, RU",
       "cc": "RU",
       "services": [
         "booking"
@@ -1532,7 +1550,7 @@
     },
     "82.202.170.94/32": {
       "asn": 29182,
-      "as_name": "RU-JSCIOT - JSC IOT, RU",
+      "as_name": "RU-JSCIOT, RU",
       "cc": "RU",
       "services": [
         "avia"
@@ -1541,7 +1559,7 @@
     },
     "82.202.189.14/32": {
       "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
+      "as_name": "KL-KDP, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1550,7 +1568,7 @@
     },
     "82.202.189.125/32": {
       "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
+      "as_name": "KL-KDP, RU",
       "cc": "RU",
       "services": [
         "mos"
@@ -1559,7 +1577,7 @@
     },
     "82.202.189.136/32": {
       "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
+      "as_name": "KL-KDP, RU",
       "cc": "RU",
       "services": [
         "mos"
@@ -1568,7 +1586,7 @@
     },
     "82.202.190.53/32": {
       "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
+      "as_name": "KL-KDP, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -1577,7 +1595,7 @@
     },
     "82.202.190.91/32": {
       "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
+      "as_name": "KL-KDP, RU",
       "cc": "RU",
       "services": [
         "edu-extra"
@@ -1586,7 +1604,7 @@
     },
     "82.202.190.99/32": {
       "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
+      "as_name": "KL-KDP, RU",
       "cc": "RU",
       "services": [
         "other-banks"
@@ -1595,7 +1613,7 @@
     },
     "82.202.190.107/32": {
       "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
+      "as_name": "KL-KDP, RU",
       "cc": "RU",
       "services": [
         "banks-extra"
@@ -1604,7 +1622,7 @@
     },
     "82.202.190.187/32": {
       "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
+      "as_name": "KL-KDP, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1613,7 +1631,7 @@
     },
     "82.202.190.240/32": {
       "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
+      "as_name": "KL-KDP, RU",
       "cc": "RU",
       "services": [
         "other-banks"
@@ -1622,7 +1640,7 @@
     },
     "82.202.191.110/32": {
       "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
+      "as_name": "KL-KDP, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1631,7 +1649,7 @@
     },
     "82.202.191.191/32": {
       "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
+      "as_name": "KL-KDP, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1640,7 +1658,7 @@
     },
     "82.202.213.210/32": {
       "asn": 50340,
-      "as_name": "SELECTEL-MSK - JSC Selectel, RU",
+      "as_name": "SELECTEL-MSK, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1649,7 +1667,7 @@
     },
     "82.202.230.54/32": {
       "asn": 50340,
-      "as_name": "SELECTEL-MSK - JSC Selectel, RU",
+      "as_name": "SELECTEL-MSK, RU",
       "cc": "RU",
       "services": [
         "media-extra"
@@ -1658,7 +1676,7 @@
     },
     "82.202.230.55/32": {
       "asn": 50340,
-      "as_name": "SELECTEL-MSK - JSC Selectel, RU",
+      "as_name": "SELECTEL-MSK, RU",
       "cc": "RU",
       "services": [
         "media-extra"
@@ -1667,7 +1685,7 @@
     },
     "82.202.230.56/32": {
       "asn": 50340,
-      "as_name": "SELECTEL-MSK - JSC Selectel, RU",
+      "as_name": "SELECTEL-MSK, RU",
       "cc": "RU",
       "services": [
         "media-extra"
@@ -1676,7 +1694,7 @@
     },
     "82.202.255.115/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1685,7 +1703,7 @@
     },
     "82.204.188.43/32": {
       "asn": 8359,
-      "as_name": "MTS - MTS PJSC, RU",
+      "as_name": "MTS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1708,7 +1726,7 @@
     },
     "83.169.194.21/32": {
       "asn": 31133,
-      "as_name": "MF-MGSM-AS - PJSC MegaFon, RU",
+      "as_name": "MF-MGSM-AS PJSC MegaFon, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1731,7 +1749,7 @@
     },
     "83.242.98.105/32": {
       "asn": 201498,
-      "as_name": "MXMANAGEMENT-AS - _MX Management_ Ltd., RU",
+      "as_name": "MXMANAGEMENT-AS, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -1747,7 +1765,7 @@
     },
     "84.42.111.247/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -1756,7 +1774,7 @@
     },
     "84.201.151.229/32": {
       "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
+      "as_name": "YANDEXCLOUD, RU",
       "cc": "RU",
       "services": [
         "yandex"
@@ -1765,7 +1783,7 @@
     },
     "84.237.49.123/32": {
       "asn": 3335,
-      "as_name": "NSU-AS - Federal State Educational Institution of Higher Professional Education _Novosibirsk State University, National Research_, RU",
+      "as_name": "NSU-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1802,7 +1820,7 @@
     },
     "84.252.149.0/24": {
       "asn": 35237,
-      "as_name": "Sberbank - Sberbank of Russia PJSC, RU",
+      "as_name": "SBERBANK, RU",
       "cc": "RU",
       "services": [
         "sber"
@@ -1832,7 +1850,7 @@
     },
     "85.118.181.3/32": {
       "asn": 35021,
-      "as_name": "E-STOCK-AS - MB Information Protection LLC, RU",
+      "as_name": "E-STOCK-AS, RU",
       "cc": "RU",
       "services": [
         "banks-extra"
@@ -1841,7 +1859,7 @@
     },
     "85.118.181.8/32": {
       "asn": 35021,
-      "as_name": "E-STOCK-AS - MB Information Protection LLC, RU",
+      "as_name": "E-STOCK-AS, RU",
       "cc": "RU",
       "services": [
         "payments"
@@ -1850,7 +1868,7 @@
     },
     "85.118.181.24/32": {
       "asn": 35021,
-      "as_name": "E-STOCK-AS - MB Information Protection LLC, RU",
+      "as_name": "E-STOCK-AS, RU",
       "cc": "RU",
       "services": [
         "banks-extra"
@@ -1859,7 +1877,7 @@
     },
     "85.118.181.77/32": {
       "asn": 35021,
-      "as_name": "E-STOCK-AS - MB Information Protection LLC, RU",
+      "as_name": "E-STOCK-AS, RU",
       "cc": "RU",
       "services": [
         "brokers"
@@ -1868,7 +1886,7 @@
     },
     "85.142.19.97/32": {
       "asn": 3267,
-      "as_name": "IDDQD-AS - IDDQD-AS, RU",
+      "as_name": "NIKS, RU",
       "cc": "RU",
       "services": [
         "edu-extra"
@@ -1877,7 +1895,7 @@
     },
     "85.142.19.98/32": {
       "asn": 3267,
-      "as_name": "IDDQD-AS - IDDQD-AS, RU",
+      "as_name": "NIKS, RU",
       "cc": "RU",
       "services": [
         "edu-extra"
@@ -1893,7 +1911,7 @@
     },
     "85.143.112.110/32": {
       "asn": 3267,
-      "as_name": "IDDQD-AS - IDDQD-AS, RU",
+      "as_name": "NIKS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1916,7 +1934,7 @@
     },
     "85.193.70.155/32": {
       "asn": 48399,
-      "as_name": "AS-LINXDATACENTER - Svyaz VSD LLC, RU",
+      "as_name": "AS-LINXDATACENTER, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -1925,7 +1943,7 @@
     },
     "85.193.70.213/32": {
       "asn": 48399,
-      "as_name": "AS-LINXDATACENTER - Svyaz VSD LLC, RU",
+      "as_name": "AS-LINXDATACENTER, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -1948,7 +1966,7 @@
     },
     "85.198.77.0/24": {
       "asn": 57073,
-      "as_name": "Wildberries-AS - LLC Wildberries, RU",
+      "as_name": "WILDBERRIES-AS, RU",
       "cc": "RU",
       "services": [
         "wildberries"
@@ -1964,7 +1982,7 @@
     },
     "85.198.79.0/24": {
       "asn": 57073,
-      "as_name": "Wildberries-AS - LLC Wildberries, RU",
+      "as_name": "WILDBERRIES-AS, RU",
       "cc": "RU",
       "services": [
         "wildberries"
@@ -1973,7 +1991,7 @@
     },
     "85.209.149.83/32": {
       "asn": 208677,
-      "as_name": "CLOUDRU-AS - _Cloud Technologies_ LLC trading as Cloud.ru, RU",
+      "as_name": "CLOUDRU-AS, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -1982,16 +2000,25 @@
     },
     "85.233.75.14/32": {
       "asn": 34887,
-      "as_name": "CIRT-AS - Information Technology Center of the Republic of Tatarstan GUP, RU",
+      "as_name": "CIRT-AS, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
       ],
       "source": "dns"
     },
+    "86.109.210.185/32": {
+      "asn": 29648,
+      "as_name": "COMLINE-AS, RU",
+      "cc": "RU",
+      "services": [
+        "telecom-extra"
+      ],
+      "source": "dns"
+    },
     "87.226.155.117/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "telecom-extra"
@@ -2000,7 +2027,7 @@
     },
     "87.226.162.216/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "isp"
@@ -2009,7 +2036,7 @@
     },
     "87.226.166.137/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2018,7 +2045,7 @@
     },
     "87.228.12.190/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "media-extra"
@@ -2034,7 +2061,7 @@
     },
     "87.240.128.0/18": {
       "asn": 47541,
-      "as_name": "VKONTAKTE-SPB-AS - LLC VK, RU",
+      "as_name": "VKONTAKTE-SPB-AS vk.com, RU",
       "cc": "RU",
       "services": [
         "vk",
@@ -2068,7 +2095,7 @@
     },
     "87.249.32.214/32": {
       "asn": 24739,
-      "as_name": "SEVEREN-TELECOM - JSC _Severen-Telecom_, RU",
+      "as_name": "SEVEREN-TELECOM St.Petersburg, Russia, RU",
       "cc": "RU",
       "services": [
         "classifieds"
@@ -2077,7 +2104,7 @@
     },
     "88.212.196.78/32": {
       "asn": 39134,
-      "as_name": "UNITEDNET - EDINAYA SET LIMITED LIABILITY COMPANY, RU",
+      "as_name": "UNITEDNET, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2086,7 +2113,7 @@
     },
     "89.20.149.117/32": {
       "asn": 12714,
-      "as_name": "MEGAFON-AS - PJSC MegaFon, RU",
+      "as_name": "MEGAFON-AS Moscow, Russia, RU",
       "cc": "RU",
       "services": [
         "isp"
@@ -2095,7 +2122,7 @@
     },
     "89.22.171.199/32": {
       "asn": 209024,
-      "as_name": "MTS-CLOUD-A - MTS PJSC, RU",
+      "as_name": "MTS-CLOUD-A, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2104,7 +2131,7 @@
     },
     "89.104.87.124/32": {
       "asn": 48287,
-      "as_name": "RU-CENTER - JSC _RU-CENTER_, RU",
+      "as_name": "RU-CENTER, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2113,7 +2140,7 @@
     },
     "89.108.122.195/32": {
       "asn": 197695,
-      "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
+      "as_name": "AS-REG, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2122,7 +2149,7 @@
     },
     "89.108.124.30/32": {
       "asn": 197695,
-      "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
+      "as_name": "AS-REG, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2131,7 +2158,7 @@
     },
     "89.175.190.152/32": {
       "asn": 8359,
-      "as_name": "MTS - MTS PJSC, RU",
+      "as_name": "MTS, RU",
       "cc": "RU",
       "services": [
         "banks-extra"
@@ -2182,7 +2209,7 @@
     },
     "89.208.226.45/32": {
       "asn": 12695,
-      "as_name": "DINET-AS - LLC Digital Network, RU",
+      "as_name": "DINET-AS, RU",
       "cc": "RU",
       "services": [
         "gov-extra",
@@ -2192,7 +2219,7 @@
     },
     "89.208.226.50/32": {
       "asn": 12695,
-      "as_name": "DINET-AS - LLC Digital Network, RU",
+      "as_name": "DINET-AS, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -2222,7 +2249,7 @@
     },
     "89.221.236.0/22": {
       "asn": 47764,
-      "as_name": "VK-AS - LLC VK, RU",
+      "as_name": "VK-AS, RU",
       "cc": "RU",
       "services": [
         "mailru",
@@ -2236,7 +2263,7 @@
     },
     "89.232.162.226/32": {
       "asn": 208677,
-      "as_name": "CLOUDRU-AS - _Cloud Technologies_ LLC trading as Cloud.ru, RU",
+      "as_name": "CLOUDRU-AS, RU",
       "cc": "RU",
       "services": [
         "edu-extra"
@@ -2245,7 +2272,7 @@
     },
     "89.248.230.0/24": {
       "asn": 207353,
-      "as_name": "Ruform - Ruform LLC, RU",
+      "as_name": "RUFORM, RU",
       "cc": "RU",
       "services": [
         "rutube"
@@ -2254,7 +2281,7 @@
     },
     "89.253.240.17/32": {
       "asn": 41535,
-      "as_name": "RUSONYX-AS - LLC _ASTRA CLOUD_, RU",
+      "as_name": "RUSONYX-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2291,7 +2318,7 @@
     },
     "90.156.232.0/21": {
       "asn": 47764,
-      "as_name": "VK-AS - LLC VK, RU",
+      "as_name": "VK-AS, RU",
       "cc": "RU",
       "services": [
         "rustore",
@@ -2302,7 +2329,7 @@
     },
     "90.156.244.0/24": {
       "asn": 215070,
-      "as_name": "AS_WILDBERRIES_BY - LLC Wildberries, RU",
+      "as_name": "AS_WILDBERRIES_BY, RU",
       "cc": "RU",
       "services": [
         "wildberries"
@@ -2318,7 +2345,7 @@
     },
     "91.109.201.40/32": {
       "asn": 199669,
-      "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
+      "as_name": "ATLEX-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2327,7 +2354,7 @@
     },
     "91.109.201.87/32": {
       "asn": 199669,
-      "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
+      "as_name": "ATLEX-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2336,7 +2363,7 @@
     },
     "91.109.201.105/32": {
       "asn": 199669,
-      "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
+      "as_name": "ATLEX-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2345,7 +2372,7 @@
     },
     "91.109.202.4/32": {
       "asn": 199669,
-      "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
+      "as_name": "ATLEX-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2354,7 +2381,7 @@
     },
     "91.109.204.245/32": {
       "asn": 199669,
-      "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
+      "as_name": "ATLEX-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2363,7 +2390,7 @@
     },
     "91.109.206.6/32": {
       "asn": 199669,
-      "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
+      "as_name": "ATLEX-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2372,7 +2399,7 @@
     },
     "91.142.135.123/32": {
       "asn": 41706,
-      "as_name": "ROSNEFT-AS - PJSC NK Rosneft, RU",
+      "as_name": "ROSNEFT-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2402,7 +2429,7 @@
     },
     "91.197.176.106/32": {
       "asn": 5589,
-      "as_name": "OPEN-FC-1-AS - JSC _BM-Bank_, RU",
+      "as_name": "OPEN-FC-1-AS, RU",
       "cc": "RU",
       "services": [
         "brokers"
@@ -2411,7 +2438,7 @@
     },
     "91.199.80.126/32": {
       "asn": 34485,
-      "as_name": "SVYAZNOY-CHAIN-AS - Svyaznoy Chain LLC, RU",
+      "as_name": "SVYAZNOY-CHAIN-AS LLC Svyaznoy Chain ES, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -2420,7 +2447,7 @@
     },
     "91.199.80.127/32": {
       "asn": 34485,
-      "as_name": "SVYAZNOY-CHAIN-AS - Svyaznoy Chain LLC, RU",
+      "as_name": "SVYAZNOY-CHAIN-AS LLC Svyaznoy Chain ES, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -2429,7 +2456,7 @@
     },
     "91.199.149.151/32": {
       "asn": 57494,
-      "as_name": "ADMAN-AS - Adman LLC, RU",
+      "as_name": "ADMAN-AS, RU",
       "cc": "RU",
       "services": [
         "food"
@@ -2438,7 +2465,7 @@
     },
     "91.200.28.169/32": {
       "asn": 43776,
-      "as_name": "RELSOFTCOM-NET - Relsoft communications Ltd., RU",
+      "as_name": "RELSOFTCOM-NET Relsoft Communications Route, RU",
       "cc": "RU",
       "services": [
         "paymaster"
@@ -2447,7 +2474,7 @@
     },
     "91.201.237.94/32": {
       "asn": 43634,
-      "as_name": "RCITSAKHA-AS - State budgetary institution of Sakha Respublic (Yakutiya) Respublicanskiy Centr infokommunikatsionnykh tekhnologiy, RU",
+      "as_name": "RCITSAKHA-AS, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -2456,7 +2483,7 @@
     },
     "91.205.183.83/32": {
       "asn": 51811,
-      "as_name": "LOKOBANK-AS - LOKOBANK-AS, RU",
+      "as_name": "LOKOBANK-AS, RU",
       "cc": "RU",
       "services": [
         "banks-extra"
@@ -2465,7 +2492,7 @@
     },
     "91.206.100.17/32": {
       "asn": 44704,
-      "as_name": "X5-RETAIL-GROUP-AS - Perekrestok-2000 LLC, RU",
+      "as_name": "X5-RETAIL-GROUP-AS, RU",
       "cc": "RU",
       "services": [
         "food"
@@ -2474,7 +2501,7 @@
     },
     "91.206.127.19/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "other-banks"
@@ -2483,7 +2510,7 @@
     },
     "91.206.127.24/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "tv"
@@ -2492,7 +2519,7 @@
     },
     "91.206.127.39/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "misc-extra",
@@ -2503,7 +2530,7 @@
     },
     "91.206.127.88/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "jobs"
@@ -2512,7 +2539,7 @@
     },
     "91.206.127.89/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2521,7 +2548,7 @@
     },
     "91.206.127.102/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2530,7 +2557,7 @@
     },
     "91.206.127.197/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "brokers"
@@ -2539,7 +2566,7 @@
     },
     "91.206.127.224/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "banks-extra"
@@ -2548,7 +2575,7 @@
     },
     "91.206.127.236/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "post"
@@ -2564,7 +2591,7 @@
     },
     "91.213.144.237/32": {
       "asn": 208981,
-      "as_name": "DPC24 - Data Center LLC, RU",
+      "as_name": "DPC24, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2573,7 +2600,7 @@
     },
     "91.215.36.177/32": {
       "asn": 49002,
-      "as_name": "RUSPOST - JSC _Russian Post_, RU",
+      "as_name": "RUSPOST, RU",
       "cc": "RU",
       "services": [
         "post"
@@ -2582,7 +2609,7 @@
     },
     "91.215.42.117/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2591,7 +2618,7 @@
     },
     "91.215.42.162/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2600,7 +2627,7 @@
     },
     "91.215.42.192/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "tv"
@@ -2609,7 +2636,7 @@
     },
     "91.215.42.222/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2618,7 +2645,7 @@
     },
     "91.215.43.100/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2627,7 +2654,7 @@
     },
     "91.215.43.128/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2636,7 +2663,7 @@
     },
     "91.215.43.185/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2645,7 +2672,7 @@
     },
     "91.215.43.202/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2654,7 +2681,7 @@
     },
     "91.215.43.206/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2663,7 +2690,7 @@
     },
     "91.215.43.223/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2735,7 +2762,7 @@
     },
     "91.221.109.76/32": {
       "asn": 59557,
-      "as_name": "ASSTATUSTELECOM - Status Telecom Ltd., RU",
+      "as_name": "ASSTATUSTELECOM, RU",
       "cc": "RU",
       "services": [
         "post"
@@ -2744,7 +2771,7 @@
     },
     "91.221.164.24/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "banks-extra",
@@ -2754,7 +2781,7 @@
     },
     "91.221.164.42/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "food"
@@ -2763,7 +2790,7 @@
     },
     "91.221.164.55/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "rutube"
@@ -2772,7 +2799,7 @@
     },
     "91.221.164.73/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2781,7 +2808,7 @@
     },
     "91.221.164.120/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "food"
@@ -2790,7 +2817,7 @@
     },
     "91.221.164.151/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2799,7 +2826,7 @@
     },
     "91.221.165.118/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -2808,7 +2835,7 @@
     },
     "91.221.165.177/32": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "AS-SERVICEPIPE, RU",
       "cc": "RU",
       "services": [
         "banks-extra"
@@ -2817,7 +2844,7 @@
     },
     "91.222.128.11/32": {
       "asn": 197467,
-      "as_name": "SSAU-AS - Samara University named after Korolev, RU",
+      "as_name": "Samara University, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2826,7 +2853,7 @@
     },
     "91.222.130.250/32": {
       "asn": 197467,
-      "as_name": "SSAU-AS - Samara University named after Korolev, RU",
+      "as_name": "Samara University, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2842,7 +2869,7 @@
     },
     "91.227.52.111/32": {
       "asn": 56806,
-      "as_name": "ascom4s - JSC Computing Forces, RU",
+      "as_name": "ASCOM4S, RU",
       "cc": "RU",
       "services": [
         "payments"
@@ -2851,7 +2878,7 @@
     },
     "91.227.52.169/32": {
       "asn": 56806,
-      "as_name": "ascom4s - JSC Computing Forces, RU",
+      "as_name": "ASCOM4S, RU",
       "cc": "RU",
       "services": [
         "paymaster"
@@ -2923,7 +2950,7 @@
     },
     "91.232.6.132/32": {
       "asn": 60343,
-      "as_name": "ROSCAP-AS - Joint Stock Company _Bank DOM.RF_, RU",
+      "as_name": "ROSCAP-AS, RU",
       "cc": "RU",
       "services": [
         "banks-extra"
@@ -2932,7 +2959,7 @@
     },
     "91.232.93.39/32": {
       "asn": 208981,
-      "as_name": "DPC24 - Data Center LLC, RU",
+      "as_name": "DPC24, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2941,7 +2968,7 @@
     },
     "91.232.135.132/32": {
       "asn": 57487,
-      "as_name": "MIXTELECOM-AS - Advanced Solutions LLC, RU",
+      "as_name": "MIXTELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -2950,7 +2977,7 @@
     },
     "91.232.230.48/32": {
       "asn": 57570,
-      "as_name": "QIWIW-AS - QIWI JSC, RU",
+      "as_name": "QIWIW-AS, RU",
       "cc": "RU",
       "services": [
         "banks-extra"
@@ -2959,7 +2986,7 @@
     },
     "91.232.230.50/32": {
       "asn": 57570,
-      "as_name": "QIWIW-AS - QIWI JSC, RU",
+      "as_name": "QIWIW-AS, RU",
       "cc": "RU",
       "services": [
         "payments"
@@ -2968,7 +2995,7 @@
     },
     "91.232.230.126/32": {
       "asn": 57570,
-      "as_name": "QIWIW-AS - QIWI JSC, RU",
+      "as_name": "QIWIW-AS, RU",
       "cc": "RU",
       "services": [
         "payments"
@@ -2977,7 +3004,7 @@
     },
     "91.232.230.139/32": {
       "asn": 57570,
-      "as_name": "QIWIW-AS - QIWI JSC, RU",
+      "as_name": "QIWIW-AS, RU",
       "cc": "RU",
       "services": [
         "payments"
@@ -3021,7 +3048,7 @@
     },
     "91.236.51.50/32": {
       "asn": 197482,
-      "as_name": "DGIS - DoubleGIS LLC, RU",
+      "as_name": "DGIS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3051,7 +3078,7 @@
     },
     "91.240.87.158/32": {
       "asn": 29182,
-      "as_name": "RU-JSCIOT - JSC IOT, RU",
+      "as_name": "RU-JSCIOT, RU",
       "cc": "RU",
       "services": [
         "game-servers"
@@ -3088,7 +3115,7 @@
     },
     "91.242.33.35/32": {
       "asn": 56864,
-      "as_name": "WELLSERVER-AS - Xeon LLC, RU",
+      "as_name": "WELLSERVER-AS, RU",
       "cc": "RU",
       "services": [
         "post"
@@ -3104,7 +3131,7 @@
     },
     "92.53.96.144/32": {
       "asn": 9123,
-      "as_name": "TimeWeb-AS - JSC _TIMEWEB_, RU",
+      "as_name": "TIMEWEB-AS, RU",
       "cc": "RU",
       "services": [
         "urban"
@@ -3113,7 +3140,7 @@
     },
     "92.53.96.195/32": {
       "asn": 9123,
-      "as_name": "TimeWeb-AS - JSC _TIMEWEB_, RU",
+      "as_name": "TIMEWEB-AS, RU",
       "cc": "RU",
       "services": [
         "telecom-extra"
@@ -3122,7 +3149,7 @@
     },
     "93.91.8.37/32": {
       "asn": 31430,
-      "as_name": "TEL-NET-AS - OOO Suntel, RU",
+      "as_name": "TEL-NET-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3131,16 +3158,7 @@
     },
     "93.93.88.21/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "93.93.89.38/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "avia"
@@ -3149,7 +3167,7 @@
     },
     "93.93.89.134/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -3158,7 +3176,16 @@
     },
     "93.93.89.138/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
+      "cc": "RU",
+      "services": [
+        "streaming"
+      ],
+      "source": "dns"
+    },
+    "93.93.89.154/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -3167,7 +3194,7 @@
     },
     "93.93.89.173/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -3176,7 +3203,7 @@
     },
     "93.93.89.201/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -3185,34 +3212,34 @@
     },
     "93.93.91.63/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "avia"
       ],
       "source": "dns"
     },
-    "93.93.91.107/32": {
+    "93.93.91.88/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "93.93.91.133/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
       ],
       "source": "dns"
     },
-    "93.93.91.220/32": {
+    "93.93.91.107/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
+      "cc": "RU",
+      "services": [
+        "shops"
+      ],
+      "source": "dns"
+    },
+    "93.93.91.187/32": {
+      "asn": 34879,
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -3221,7 +3248,7 @@
     },
     "93.95.101.202/32": {
       "asn": 48347,
-      "as_name": "MTW-AS - MTW-AS, RU",
+      "as_name": "MTW-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3230,7 +3257,7 @@
     },
     "93.186.224.0/21": {
       "asn": 47541,
-      "as_name": "VKONTAKTE-SPB-AS - LLC VK, RU",
+      "as_name": "VKONTAKTE-SPB-AS vk.com, RU",
       "cc": "RU",
       "services": [
         "vk",
@@ -3241,7 +3268,7 @@
     },
     "93.186.232.0/21": {
       "asn": 47541,
-      "as_name": "VKONTAKTE-SPB-AS - LLC VK, RU",
+      "as_name": "VKONTAKTE-SPB-AS vk.com, RU",
       "cc": "RU",
       "services": [
         "vk",
@@ -3251,7 +3278,7 @@
     },
     "93.189.47.100/32": {
       "asn": 41853,
-      "as_name": "NTCOM-AS - Limited Liability Company NTCOM, RU",
+      "as_name": "NTCOM-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3260,7 +3287,7 @@
     },
     "94.25.116.37/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3269,7 +3296,7 @@
     },
     "94.26.239.24/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3278,7 +3305,7 @@
     },
     "94.26.249.177/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "streaming"
@@ -3287,7 +3314,7 @@
     },
     "94.26.255.104/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "cloud-extra"
@@ -3296,7 +3323,7 @@
     },
     "94.79.51.12/32": {
       "asn": 8901,
-      "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
+      "as_name": "UNSPECIFIED - GKU Mosgortelecom, RU",
       "cc": "RU",
       "services": [
         "mos"
@@ -3305,7 +3332,7 @@
     },
     "94.79.51.13/32": {
       "asn": 8901,
-      "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
+      "as_name": "UNSPECIFIED - GKU Mosgortelecom, RU",
       "cc": "RU",
       "services": [
         "mos"
@@ -3314,7 +3341,7 @@
     },
     "94.79.51.14/32": {
       "asn": 8901,
-      "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
+      "as_name": "UNSPECIFIED - GKU Mosgortelecom, RU",
       "cc": "RU",
       "services": [
         "mos"
@@ -3323,7 +3350,7 @@
     },
     "94.79.51.135/32": {
       "asn": 8901,
-      "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
+      "as_name": "UNSPECIFIED - GKU Mosgortelecom, RU",
       "cc": "RU",
       "services": [
         "mos"
@@ -3332,7 +3359,7 @@
     },
     "94.79.51.184/32": {
       "asn": 8901,
-      "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
+      "as_name": "UNSPECIFIED - GKU Mosgortelecom, RU",
       "cc": "RU",
       "services": [
         "mos"
@@ -3341,7 +3368,7 @@
     },
     "94.79.51.185/32": {
       "asn": 8901,
-      "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
+      "as_name": "UNSPECIFIED - GKU Mosgortelecom, RU",
       "cc": "RU",
       "services": [
         "mos"
@@ -3350,7 +3377,7 @@
     },
     "94.79.51.186/32": {
       "asn": 8901,
-      "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
+      "as_name": "UNSPECIFIED - GKU Mosgortelecom, RU",
       "cc": "RU",
       "services": [
         "mos"
@@ -3359,7 +3386,7 @@
     },
     "94.100.176.0/20": {
       "asn": 47764,
-      "as_name": "VK-AS - LLC VK, RU",
+      "as_name": "VK-AS, RU",
       "cc": "RU",
       "services": [
         "mailru",
@@ -3369,7 +3396,7 @@
     },
     "94.124.200.0/32": {
       "asn": 47724,
-      "as_name": "HEADHUNTER-AS - Limited Liability Company HeadHunter, RU",
+      "as_name": "HEADHUNTER-AS, RU",
       "cc": "RU",
       "services": [
         "jobs"
@@ -3378,7 +3405,7 @@
     },
     "94.124.200.1/32": {
       "asn": 47724,
-      "as_name": "HEADHUNTER-AS - Limited Liability Company HeadHunter, RU",
+      "as_name": "HEADHUNTER-AS, RU",
       "cc": "RU",
       "services": [
         "jobs"
@@ -3399,18 +3426,9 @@
       "services": [],
       "source": "asn"
     },
-    "95.129.232.3/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "tv"
-      ],
-      "source": "dns"
-    },
     "95.129.232.81/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3419,7 +3437,7 @@
     },
     "95.129.232.95/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "media-extra"
@@ -3428,7 +3446,7 @@
     },
     "95.129.232.128/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -3437,7 +3455,7 @@
     },
     "95.129.232.159/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -3446,7 +3464,7 @@
     },
     "95.129.232.210/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3455,7 +3473,7 @@
     },
     "95.129.232.243/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "classifieds"
@@ -3464,7 +3482,7 @@
     },
     "95.129.236.96/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "news"
@@ -3473,7 +3491,7 @@
     },
     "95.129.236.100/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3482,7 +3500,7 @@
     },
     "95.129.236.170/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "game-ru"
@@ -3491,7 +3509,7 @@
     },
     "95.129.236.192/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "edu-extra"
@@ -3500,7 +3518,7 @@
     },
     "95.129.236.203/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "post"
@@ -3509,7 +3527,7 @@
     },
     "95.129.236.219/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "edu-extra"
@@ -3518,7 +3536,7 @@
     },
     "95.129.237.124/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3527,7 +3545,7 @@
     },
     "95.129.237.198/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "edu-extra"
@@ -3536,7 +3554,7 @@
     },
     "95.129.237.199/32": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDOS-GUARD, RU",
       "cc": "RU",
       "services": [
         "edu-extra"
@@ -3573,7 +3591,7 @@
     },
     "95.142.204.0/23": {
       "asn": 47542,
-      "as_name": "VKONTAKTE-MSK-CDN-AS - LLC VK, RU",
+      "as_name": "VKONTAKTE-MSK-CDN-AS Moscow CDN vk.com, RU",
       "cc": "RU",
       "services": [
         "vk-cdn"
@@ -3582,7 +3600,7 @@
     },
     "95.142.206.31/32": {
       "asn": 60476,
-      "as_name": "MYCOM-AS - Digital Transformation Plus LLC, RU",
+      "as_name": "MYCOM-AS, RU",
       "cc": "RU",
       "services": [
         "vk-cdn"
@@ -3598,7 +3616,7 @@
     },
     "95.161.182.169/32": {
       "asn": 8492,
-      "as_name": "OBIT-AS - _OBIT_ Ltd., RU",
+      "as_name": "OBIT-AS OBIT Ltd., RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3607,7 +3625,7 @@
     },
     "95.163.32.0/19": {
       "asn": 47764,
-      "as_name": "VK-AS - LLC VK, RU",
+      "as_name": "VK-AS, RU",
       "cc": "RU",
       "services": [
         "classifieds",
@@ -3643,7 +3661,7 @@
     },
     "95.163.216.0/22": {
       "asn": 47764,
-      "as_name": "VK-AS - LLC VK, RU",
+      "as_name": "VK-AS, RU",
       "cc": "RU",
       "services": [
         "yandex"
@@ -3652,7 +3670,7 @@
     },
     "95.163.227.216/32": {
       "asn": 197695,
-      "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
+      "as_name": "AS-REG, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3661,7 +3679,7 @@
     },
     "95.163.244.135/32": {
       "asn": 197695,
-      "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
+      "as_name": "AS-REG, RU",
       "cc": "RU",
       "services": [
         "banks-extra"
@@ -3677,7 +3695,7 @@
     },
     "95.167.154.115/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "telecom-extra"
@@ -3686,7 +3704,7 @@
     },
     "95.167.220.237/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3695,7 +3713,7 @@
     },
     "95.167.245.92/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -3704,7 +3722,7 @@
     },
     "95.167.245.141/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -3713,7 +3731,7 @@
     },
     "95.170.128.19/32": {
       "asn": 25549,
-      "as_name": "AVANTEL-AS - JSC _ER-Telecom Holding_, RU",
+      "as_name": "AVANTEL-AS, RU",
       "cc": "RU",
       "services": [
         "classifieds"
@@ -3729,7 +3747,7 @@
     },
     "95.173.128.0/22": {
       "asn": 8291,
-      "as_name": "RSNET-AS - The Federal Guard Service of the Russian Federation, RU",
+      "as_name": "RSNET-AS RSNET, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -3738,7 +3756,7 @@
     },
     "95.173.132.0/22": {
       "asn": 8291,
-      "as_name": "RSNET-AS - The Federal Guard Service of the Russian Federation, RU",
+      "as_name": "RSNET-AS RSNET, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -3754,7 +3772,7 @@
     },
     "95.173.136.0/24": {
       "asn": 8291,
-      "as_name": "RSNET-AS - The Federal Guard Service of the Russian Federation, RU",
+      "as_name": "RSNET-AS RSNET, RU",
       "cc": "RU",
       "services": [
         "gov-extra",
@@ -3827,7 +3845,7 @@
     },
     "95.173.146.0/24": {
       "asn": 43797,
-      "as_name": "RSNET2-AS - The Federal Guard Service of the Russian Federation, RU",
+      "as_name": "RSNET2-AS RSNET2, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -3836,7 +3854,7 @@
     },
     "95.173.147.0/24": {
       "asn": 43797,
-      "as_name": "RSNET2-AS - The Federal Guard Service of the Russian Federation, RU",
+      "as_name": "RSNET2-AS RSNET2, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -3873,7 +3891,7 @@
     },
     "95.173.151.0/24": {
       "asn": 43797,
-      "as_name": "RSNET2-AS - The Federal Guard Service of the Russian Federation, RU",
+      "as_name": "RSNET2-AS RSNET2, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3924,7 +3942,7 @@
     },
     "95.173.156.0/24": {
       "asn": 43797,
-      "as_name": "RSNET2-AS - The Federal Guard Service of the Russian Federation, RU",
+      "as_name": "RSNET2-AS RSNET2, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -3933,7 +3951,7 @@
     },
     "95.173.157.0/24": {
       "asn": 43797,
-      "as_name": "RSNET2-AS - The Federal Guard Service of the Russian Federation, RU",
+      "as_name": "RSNET2-AS RSNET2, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -3956,7 +3974,7 @@
     },
     "95.181.177.3/32": {
       "asn": 210756,
-      "as_name": "EdgeCenterLLC - EdgeCenter LLC, RU",
+      "as_name": "EDGECENTERLLC, RU",
       "cc": "RU",
       "services": [
         "food"
@@ -3965,7 +3983,7 @@
     },
     "95.181.177.105/32": {
       "asn": 210756,
-      "as_name": "EdgeCenterLLC - EdgeCenter LLC, RU",
+      "as_name": "EDGECENTERLLC, RU",
       "cc": "RU",
       "services": [
         "food"
@@ -3974,7 +3992,7 @@
     },
     "95.181.177.110/32": {
       "asn": 210756,
-      "as_name": "EdgeCenterLLC - EdgeCenter LLC, RU",
+      "as_name": "EDGECENTERLLC, RU",
       "cc": "RU",
       "services": [
         "tv"
@@ -3983,25 +4001,16 @@
     },
     "95.181.177.111/32": {
       "asn": 210756,
-      "as_name": "EdgeCenterLLC - EdgeCenter LLC, RU",
+      "as_name": "EDGECENTERLLC, RU",
       "cc": "RU",
       "services": [
         "news"
       ],
       "source": "dns"
     },
-    "95.181.181.21/32": {
-      "asn": 210756,
-      "as_name": "EdgeCenterLLC - EdgeCenter LLC, RU",
-      "cc": "RU",
-      "services": [
-        "classifieds"
-      ],
-      "source": "dns"
-    },
     "95.181.181.29/32": {
       "asn": 210756,
-      "as_name": "EdgeCenterLLC - EdgeCenter LLC, RU",
+      "as_name": "EDGECENTERLLC, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -4010,7 +4019,7 @@
     },
     "95.181.181.107/32": {
       "asn": 210756,
-      "as_name": "EdgeCenterLLC - EdgeCenter LLC, RU",
+      "as_name": "EDGECENTERLLC, RU",
       "cc": "RU",
       "services": [
         "classifieds"
@@ -4019,7 +4028,7 @@
     },
     "95.181.181.126/32": {
       "asn": 210756,
-      "as_name": "EdgeCenterLLC - EdgeCenter LLC, RU",
+      "as_name": "EDGECENTERLLC, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -4028,7 +4037,7 @@
     },
     "95.181.181.254/32": {
       "asn": 210756,
-      "as_name": "EdgeCenterLLC - EdgeCenter LLC, RU",
+      "as_name": "EDGECENTERLLC, RU",
       "cc": "RU",
       "services": [
         "sber"
@@ -4044,7 +4053,7 @@
     },
     "95.213.0.0/18": {
       "asn": 47541,
-      "as_name": "VKONTAKTE-SPB-AS - LLC VK, RU",
+      "as_name": "VKONTAKTE-SPB-AS vk.com, RU",
       "cc": "RU",
       "services": [
         "vk",
@@ -4068,7 +4077,7 @@
     },
     "95.213.136.198/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -4077,7 +4086,7 @@
     },
     "95.213.217.168/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "post"
@@ -4086,7 +4095,7 @@
     },
     "95.213.232.147/32": {
       "asn": 50340,
-      "as_name": "SELECTEL-MSK - JSC Selectel, RU",
+      "as_name": "SELECTEL-MSK, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -4416,6 +4425,13 @@
     "138.16.240.0/24": {
       "asn": 47764,
       "as_name": "VK — VK-AS (Mail.ru, OK, MAX, Сферум)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "141.8.134.0/24": {
+      "asn": 13238,
+      "as_name": "Яндекс — YANDEX LLC",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -4774,7 +4790,7 @@
       "services": [],
       "source": "asn"
     },
-    "168.113.255.156/32": {
+    "168.113.255.155/32": {
       "asn": 208677,
       "as_name": "CLOUDRU-AS - _Cloud Technologies_ LLC trading as Cloud.ru, RU",
       "cc": "RU",
@@ -6001,6 +6017,15 @@
       ],
       "source": "dns"
     },
+    "185.65.149.115/32": {
+      "asn": 51115,
+      "as_name": "HLL-AS - HLL LLC, RU",
+      "cc": "RU",
+      "services": [
+        "classifieds"
+      ],
+      "source": "dns"
+    },
     "185.65.149.117/32": {
       "asn": 51115,
       "as_name": "HLL-AS - HLL LLC, RU",
@@ -6875,7 +6900,7 @@
       ],
       "source": "dns"
     },
-    "185.179.146.43/32": {
+    "185.179.144.43/32": {
       "asn": 24823,
       "as_name": "VTB-BANK-AS - VTB Bank (Public Joint-Stock Company), RU",
       "cc": "RU",
@@ -8105,6 +8130,15 @@
       ],
       "source": "dns"
     },
+    "195.209.215.86/32": {
+      "asn": 35598,
+      "as_name": "INETCOM - INETCOM CARRIER LLC, RU",
+      "cc": "RU",
+      "services": [
+        "classifieds"
+      ],
+      "source": "dns"
+    },
     "195.211.20.0/22": {
       "asn": 47764,
       "as_name": "VK — VK-AS (Mail.ru, OK, MAX, Сферум)",
@@ -8238,7 +8272,7 @@
     },
     "212.41.28.68/32": {
       "asn": 49505,
-      "as_name": "SELECTEL - JSC Selectel, RU",
+      "as_name": "SELECTEL, RU",
       "cc": "RU",
       "services": [
         "game-servers"
@@ -8247,7 +8281,7 @@
     },
     "212.42.38.154/32": {
       "asn": 50313,
-      "as_name": "TESLATEL-AS - TESLATEL LLC, RU",
+      "as_name": "TESLATEL-AS Moscow, Russia, RU",
       "cc": "RU",
       "services": [
         "game-ru"
@@ -8256,7 +8290,7 @@
     },
     "212.45.30.1/32": {
       "asn": 8901,
-      "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
+      "as_name": "UNSPECIFIED - GKU Mosgortelecom, RU",
       "cc": "RU",
       "services": [
         "mos"
@@ -8265,7 +8299,7 @@
     },
     "212.45.30.2/32": {
       "asn": 8901,
-      "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
+      "as_name": "UNSPECIFIED - GKU Mosgortelecom, RU",
       "cc": "RU",
       "services": [
         "mos"
@@ -8274,7 +8308,7 @@
     },
     "212.45.30.3/32": {
       "asn": 8901,
-      "as_name": "UNSPECIFIED - GKU _Mosgortelecom_, RU",
+      "as_name": "UNSPECIFIED - GKU Mosgortelecom, RU",
       "cc": "RU",
       "services": [
         "mos"
@@ -8283,7 +8317,7 @@
     },
     "212.74.251.101/32": {
       "asn": 50340,
-      "as_name": "SELECTEL-MSK - JSC Selectel, RU",
+      "as_name": "SELECTEL-MSK, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -8292,7 +8326,7 @@
     },
     "212.83.11.22/32": {
       "asn": 9039,
-      "as_name": "IIAT-AS - Institute of information & analytical technologies IIAT, Limited, RU",
+      "as_name": "IIAT-AS IIAT Autonomous System, RU",
       "cc": "RU",
       "services": [
         "telecom-extra"
@@ -8587,7 +8621,7 @@
     },
     "212.193.69.18/32": {
       "asn": 5468,
-      "as_name": "UrFU - UrFU, RU",
+      "as_name": "URFU, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -8657,12 +8691,30 @@
       ],
       "source": "dns"
     },
+    "212.193.152.230/32": {
+      "asn": 204878,
+      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "gosuslugi"
+      ],
+      "source": "dns"
+    },
     "212.193.152.252/32": {
       "asn": 204878,
       "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
         "mobile"
+      ],
+      "source": "dns"
+    },
+    "212.193.153.14/32": {
+      "asn": 204878,
+      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
+      "cc": "RU",
+      "services": [
+        "avia"
       ],
       "source": "dns"
     },
@@ -8675,18 +8727,9 @@
       ],
       "source": "dns"
     },
-    "212.193.153.34/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
     "212.193.153.45/32": {
       "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-M9P1, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -8749,7 +8792,7 @@
     },
     "212.193.155.41/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -8758,7 +8801,7 @@
     },
     "212.193.155.42/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -8767,7 +8810,7 @@
     },
     "212.193.155.44/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "health-extra"
@@ -8776,7 +8819,7 @@
     },
     "212.193.155.50/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -8785,7 +8828,7 @@
     },
     "212.193.155.78/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -8794,7 +8837,7 @@
     },
     "212.193.155.92/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "health-extra"
@@ -8803,7 +8846,7 @@
     },
     "212.193.156.205/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -8812,25 +8855,16 @@
     },
     "212.193.156.238/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "delivery-extra"
       ],
       "source": "dns"
     },
-    "212.193.157.40/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
     "212.193.157.64/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -8839,28 +8873,10 @@
     },
     "212.193.157.88/32": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "CCT-AS NGENIX, RU",
       "cc": "RU",
       "services": [
         "delivery-extra"
-      ],
-      "source": "dns"
-    },
-    "212.193.157.189/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "212.193.157.252/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "streaming"
       ],
       "source": "dns"
     },
@@ -8936,7 +8952,7 @@
     },
     "213.24.64.17/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -8945,7 +8961,7 @@
     },
     "213.24.64.140/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -8954,7 +8970,7 @@
     },
     "213.24.64.151/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -8963,7 +8979,7 @@
     },
     "213.24.64.156/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -8972,7 +8988,7 @@
     },
     "213.24.64.170/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -8981,7 +8997,7 @@
     },
     "213.24.64.175/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -8990,7 +9006,7 @@
     },
     "213.24.64.178/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -8999,7 +9015,7 @@
     },
     "213.24.64.181/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -9008,7 +9024,7 @@
     },
     "213.24.64.183/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "nalog"
@@ -9017,7 +9033,7 @@
     },
     "213.33.155.164/32": {
       "asn": 3216,
-      "as_name": "SOVAM-AS - PJSC _Vimpelcom_, RU",
+      "as_name": "SOVAM-AS, RU",
       "cc": "RU",
       "services": [
         "shops"
@@ -9026,7 +9042,7 @@
     },
     "213.59.235.104/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -9035,7 +9051,7 @@
     },
     "213.59.253.6/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -9044,7 +9060,7 @@
     },
     "213.59.253.7/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "gibdd",
@@ -9055,7 +9071,7 @@
     },
     "213.59.253.8/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -9064,7 +9080,7 @@
     },
     "213.59.254.6/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -9073,7 +9089,7 @@
     },
     "213.59.254.7/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "gibdd",
@@ -9082,9 +9098,18 @@
       ],
       "source": "dns"
     },
+    "213.59.254.8/32": {
+      "asn": 12389,
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
+      "cc": "RU",
+      "services": [
+        "gosuslugi"
+      ],
+      "source": "dns"
+    },
     "213.165.196.135/32": {
       "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
+      "as_name": "YANDEXCLOUD, RU",
       "cc": "RU",
       "services": [
         "yandex"
@@ -9093,7 +9118,7 @@
     },
     "213.165.196.237/32": {
       "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
+      "as_name": "YANDEXCLOUD, RU",
       "cc": "RU",
       "services": [
         "yandex"
@@ -9102,7 +9127,7 @@
     },
     "213.167.56.234/32": {
       "asn": 8905,
-      "as_name": "DIGIT1-AS - Digit One LLC, RU",
+      "as_name": "DIGIT1-AS Digit One Moscow Network, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -9111,7 +9136,7 @@
     },
     "213.172.3.49/32": {
       "asn": 24913,
-      "as_name": "BANKSPB - Bank Saint Petersburg PJSC, RU",
+      "as_name": "BANKSPB, RU",
       "cc": "RU",
       "services": [
         "other-banks"
@@ -9120,7 +9145,7 @@
     },
     "213.184.155.0/24": {
       "asn": 57073,
-      "as_name": "Wildberries-AS - LLC Wildberries, RU",
+      "as_name": "WILDBERRIES-AS, RU",
       "cc": "RU",
       "services": [
         "wildberries"
@@ -9129,7 +9154,7 @@
     },
     "213.184.156.0/22": {
       "asn": 57073,
-      "as_name": "Wildberries-AS - LLC Wildberries, RU",
+      "as_name": "WILDBERRIES-AS, RU",
       "cc": "RU",
       "services": [
         "wildberries"
@@ -9152,7 +9177,7 @@
     },
     "217.12.96.64/32": {
       "asn": 15632,
-      "as_name": "Alfa-Bank-AS - JSC _Alfa-Bank_, RU",
+      "as_name": "ALFA-BANK-AS, RU",
       "cc": "RU",
       "services": [
         "banks-extra"
@@ -9161,7 +9186,7 @@
     },
     "217.12.98.122/32": {
       "asn": 15632,
-      "as_name": "Alfa-Bank-AS - JSC _Alfa-Bank_, RU",
+      "as_name": "ALFA-BANK-AS, RU",
       "cc": "RU",
       "services": [
         "alfa"
@@ -9170,7 +9195,7 @@
     },
     "217.12.98.163/32": {
       "asn": 15632,
-      "as_name": "Alfa-Bank-AS - JSC _Alfa-Bank_, RU",
+      "as_name": "ALFA-BANK-AS, RU",
       "cc": "RU",
       "services": [
         "alfa"
@@ -9179,7 +9204,7 @@
     },
     "217.12.104.100/32": {
       "asn": 15632,
-      "as_name": "Alfa-Bank-AS - JSC _Alfa-Bank_, RU",
+      "as_name": "ALFA-BANK-AS, RU",
       "cc": "RU",
       "services": [
         "alfa",
@@ -9189,7 +9214,7 @@
     },
     "217.14.50.179/32": {
       "asn": 24823,
-      "as_name": "VTB-BANK-AS - VTB Bank (Public Joint-Stock Company), RU",
+      "as_name": "VTB-BANK-AS, RU",
       "cc": "RU",
       "services": [
         "vtb"
@@ -9205,7 +9230,7 @@
     },
     "217.20.144.0/20": {
       "asn": 47764,
-      "as_name": "VK-AS - LLC VK, RU",
+      "as_name": "VK-AS, RU",
       "cc": "RU",
       "services": [
         "ok",
@@ -9215,7 +9240,7 @@
     },
     "217.23.177.16/32": {
       "asn": 28840,
-      "as_name": "TATTELECOM-AS - PJSC _TATTELECOM_, RU",
+      "as_name": "TATTELECOM-AS, RU",
       "cc": "RU",
       "services": [
         "isp"
@@ -9224,7 +9249,7 @@
     },
     "217.65.3.196/32": {
       "asn": 3175,
-      "as_name": "CITYTELECOM-MSK - Citytelecom LLC, RU",
+      "as_name": "CITYTELECOM-MSK, RU",
       "cc": "RU",
       "services": [
         "edu-extra"
@@ -9233,7 +9258,7 @@
     },
     "217.65.3.198/32": {
       "asn": 3175,
-      "as_name": "CITYTELECOM-MSK - Citytelecom LLC, RU",
+      "as_name": "CITYTELECOM-MSK, RU",
       "cc": "RU",
       "services": [
         "edu-extra"
@@ -9249,7 +9274,7 @@
     },
     "217.71.131.242/32": {
       "asn": 29147,
-      "as_name": "NSTU-AS - State Educational Enterprise of Higher Professional Education Novosibirsk State Technical University, RU",
+      "as_name": "NSTU-AS, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -9258,7 +9283,7 @@
     },
     "217.73.62.83/32": {
       "asn": 51219,
-      "as_name": "K2_INT - K2 Integration JSC, RU",
+      "as_name": "K2_INT, RU",
       "cc": "RU",
       "services": [
         "booking"
@@ -9267,7 +9292,7 @@
     },
     "217.74.40.221/32": {
       "asn": 20919,
-      "as_name": "DF - DataFort LLC, RU",
+      "as_name": "DF Moscow, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -9276,7 +9301,7 @@
     },
     "217.77.104.132/32": {
       "asn": 199599,
-      "as_name": "CIREX - Telecom-Birzha, LLC, RU",
+      "as_name": "CIREX, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -9285,7 +9310,7 @@
     },
     "217.77.104.150/32": {
       "asn": 199599,
-      "as_name": "CIREX - Telecom-Birzha, LLC, RU",
+      "as_name": "CIREX, RU",
       "cc": "RU",
       "services": [
         "gov-extra"
@@ -9294,7 +9319,7 @@
     },
     "217.107.108.114/32": {
       "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
+      "as_name": "ROSTELECOM-AS PJSC Rostelecom. Technical Team, RU",
       "cc": "RU",
       "services": [
         "gosuslugi"
@@ -9303,7 +9328,7 @@
     },
     "217.118.87.98/32": {
       "asn": 16345,
-      "as_name": "BEE-AS - PJSC _Vimpelcom_, RU",
+      "as_name": "BEE-AS Russia, RU",
       "cc": "RU",
       "services": [
         "mobile"
@@ -9319,7 +9344,7 @@
     },
     "217.175.24.112/32": {
       "asn": 33936,
-      "as_name": "SCAT7-AS - Joint stock company _Severstal-infocom_, RU",
+      "as_name": "SCAT7-AS AS for JSC Severstal-infocom, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
@@ -9328,7 +9353,7 @@
     },
     "217.195.76.247/32": {
       "asn": 59722,
-      "as_name": "ROSSIA-AIRLINES-AS - JSC ROSSIYA-AIRLINES, RU",
+      "as_name": "ROSSIA-AIRLINES-AS, RU",
       "cc": "RU",
       "services": [
         "avia"
@@ -9337,7 +9362,7 @@
     },
     "217.195.86.165/32": {
       "asn": 24913,
-      "as_name": "BANKSPB - Bank Saint Petersburg PJSC, RU",
+      "as_name": "BANKSPB, RU",
       "cc": "RU",
       "services": [
         "other-banks"
@@ -9346,7 +9371,7 @@
     },
     "217.198.15.72/32": {
       "asn": 201757,
-      "as_name": "AKBARS - Joint-Stock Commercial Bank Ak Bars (OJSC), RU",
+      "as_name": "AKBARS, RU",
       "cc": "RU",
       "services": [
         "other-banks"
@@ -9355,7 +9380,7 @@
     },
     "217.198.92.33/32": {
       "asn": 20919,
-      "as_name": "DF - DataFort LLC, RU",
+      "as_name": "DF Moscow, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
