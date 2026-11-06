@@ -14,6 +14,17 @@
       ]
     },
     {
+      "id": "cloud-ufo",
+      "title": "UFO Hosting — российский хостинг",
+      "tier": "core",
+      "notes": "Капча входа (Yandex SmartCaptcha) идёт напрямую; если сам биллинг идёт через VPN, UFO видит разные IP и отвечает «Ошибка прохождения капчи».",
+      "domains": [
+        "bill.ufo.hosting",
+        "ufo.hosting"
+      ],
+      "cidrs": []
+    },
+    {
       "id": "cloud-extra",
       "title": "Российский хостинг и облака",
       "tier": "extended",

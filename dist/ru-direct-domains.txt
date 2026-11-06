@@ -121,6 +121,7 @@ bfm.ru
 bi.zone
 bibika.ru
 biletix.ru
+bill.ufo.hosting
 bio.rt.ru
 bitrix24.com
 bitrix24.ru
@@ -1024,6 +1025,7 @@ uchitelya.com
 udmurt.ru
 udsu.ru
 ufanet.ru
+ufo.hosting
 unicredit.ru
 upload.rutube.ru
 uralairlines.ru
