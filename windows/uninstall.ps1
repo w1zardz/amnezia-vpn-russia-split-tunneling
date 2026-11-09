@@ -59,6 +59,16 @@ try {
     try { $hasLock = $mutex.WaitOne(5000) } catch [Threading.AbandonedMutexException] { $hasLock = $true }
     if (-not $hasLock) { throw 'Updater ещё работает; файлы сохранены. Повторите удаление после его завершения.' }
     if (Test-Path -LiteralPath $JournalPath -PathType Leaf) { throw 'Updater оставил транзакцию; файлы сохранены. Повторите удаление для восстановления.' }
+    $smbStatePath = Join-Path $InstallDir 'smb-multichannel.json'
+    if (Test-Path -LiteralPath $smbStatePath -PathType Leaf) {
+        try {
+            $smbState = Get-Content -LiteralPath $smbStatePath -Raw | ConvertFrom-Json
+            Set-SmbServerConfiguration -EnableMultiChannel ([bool]$smbState.server) -Force -ErrorAction Stop
+            Set-SmbClientConfiguration -EnableMultiChannel ([bool]$smbState.client) -Force -ErrorAction Stop
+        } catch {
+            Write-Warning "Прежний SMB multichannel не восстановлен: $($_.Exception.Message)"
+        }
+    }
     $resolvedInstallDir = [IO.Path]::GetFullPath($InstallDir)
     $expectedParent = [IO.Path]::GetFullPath($env:LOCALAPPDATA).TrimEnd('\') + '\'
     if (-not $resolvedInstallDir.StartsWith($expectedParent, [StringComparison]::OrdinalIgnoreCase) -or

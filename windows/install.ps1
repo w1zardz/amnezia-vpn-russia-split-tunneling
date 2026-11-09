@@ -181,6 +181,25 @@ try {
     Write-Host 'Работающая Amnezia автоматически не переподключается независимо от KillSwitch: применение изменённого списка откладывается.'
     Write-Host "Статус: Get-ScheduledTask -TaskName '$TaskName'"
     Write-Host "Результат последнего запуска: Get-Content `"$InstallDir\status.json`""
+
+    # SMB multichannel: адаптер туннеля Amnezia (WireGuard) объявляет себя 100 Гбит/с,
+    # и SMB-клиент уводит файловую шару домашней сети в VPN, если оба устройства в одном
+    # туннеле: копирование падает до ~1 МБ/с. Прежние значения хранятся для uninstall.
+    $smbStatePath = Join-Path $InstallDir 'smb-multichannel.json'
+    try {
+        if (-not (Test-Path -LiteralPath $smbStatePath -PathType Leaf)) {
+            $smbState = [ordered]@{
+                server = [bool](Get-SmbServerConfiguration -ErrorAction Stop).EnableMultiChannel
+                client = [bool](Get-SmbClientConfiguration -ErrorAction Stop).EnableMultiChannel
+            }
+            [IO.File]::WriteAllText($smbStatePath, ($smbState | ConvertTo-Json), (New-Object Text.UTF8Encoding($false)))
+        }
+        Set-SmbServerConfiguration -EnableMultiChannel $false -Force -ErrorAction Stop
+        Set-SmbClientConfiguration -EnableMultiChannel $false -Force -ErrorAction Stop
+        Write-Host 'SMB multichannel выключен: общие папки локальной сети не уходят в туннель Amnezia.'
+    } catch {
+        Write-Warning "SMB multichannel не изменён: $($_.Exception.Message)"
+    }
 } catch {
     if ($mutationStarted -and -not $installComplete) {
         try {

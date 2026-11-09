@@ -70,4 +70,21 @@ if [[ -e "${LAUNCH_AGENT}" || -e "${INSTALL_DIR}" ]]; then
     echo "Не удалось полностью удалить приватные файлы automation" >&2
     exit 1
 fi
+SMB_CONF="${HOME}/Library/Preferences/nsmb.conf"
+SMB_MARK="# amnezia-route-sync: SMB multichannel off"
+if [[ -f "${SMB_CONF}" ]] && grep -Fq "${SMB_MARK}" "${SMB_CONF}"; then
+    SMB_TMP="$(mktemp "${SMB_CONF}.XXXXXX")"
+    awk -v mark="${SMB_MARK}" '
+        $0 == mark " (section)" { header = 1; next }
+        header && $0 == "[default]" { header = 0; next }
+        $0 == mark { header = 0; skip = 1; next }
+        skip && $0 == "mc_on=no" { skip = 0; next }
+        { header = 0; skip = 0; print }' "${SMB_CONF}" >"${SMB_TMP}"
+    if ! grep -Evq '^[[:space:]]*(\[default\])?[[:space:]]*$' "${SMB_TMP}"; then
+        rm -f -- "${SMB_TMP}" "${SMB_CONF}"
+    else
+        chmod 644 "${SMB_TMP}"
+        mv -f "${SMB_TMP}" "${SMB_CONF}"
+    fi
+fi
 echo "Автоматизация удалена. Очистите managed-маршруты в интерфейсе AmneziaVPN."

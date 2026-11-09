@@ -65,6 +65,10 @@ function Unregister-ScheduledTask {
     $global:AmneziaHandoffMockTask = $null
 }
 function Stop-ScheduledTask { throw 'Unexpected attempt to stop a task' }
+function Get-SmbServerConfiguration { return [pscustomobject]@{ EnableMultiChannel = $global:AmneziaSmbServer } }
+function Get-SmbClientConfiguration { return [pscustomobject]@{ EnableMultiChannel = $global:AmneziaSmbClient } }
+function Set-SmbServerConfiguration { [CmdletBinding()] param([bool]$EnableMultiChannel, [switch]$Force) $global:AmneziaSmbServer = $EnableMultiChannel }
+function Set-SmbClientConfiguration { [CmdletBinding()] param([bool]$EnableMultiChannel, [switch]$Force) $global:AmneziaSmbClient = $EnableMultiChannel }
 function Export-ScheduledTask { throw 'Unexpected attempt to export a task' }
 
 # A separate native child is used for each updater invocation. Exit statements,
@@ -166,6 +170,7 @@ exit $childExit
 
 function Invoke-HandoffCase([string]$Name, [int]$CacheHours, [string]$Tamper = '', [string]$ExpectedError = '', [bool]$YouTube = $false, [bool]$Defer = $false) {
     $caseRoot = Join-Path $testRoot $Name
+    $global:AmneziaSmbServer = $true; $global:AmneziaSmbClient = $true
     $sourceDir = Join-Path $caseRoot 'source'
     $tempDir = Join-Path $caseRoot 'temp'
     [IO.Directory]::CreateDirectory($sourceDir) | Out-Null
@@ -260,6 +265,9 @@ function Invoke-HandoffCase([string]$Name, [int]$CacheHours, [string]$Tamper = '
         Assert-True ($transactions.Count -eq 1 -and $transactions[0].data.dns_present -and $transactions[0].data.late_manual) "$Name lost DNS or manual edits made after preflight"
         Assert-True (@($events | Where-Object { $_.kind -eq 'registry-read' -and $_.mode -eq 'dry-run' -and -not $_.data.late_manual }).Count -gt 0) "$Name did not read original registry state during preflight"
         Assert-True (@($events | Where-Object { $_.kind -eq 'registry-read' -and $_.mode -eq 'apply' -and $_.data.late_manual }).Count -gt 0) "$Name reused preflight registry state"
+        $smbSaved = Get-Content -LiteralPath (Join-Path $env:LOCALAPPDATA 'AmneziaRouteSync\smb-multichannel.json') -Raw | ConvertFrom-Json
+        Assert-True ($smbSaved.server -eq $true -and $smbSaved.client -eq $true) "$Name lost original SMB multichannel state"
+        Assert-True (-not $global:AmneziaSmbServer -and -not $global:AmneziaSmbClient) "$Name left SMB multichannel enabled"
         $deferredPath = Join-Path $env:LOCALAPPDATA 'AmneziaRouteSync\deferred-update.json'
         if ($Defer) {
             Assert-True ([IO.File]::ReadAllText($appliedStatusPath, [Text.Encoding]::UTF8) -ceq $previousStatus) "$Name changed the previous applied status during deferral"

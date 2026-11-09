@@ -202,6 +202,36 @@ if ! grep -q 'last exit code = 0' <<<"${AGENT_STATE}"; then
     exit 1
 fi
 
+# SMB multichannel: адаптер туннеля Amnezia объявляется сервером как самый быстрый,
+# и macOS уводит файловую шару домашней сети в VPN, если ПК и Mac в одном туннеле
+# (копирование ~1 МБ/с). Пользовательский nsmb.conf, без sudo; строки с маркером
+# снимает uninstall.sh. Заданный пользователем mc_on не трогаем.
+SMB_CONF="${HOME}/Library/Preferences/nsmb.conf"
+SMB_MARK="# amnezia-route-sync: SMB multichannel off"
+configure_smb_multichannel() {
+    if [[ -f "${SMB_CONF}" ]] && grep -Eiq '^[[:space:]]*mc_on[[:space:]]*=' "${SMB_CONF}"; then
+        grep -Fq "${SMB_MARK}" "${SMB_CONF}" ||
+            echo "SMB multichannel: в ${SMB_CONF} уже задан mc_on — оставлен как есть"
+        return 0
+    fi
+    mkdir -p "$(dirname "${SMB_CONF}")"
+    local tmp
+    tmp="$(mktemp "${SMB_CONF}.XXXXXX")"
+    if [[ -f "${SMB_CONF}" ]] && awk -v mark="${SMB_MARK}" '
+        { print }
+        !done && tolower($0) ~ /^[[:space:]]*\[default\][[:space:]]*$/ { print mark; print "mc_on=no"; done = 1 }
+        END { exit done ? 0 : 3 }' "${SMB_CONF}" >"${tmp}"; then
+        :
+    else
+        { printf '%s\n[default]\n%s\nmc_on=no\n' "${SMB_MARK} (section)" "${SMB_MARK}"
+          [[ -f "${SMB_CONF}" ]] && cat "${SMB_CONF}"; } >"${tmp}"
+    fi
+    chmod 644 "${tmp}"
+    mv -f "${tmp}" "${SMB_CONF}"
+    echo "SMB multichannel выключен (${SMB_CONF}); подключите сетевые диски заново"
+}
+configure_smb_multichannel || echo "SMB multichannel не изменён" >&2
+
 echo "Установлено: ${LAUNCH_AGENT}"
 echo "Обновление: раз в неделю, воскресенье 12:00 по местному времени"
 echo "Статус: launchctl print ${SERVICE_TARGET}"
