@@ -83,6 +83,9 @@ class UpdateError(RuntimeError):
     pass
 
 
+DEFERRED_IMPORT_FILENAME = "deferred-import.json"
+
+
 class UpdateDeferred(UpdateError):
     """Применение требует остановки работающей Amnezia и ожидает обслуживания."""
 
@@ -221,6 +224,34 @@ def validate_and_collapse(networks: Iterable[ipaddress.IPv4Network]) -> list[ipa
         if protected_inside:
             raise UpdateError("итоговый маршрут покрывает protected IP")
     return sorted(collapsed, key=lambda network: (int(network.network_address), network.prefixlen))
+
+
+def load_deferred_entries(state_dir: Path) -> list[str] | None:
+    try:
+        document = json.loads((state_dir / "deferred-update.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    entries = document.get("entries") if isinstance(document, dict) else None
+    return entries if isinstance(entries, list) else None
+
+
+def notify_deferred_import(import_path: Path) -> None:
+    """Пока VPN включён, список сам не применится: подсказать импорт без разрыва туннеля."""
+    message = (
+        "VPN включён, поэтому новый список RU Direct не применён. "
+        "Импортируйте файл в Amnezia: Раздельное туннелирование → Импорт → Заменить."
+    )
+    script = (
+        f"display notification {json.dumps(message)} "
+        f"with title \"Amnezia RU Direct\" subtitle {json.dumps(str(import_path))}"
+    )
+    try:
+        subprocess.run(
+            ["/usr/bin/osascript", "-e", script], check=False,
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=10,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        pass
 
 
 def merge_except_sites(
@@ -1222,6 +1253,12 @@ def update(
             )
         except UpdateDeferred as exc:
             # Не путать скачанный снимок с применённым списком или transaction journal.
+            previous_deferred = load_deferred_entries(state_dir)
+            import_path = state_dir / DEFERRED_IMPORT_FILENAME
+            atomic_write(
+                import_path,
+                json_bytes([{"hostname": value, "ip": ""} for value in entries]),
+            )
             atomic_write(state_dir / "deferred-update.json", json_bytes({
                 "deferred": True,
                 "source": source,
@@ -1230,6 +1267,12 @@ def update(
                 "reason": str(exc),
             }))
             print(str(exc))
+            print(
+                f"Без переподключения: импортируйте {import_path} в AmneziaVPN "
+                "(Раздельное туннелирование → Импорт → Заменить), маршруты применятся на лету"
+            )
+            if previous_deferred != entries:
+                notify_deferred_import(import_path)
             return 0
 
         import_payload = [{"hostname": value, "ip": ""} for value in entries]
@@ -1246,6 +1289,7 @@ def update(
         }
         atomic_write(state_dir / "status.json", json_bytes(status))
         (state_dir / "deferred-update.json").unlink(missing_ok=True)
+        (state_dir / DEFERRED_IMPORT_FILENAME).unlink(missing_ok=True)
 
     if changed:
         print(

@@ -48,6 +48,7 @@ class ManagedRouteReplacementTests(unittest.TestCase):
         stack.enter_context(patch.object(updater, "verify_app_version", return_value="5.0"))
         stack.enter_context(patch.object(updater, "load_protected_ips"))
         stack.enter_context(patch.object(updater, "warn_broken_ipv6"))
+        self.notify = stack.enter_context(patch.object(updater, "notify_deferred_import"))
         stack.enter_context(patch.object(
             updater, "export_preferences", side_effect=lambda: (b"", deepcopy(self.preferences))
         ))
@@ -192,6 +193,10 @@ class ManagedRouteReplacementTests(unittest.TestCase):
                 deferred = self.read_json("deferred-update.json")
                 self.assertTrue(deferred["deferred"])
                 self.assertEqual(deferred["entries"], ["9.9.9.0/24"])
+                self.assertEqual(
+                    self.read_json(updater.DEFERRED_IMPORT_FILENAME),
+                    [{"hostname": "9.9.9.0/24", "ip": ""}],
+                )
                 self.assertFalse((self.state_dir / updater.PENDING_FILENAME).exists())
                 self.stop.assert_not_called()
                 self.relaunch.assert_not_called()
@@ -211,6 +216,14 @@ class ManagedRouteReplacementTests(unittest.TestCase):
         run.assert_not_called()
         self.assertEqual(self.read_json("managed-cidrs.json"), ["9.9.9.0/24"])
         self.assertFalse((self.state_dir / "deferred-update.json").exists())
+        self.assertFalse((self.state_dir / updater.DEFERRED_IMPORT_FILENAME).exists())
+
+    def test_deferral_notifies_once_per_new_list(self):
+        self.run_update([], ["9.9.9.0/24"], allow_vpn_reconnect=False)
+        self.run_update([], ["9.9.9.0/24"], allow_vpn_reconnect=False)
+        self.assertEqual(self.notify.call_count, 1)
+        self.run_update([], ["9.9.8.0/24"], allow_vpn_reconnect=False)
+        self.assertEqual(self.notify.call_count, 2)
 
     def test_unchanged_list_with_live_vpn_passes_without_permission(self):
         self.run_update([], ["8.8.8.0/24"])

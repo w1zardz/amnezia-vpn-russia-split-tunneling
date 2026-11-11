@@ -655,6 +655,7 @@ public-api.rustore.ru
 qdelivery.ru
 qiwi.com
 qiwi.ru
+qr.nspk.ru
 r7-office.ru
 rabota.ru
 radiomayak.ru
@@ -957,6 +958,7 @@ streaming.vk.com
 strm.yandex.net
 strm.yandex.ru
 studio.rutube.ru
+sub.nspk.ru
 sun1.userapi.com
 sun2.userapi.com
 sun6.userapi.com
