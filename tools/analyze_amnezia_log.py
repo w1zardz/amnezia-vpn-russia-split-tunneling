@@ -47,6 +47,8 @@ def analyze(lines: Iterable[str], since: datetime | None = None) -> dict:
             ("client_connected", "Parse command: connected"),
             ("route_changes", "WindowsRouteMonitor : Routes changed"),
             ("exclusions", "Adding exclusion route for"),
+            ("app_rules_started", "WindowsSplitTunnel : Pushing new Ruleset for Split-Tunnel"),
+            ("app_rules_applied", "WindowsSplitTunnel : New Configuration applied"),
         ):
             if marker in line:
                 events.setdefault(event, []).append(stamp)
@@ -92,6 +94,28 @@ def analyze(lines: Iterable[str], since: datetime | None = None) -> dict:
     }
 
 
+def analyze_attempts(lines: Iterable[str], since: datetime | None = None) -> list[dict]:
+    """Group attempts by connection starts; never compare events across attempts."""
+    stamped = []
+    for line in lines:
+        if not (match := STAMP.match(line)):
+            continue
+        try:
+            stamp = datetime.fromisoformat(match[1].replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if since is None or stamp >= since:
+            stamped.append((stamp, line))
+    stamped.sort(key=lambda item: item[0])
+    attempts: list[list[str]] = []
+    for _, line in stamped:
+        if "Trying to connect to VPN" in line:
+            attempts.append([])
+        if attempts:
+            attempts[-1].append(line)
+    return [analyze(attempt) for attempt in attempts]
+
+
 def compare_state(report: dict, state: dict) -> dict:
     """Counts can reveal a stale client; equal counts cannot prove equal routes."""
     started = report.get("events", {}).get("connection_started", {}).get("first")
@@ -115,6 +139,7 @@ def main() -> int:
     period = parser.add_mutually_exclusive_group()
     period.add_argument("--since", type=datetime.fromisoformat, help="UTC ISO timestamp, e.g. 2026-01-01T12:00:00+00:00")
     period.add_argument("--latest-connection", action="store_true", help="ignore earlier attempts")
+    parser.add_argument("--attempts", action="store_true", help="summarize each connection attempt separately")
     parser.add_argument("--state", type=Path, help="compare with updater status.json (read only)")
     args = parser.parse_args()
 
@@ -125,6 +150,8 @@ def main() -> int:
 
     try:
         since = args.since
+        if args.attempts and args.latest_connection:
+            parser.error("--attempts and --latest-connection cannot be combined")
         if since is not None and since.tzinfo is None:
             parser.error("--since must include a timezone")
         if args.latest_connection:
@@ -138,10 +165,19 @@ def main() -> int:
             if not starts:
                 parser.exit(1, "No connection start in these logs\n")
             since = max(starts)
-        report = analyze(lines(), since)
-        if args.state:
-            report["plan_comparison"] = compare_state(report, json.loads(args.state.read_text(encoding="utf-8-sig")))
-        print(json.dumps(report, ensure_ascii=False, indent=2))
+        state = json.loads(args.state.read_text(encoding="utf-8-sig")) if args.state else None
+        if args.attempts:
+            reports = analyze_attempts(lines(), since)
+            if state is not None:
+                for report in reports:
+                    report["plan_comparison"] = compare_state(report, state)
+            output = {"attempts": reports}
+        else:
+            report = analyze(lines(), since)
+            if state is not None:
+                report["plan_comparison"] = compare_state(report, state)
+            output = report
+        print(json.dumps(output, ensure_ascii=False, indent=2))
     except (OSError, ValueError, KeyError) as exc:
         parser.exit(1, f"Cannot read log: {exc}\n")
     return 0

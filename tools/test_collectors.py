@@ -153,6 +153,24 @@ class RouteLoadTests(unittest.TestCase):
         self.assertNotIn('hidden', json.dumps(report))
         self.assertIsNone(log_analyzer.analyze([])['first_connection_seconds'])
 
+    def test_log_attempts_do_not_assign_later_success_to_a_hung_attempt(self):
+        lines = [
+            '[2026-01-01 00:00:00.000Z] Trying to connect to VPN',
+            '[2026-01-01 00:00:01.000Z] WindowsSplitTunnel : Pushing new Ruleset for Split-Tunnel 3',
+            '[2026-01-01 00:00:02.000Z] Received handshake response',
+            '[2026-01-01 00:05:00.000Z] Trying to connect to VPN',
+            '[2026-01-01 00:05:01.000Z] WindowsSplitTunnel : Pushing new Ruleset for Split-Tunnel 3',
+            '[2026-01-01 00:05:02.000Z] WindowsSplitTunnel : New Configuration applied: STATE_RUNNING',
+            '[2026-01-01 00:05:03.000Z] Parse command: connected',
+        ]
+        attempts = log_analyzer.analyze_attempts(reversed(lines))
+        self.assertEqual(len(attempts), 2)
+        self.assertIsNone(attempts[0]['first_connection_seconds'])
+        self.assertEqual(attempts[0]['events']['app_rules_started']['count'], 1)
+        self.assertNotIn('app_rules_applied', attempts[0]['events'])
+        self.assertEqual(attempts[1]['first_connection_seconds'], 3)
+        self.assertEqual(attempts[1]['events']['app_rules_applied']['count'], 1)
+
 
 def row(first, last, asn=64501, country="RU"):
     return (int(ipaddress.ip_address(first)), int(ipaddress.ip_address(last)), asn, country, "Test AS")
