@@ -11475,14 +11475,7 @@
       ]
     },
     "api.browser.yandex.com": {
-      "parent": "yandex.com",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
-    "api.browser.yandex.ru": {
-      "parent": "browser.yandex.ru",
+      "parent": "browser.yandex.com",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -11570,22 +11563,8 @@
         "jirnobruh-amnezia"
       ]
     },
-    "appmetrica.yandex.com": {
-      "parent": "yandex.com",
-      "sources": [
-        "jirnobruh-amnezia",
-        "lib4u-amnezia"
-      ]
-    },
     "appmetrica.yandex.net": {
       "parent": "yandex.net",
-      "sources": [
-        "jirnobruh-amnezia",
-        "lib4u-amnezia"
-      ]
-    },
-    "appmetrica.yandex.ru": {
-      "parent": "yandex.ru",
       "sources": [
         "jirnobruh-amnezia",
         "lib4u-amnezia"
@@ -11834,13 +11813,6 @@
         "mobile-whitelist-domains"
       ]
     },
-    "browser.yandex.com": {
-      "parent": "yandex.com",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
     "bs.mail.ru": {
       "parent": "mail.ru",
       "sources": [
@@ -11909,6 +11881,12 @@
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
+      ]
+    },
+    "cdn.lemanapro.ru": {
+      "parent": "lemanapro.ru",
+      "sources": [
+        "egkodin-ru-sites"
       ]
     },
     "cdn.newyear.mail.ru": {
@@ -12313,13 +12291,6 @@
         "mobile-whitelist-domains"
       ]
     },
-    "csp.yandex.net": {
-      "parent": "yandex.net",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
     "ctlog.mail.ru": {
       "parent": "mail.ru",
       "sources": [
@@ -12479,6 +12450,12 @@
         "mobile-whitelist-domains"
       ]
     },
+    "dmp.dmpkit.lemanapro.ru": {
+      "parent": "lemanapro.ru",
+      "sources": [
+        "egkodin-ru-sites"
+      ]
+    },
     "dn.mail.ru": {
       "parent": "mail.ru",
       "sources": [
@@ -12522,13 +12499,6 @@
     },
     "download.max.ru": {
       "parent": "max.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
-    "dr.yandex.net": {
-      "parent": "yandex.net",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -12673,13 +12643,6 @@
     },
     "favicon.yandex.com": {
       "parent": "yandex.com",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
-    "favicon.yandex.net": {
-      "parent": "yandex.net",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -13165,13 +13128,6 @@
         "mobile-whitelist-domains"
       ]
     },
-    "kiks.yandex.ru": {
-      "parent": "yandex.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
     "kingdomrift.mail.ru": {
       "parent": "mail.ru",
       "sources": [
@@ -13420,13 +13376,6 @@
         "mobile-whitelist-domains"
       ]
     },
-    "mail.yandex.com": {
-      "parent": "yandex.com",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
     "mailer.mail.ru": {
       "parent": "mail.ru",
       "sources": [
@@ -13512,15 +13461,6 @@
       "parent": "vk.com",
       "sources": [
         "jirnobruh-amnezia"
-      ]
-    },
-    "mc.yandex.com": {
-      "parent": "yandex.com",
-      "sources": [
-        "egkodin-ru-sites",
-        "jirnobruh-amnezia",
-        "lib4u-amnezia",
-        "mobile-whitelist-domains"
       ]
     },
     "mc.yandex.net": {
@@ -13961,6 +13901,12 @@
     },
     "parking.mos.ru": {
       "parent": "mos.ru",
+      "sources": [
+        "egkodin-ru-sites"
+      ]
+    },
+    "partners.lemanapro.ru": {
+      "parent": "lemanapro.ru",
       "sources": [
         "egkodin-ru-sites"
       ]
@@ -14759,6 +14705,12 @@
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
+      ]
+    },
+    "static.lemanapro.ru": {
+      "parent": "lemanapro.ru",
+      "sources": [
+        "egkodin-ru-sites"
       ]
     },
     "static.operator.mail.ru": {
@@ -15917,13 +15869,6 @@
         "mobile-whitelist-domains"
       ]
     },
-    "sync.browser.yandex.net": {
-      "parent": "yandex.net",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
     "t.mail.ru": {
       "parent": "mail.ru",
       "sources": [
@@ -15951,12 +15896,6 @@
         "jirnobruh-amnezia",
         "lib4u-amnezia",
         "mobile-whitelist-domains"
-      ]
-    },
-    "taxi.yandex.com": {
-      "parent": "yandex.com",
-      "sources": [
-        "egkodin-ru-sites"
       ]
     },
     "team.mail.ru": {
@@ -17444,23 +17383,7 @@
         52007
       ]
     },
-    "ads-integration.rustore.ru": {
-      "sources": [
-        "lib4u-amnezia"
-      ],
-      "asn": [
-        47764
-      ]
-    },
     "ads.icq.com": {
-      "sources": [
-        "lib4u-amnezia"
-      ],
-      "asn": [
-        47764
-      ]
-    },
-    "ads.rustore.ru": {
       "sources": [
         "lib4u-amnezia"
       ],
@@ -17490,14 +17413,6 @@
       ],
       "asn": [
         200350
-      ]
-    },
-    "adv.rustore.ru": {
-      "sources": [
-        "lib4u-amnezia"
-      ],
-      "asn": [
-        47764
       ]
     },
     "adygeya.ru": {
@@ -17717,14 +17632,6 @@
       "sources": [
         "lib4u-amnezia",
         "v2fly-ru"
-      ],
-      "asn": [
-        47764
-      ]
-    },
-    "apptracer.ru": {
-      "sources": [
-        "lib4u-amnezia"
       ],
       "asn": [
         47764
@@ -18460,14 +18367,6 @@
         210756
       ]
     },
-    "cdn.lemanapro.ru": {
-      "sources": [
-        "egkodin-ru-sites"
-      ],
-      "asn": [
-        215013
-      ]
-    },
     "cdnvideo.ru": {
       "sources": [
         "jirnobruh-amnezia",
@@ -18645,14 +18544,6 @@
       ],
       "asn": [
         51115
-      ]
-    },
-    "click.rustore.ru": {
-      "sources": [
-        "lib4u-amnezia"
-      ],
-      "asn": [
-        47764
       ]
     },
     "cloud.ru": {
@@ -19070,14 +18961,6 @@
       ],
       "asn": [
         200350
-      ]
-    },
-    "dmp.dmpkit.lemanapro.ru": {
-      "sources": [
-        "egkodin-ru-sites"
-      ],
-      "asn": [
-        51115
       ]
     },
     "dns.ru": {
@@ -21297,14 +21180,6 @@
         2854
       ]
     },
-    "lemanapro.ru": {
-      "sources": [
-        "egkodin-ru-sites"
-      ],
-      "asn": [
-        51115
-      ]
-    },
     "lenta.tech": {
       "sources": [
         "jirnobruh-amnezia",
@@ -22743,14 +22618,6 @@
         44386
       ]
     },
-    "partners.lemanapro.ru": {
-      "sources": [
-        "egkodin-ru-sites"
-      ],
-      "asn": [
-        51115
-      ]
-    },
     "payecom.ru": {
       "sources": [
         "lib4u-amnezia",
@@ -22822,14 +22689,6 @@
       ],
       "asn": [
         44128
-      ]
-    },
-    "pixel.rustore.ru": {
-      "sources": [
-        "lib4u-amnezia"
-      ],
-      "asn": [
-        47764
       ]
     },
     "planetazdorovo.ru": {
@@ -24179,34 +24038,6 @@
         57073
       ]
     },
-    "rustore.ru": {
-      "sources": [
-        "jirnobruh-amnezia",
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        47764
-      ]
-    },
-    "rustore.team": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        47764
-      ]
-    },
-    "rustore.tv": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        47764
-      ]
-    },
     "rutube.sport": {
       "sources": [
         "lib4u-amnezia",
@@ -24650,15 +24481,6 @@
         51115
       ]
     },
-    "servicepipe.ru": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        201706
-      ]
-    },
     "servicepipe.tech": {
       "sources": [
         "lib4u-amnezia",
@@ -25095,22 +24917,6 @@
       ],
       "asn": [
         44310
-      ]
-    },
-    "static.lemanapro.ru": {
-      "sources": [
-        "egkodin-ru-sites"
-      ],
-      "asn": [
-        215013
-      ]
-    },
-    "stats.rustore.ru": {
-      "sources": [
-        "lib4u-amnezia"
-      ],
-      "asn": [
-        47764
       ]
     },
     "stats.telega.info": {
@@ -25582,15 +25388,6 @@
         43399
       ]
     },
-    "timeweb.cloud": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        51115
-      ]
-    },
     "tinkoff-edu.ru": {
       "sources": [
         "lib4u-amnezia",
@@ -25797,22 +25594,6 @@
       ],
       "asn": [
         201706
-      ]
-    },
-    "tracker-api.my.com": {
-      "sources": [
-        "lib4u-amnezia"
-      ],
-      "asn": [
-        47764
-      ]
-    },
-    "tracker.my.com": {
-      "sources": [
-        "lib4u-amnezia"
-      ],
-      "asn": [
-        47764
       ]
     },
     "travel-tec.ru": {
@@ -27448,14 +27229,6 @@
       ],
       "asn": [
         49505
-      ]
-    },
-    "www.rustore.ru": {
-      "sources": [
-        "jirnobruh-amnezia"
-      ],
-      "asn": [
-        47764
       ]
     },
     "www.rzd-medicine.ru": {

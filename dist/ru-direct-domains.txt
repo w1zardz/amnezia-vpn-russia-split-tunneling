@@ -29,6 +29,7 @@ absolutbank.ru
 acdn.tinkoff.ru
 acm.timus.ru
 acra-ratings.ru
+activation-v2.kaspersky.com
 adfox.yandex.ru
 ads-integration.rustore.ru
 ads.adfox.ru
@@ -67,6 +68,8 @@ api.easydonate.ru
 api.easyx.ru
 api.grnd.game
 api.grnd.gg
+api.grndgg.ru
+api.inappstory.ru
 api.nomerogram.ru
 api.ok.ru
 api.ozon.ru
@@ -77,6 +80,7 @@ apigw.yandexcloud.net
 appmetrica.yandex.com
 appmetrica.yandex.ru
 apps.rustore.ru
+apptracer.ru
 apteka.ru
 arbitr.ru
 arena1.grnd.game
@@ -162,6 +166,7 @@ cdek.ru
 cdn.cdngrand.com
 cdn.grnd.game
 cdn.grnd.gg
+cdn.grndgg.ru
 cdn.myarena.ru
 cdn.tbank.ru
 cdn1.ozone.ru
@@ -180,6 +185,7 @@ citilink.ru
 citymobil.ru
 clck.ru
 click.alfabank.ru
+click.rustore.ru
 clips.vk.com
 clips.vk.ru
 cloud.mail.ru
@@ -192,6 +198,7 @@ codeby.school
 codland.ru
 connect.ok.ru
 console.cloud.yandex.ru
+console.rustore.ru
 console.yandex.cloud
 consultant.ru
 containers.yandexcloud.net
@@ -220,6 +227,7 @@ delivery.yandex.ru
 dellin.ru
 deti.mail.ru
 detmir.ru
+dev.rustore.ru
 dev.vk.com
 dhl.ru
 diadoc.ru
@@ -258,6 +266,7 @@ dr.yandex.net
 drive.yandex.ru
 drom.ru
 drweb.ru
+ds.kaspersky.com
 dtf.ru
 duma.gov.ru
 dzen.ru
@@ -377,12 +386,15 @@ gpb.ru
 gq.ru
 grnd.game
 grnd.gg
+grndgg.ru
 group-ib.ru
 gtd.ru
 gu-st.ru
 guta.ru
 habr.com
 hassle.online
+hb.bizmrg.com
+hb.vkcs.cloud
 hd.kinopoisk.ru
 headhunter.ru
 health.mail.ru
@@ -417,6 +429,7 @@ img.avito.st
 img.cdngrand.com
 img.mail.ru
 imgsmail.ru
+inappstory.ru
 informatics.ru
 infosystems.ru
 infotecs.ru
@@ -709,6 +722,7 @@ pic.rtbcdn.ru
 pickpoint.ru
 pikabu.ru
 piluli.ru
+pixel.rustore.ru
 platformaofd.ru
 platon.ru
 play.vk.com
@@ -831,6 +845,8 @@ russia-24.ru
 russia.tv
 russianpost.ru
 rustore.ru
+rustore.team
+rustore.tv
 rutube.ru
 rutubelist.ru
 rzd-bonus.ru
@@ -983,6 +999,7 @@ school.mos.ru
 school.mosreg.ru
 sdamgia.ru
 sdek.ru
+sdk-api.apptracer.ru
 searchinform.ru
 secretmag.ru
 securepay.tinkoff.ru
@@ -1108,7 +1125,10 @@ torg.mail.ru
 torgi.gov.ru
 touch.mail.ru
 tpu.ru
+tracer.ru
 track24.ru
+tracker-api.my.com
+tracker.my.com
 tracker.yandex.ru
 trackitonline.ru
 trademc.org
@@ -1165,6 +1185,7 @@ vk-portal.net
 vk.cc
 vk.com
 vk.company
+vk.foreignpay.ru
 vk.link
 vk.me
 vk.ru
@@ -1227,6 +1248,7 @@ www.cdngrand.com
 www.gosuslugi.ru
 www.grnd.game
 www.grnd.gg
+www.grndgg.ru
 www.kinopoisk.ru
 www.kripmine.ru
 www.myarena.ru
@@ -1238,6 +1260,7 @@ www.rutube.ru
 www.sberbank.ru
 www.tbank.ru
 www.tinkoff.ru
+www.tns-counter.ru
 www.vk.com
 www.vk.ru
 www.vkvideo.ru
