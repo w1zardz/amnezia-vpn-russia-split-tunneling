@@ -13,19 +13,19 @@
   "ip_entries": 1032,
   "routing": {
     "full": {
-      "candidates": 3709,
-      "unique": 2469,
+      "candidates": 3714,
+      "unique": 2471,
       "compacted": 1032,
-      "redundant": 2677
+      "redundant": 2682
     },
     "lite": {
-      "candidates": 2983,
-      "unique": 2026,
+      "candidates": 2987,
+      "unique": 2028,
       "compacted": 793,
-      "redundant": 2190
+      "redundant": 2194
     }
   },
-  "allowed_ips": 9546,
+  "allowed_ips": 9545,
   "prefix_snapshot": 2109,
   "personal_domains": 0,
   "personal_cidrs": 0,
@@ -36,12 +36,12 @@
   "domains_with_ips": 1382,
   "lite_domains_with_ips": 1014,
   "sha256": {
-    "amnezia-ru-direct.json": "99e19e739f86252a2e572c7b95260dfe44546feb2f5bef11fa7bd55d13d932e3",
-    "amnezia-ru-direct-lite.json": "b6f8fcd4b66b00ebc7317209bb08b5e6e9c291af99488de5f864df81db3074b6",
-    "amnezia-ru-direct-ip.json": "0998b91a603ca896ee426f6ad85a572c8216b205dddfda7a817f9867f0352ed1",
+    "amnezia-ru-direct.json": "660f864b0ca74828e62de00b3f65232d867c40e0f424014b6e1b935605a1f9ac",
+    "amnezia-ru-direct-lite.json": "ac123bc3dc1d305d5571ae2431142ecb8b6d3ace8794e1dd9b064e271d43c6e9",
+    "amnezia-ru-direct-ip.json": "57a0b290a4e24dc25ed2c2cec39f29ae77517611c7b4896d20bbf434157633ab",
     "ru-direct-domains.txt": "b2bde20f01bdbc86a645046373d9cf1479dcbcb518716427c2f45169e689484b",
-    "ru-direct-ipv4.txt": "a27b13449db391f57807eebb84f0ad8f7766803fced90a0c4d1f6eb3099329b8",
-    "wg-allowed-ips.txt": "5b3c7e8ebb14505eb13853a5de247e171107ba27cd914c0efcb50ce8d0e360bb",
-    "happ-ru-direct.json": "021d2b9e356dece9efbc21e7a87b7c5e35e0f81ea327ffa3629d1f176c595cfc"
+    "ru-direct-ipv4.txt": "d6ef5810c9f8f69a4986682f54a69eb1d3a22f847edc20c63da2f5456da78331",
+    "wg-allowed-ips.txt": "865f517bfcbc8d66c7276225a1e1c6d4f23dc5e54287c97354c9652a185f2cdd",
+    "happ-ru-direct.json": "dc621dce3a2f235d77a704cfb1129b0bc94ebc8cddba1a517720ee41896ec47b"
   }
 }
