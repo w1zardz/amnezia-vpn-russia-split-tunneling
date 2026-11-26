@@ -53,6 +53,27 @@ DOH_RESOLVERS = (
 DOT_SERVERS = ("77.88.8.8", "77.88.8.1")
 DOT_HOSTNAME = "common.dot.dns.yandex.net"
 UDP_RESOLVERS = ("77.88.8.8", "77.88.8.1")  # Яндекс.DNS (резерв)
+# Ленты конкурентов с готовыми IPv4 доменов (резолв внутри РФ / мобильных сетей):
+# добирают российские ноды балансировщиков, которых не видно с зарубежного раннера.
+COMPETITOR_DOMAIN_IP_FEEDS: tuple[tuple[str, str], ...] = (
+    (
+        "lib4u-amnezia",
+        "https://raw.githubusercontent.com/lib4u/amnezia-tunneling-ru/main/amnezia.json",
+    ),
+    (
+        "kyoresuas-domains",
+        "https://github.com/kyoresuas/ru-direct/releases/download/latest/ru-standard.amnezia-domains.json",
+    ),
+    (
+        "egkodin-ru-sites",
+        "https://raw.githubusercontent.com/egkodin/ru-split-amneziavpn/main/ru_sites.json",
+    ),
+    (
+        "jirnobruh-amnezia",
+        "https://raw.githubusercontent.com/jirnobruh/Split-Tunneling-Amnezia-for-Russia/master/amnezia_split_ru_full.json",
+    ),
+)
+MAX_COMPETITOR_JSON_BYTES = 8_388_608
 QUERIES_PER_RESOLVER = 2
 TIMEOUT = 4.0
 RETRIES = 2
@@ -466,6 +487,75 @@ def manual_domain_networks(services: Iterable[catalog.Service]) -> dict[str, lis
     return result
 
 
+def harvest_competitor_domain_ips(
+    wanted_domains: Iterable[str],
+    feeds: Iterable[tuple[str, str]] = COMPETITOR_DOMAIN_IP_FEEDS,
+) -> dict[str, list[str]]:
+    """Добирает готовые IPv4 наших доменов (и их поддоменов) из ежедневных сборок конкурентов."""
+    wanted = set(wanted_domains)
+    if not wanted:
+        return {}
+    collected: dict[str, set[str]] = {}
+    for feed_id, url in feeds:
+        try:
+            payload = catalog.http_get(url, MAX_COMPETITOR_JSON_BYTES, timeout=45)
+            document = json.loads(payload.decode("utf-8-sig", "replace"))
+        except (catalog.CatalogError, ValueError, OSError) as exc:
+            print(f"ПРЕДУПРЕЖДЕНИЕ: доменная лента {feed_id} пропущена ({exc})", file=sys.stderr)
+            continue
+        if not isinstance(document, list):
+            continue
+        matched = 0
+        for item in document:
+            if not isinstance(item, dict):
+                continue
+            raw_host = item.get("hostname")
+            if not isinstance(raw_host, str):
+                continue
+            host = raw_host.strip().lower().rstrip(".")
+            target = host if host in wanted else catalog.external_domain_parent(host, wanted)
+            if target is None:
+                continue
+            raw_ips: list[str] = []
+            single = item.get("ip")
+            if isinstance(single, str) and single.strip():
+                raw_ips.append(single.strip())
+            multi = item.get("ips")
+            if isinstance(multi, list):
+                raw_ips.extend(val.strip() for val in multi if isinstance(val, str) and val.strip())
+            for candidate in raw_ips:
+                try:
+                    parsed = ipaddress.IPv4Address(candidate)
+                except (ipaddress.AddressValueError, ValueError):
+                    continue
+                if parsed.is_global:
+                    collected.setdefault(target, set()).add(str(parsed))
+                    matched += 1
+        print(f"доменная лента {feed_id}: найдено {matched} кандидатов IPv4 для каталога")
+    return {host: sorted(values, key=ipaddress.IPv4Address) for host, values in collected.items()}
+
+
+def merge_domain_pool(
+    fresh: Iterable[str],
+    competitor: Iterable[str],
+    stale: Iterable[str],
+    table: catalog.AsnTable,
+    manual_networks: Iterable[ipaddress.IPv4Network] = (),
+) -> list[str]:
+    """Свежие ответы DNS + IP конкурентов + прошлые рабочие IP ротации (до MAX_DOMAIN_IPS)."""
+    chosen: list[str] = []
+    seen: set[str] = set()
+    for group in (fresh, competitor, stale):
+        validated = ru_addresses(group, table, manual_networks)
+        for ip in validated:
+            if ip not in seen:
+                seen.add(ip)
+                chosen.append(ip)
+                if len(chosen) >= catalog.MAX_DOMAIN_IPS:
+                    return sorted(chosen, key=ipaddress.IPv4Address)
+    return sorted(chosen, key=ipaddress.IPv4Address)
+
+
 def full_list_domains(services: list[catalog.Service], with_external: bool = False) -> list[str]:
     """Те же домены, что попадают в полный список: каталог, поддомены, корни."""
     if not with_external:
@@ -481,6 +571,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=catalog.DOMAIN_IPS_FILE)
     parser.add_argument("--asn-table", type=Path, help="локальный ip2asn-v4.tsv(.gz) вместо загрузки")
+    parser.add_argument("--no-competitors", action="store_true", help="без добора IP из лент конкурентов")
     external_group = parser.add_mutually_exclusive_group()
     external_group.add_argument("--no-external", dest="with_external", action="store_false", default=False)
     external_group.add_argument("--with-external", dest="with_external", action="store_true")
@@ -515,18 +606,32 @@ def main() -> int:
                 "DNS режет запросы, прошлый снимок оставлен как есть"
             )
 
+        competitor_ips: dict[str, list[str]] = {}
+        # В модульных тестах мало тестовых доменов — внешнюю сеть там не трогаем.
+        if not arguments.no_competitors and len(domains) >= 50:
+            competitor_ips = harvest_competitor_domain_ips(domains)
+
         result: dict[str, list[str]] = {}
         stale = 0
         for domain in domains:
             answer = answers[domain]
+            allowed_nets = manual_networks.get(domain, ())
             if answer.status == FAIL:
-                # Резолверы промолчали — держим прошлые адреса, но и их сверяем с таблицей.
-                kept = ru_addresses(previous.get(domain, []), table, manual_networks.get(domain, ()))
+                # Резолверы промолчали — держим прошлые и конкурентные адреса, сверяя с таблицей.
+                kept = merge_domain_pool((), competitor_ips.get(domain, ()), previous.get(domain, ()), table, allowed_nets)
                 if kept:
                     result[domain] = kept
                     stale += 1
                 continue
-            accepted = ru_addresses(answer.addresses, table, manual_networks.get(domain, ()))
+            if answer.status == EMPTY and not competitor_ips.get(domain):
+                continue
+            accepted = merge_domain_pool(
+                answer.addresses,
+                competitor_ips.get(domain, ()),
+                previous.get(domain, ()) if answer.status == OK else (),
+                table,
+                allowed_nets,
+            )
             if accepted:
                 result[domain] = accepted
         print(

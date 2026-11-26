@@ -148,6 +148,81 @@ class RouteLoadTests(unittest.TestCase):
             harvested = refresh.harvest_competitor_prefixes({200350: 'Yandex Cloud'}, table, feeds)
         self.assertEqual(harvested, {'84.201.151.0/24': 200350})
 
+    def test_ripestat_transient_failure_falls_back_to_previous_asn_snapshot(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / 'prefixes.json'
+            path.write_bytes(catalog.json_bytes({
+                'version': 1,
+                'prefixes': {
+                    '8.8.8.0/24': {'asn': 64501, 'as_name': 'Saved', 'cc': 'RU', 'services': [], 'source': 'asn'},
+                },
+            }))
+
+            def fake_announced(asn):
+                if asn == 64501:
+                    raise refresh.RefreshError('RIPEstat HTTP 503')
+                return ['8.8.9.0/24']
+
+            table = catalog.AsnTable([row('8.8.8.0', '8.8.8.255', 64501), row('8.8.9.0', '8.8.9.255', 64502)])
+            with patch.object(sys, 'argv', ['refresh', '--no-external', '--output', str(path)]), \
+                 patch.object(catalog, 'load_asn_table', return_value=table), \
+                 patch.object(catalog, 'catalog_domains', return_value=['base.ru']), \
+                 patch.object(refresh, 'resolve_all', return_value={'base.ru': ['8.8.9.1']}), \
+                 patch.object(refresh, 'cymru_lookup', return_value={'8.8.9.1': (64502, '8.8.9.0/24', 'RU', 'OK')}), \
+                 patch.object(refresh, 'load_asn_expand', return_value={64501: 'Saved', 64502: 'Live'}), \
+                 patch.object(refresh, 'announced_prefixes', side_effect=fake_announced), \
+                 contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                self.assertEqual(refresh.main(), 0)
+            saved = json.loads(path.read_text(encoding='utf-8'))['prefixes']
+            self.assertIn('8.8.8.0/24', saved)
+            self.assertIn('8.8.9.0/24', saved)
+
+    def test_competitor_asn_discovery_accepts_small_ru_service_and_rejects_hosting_or_isp(self):
+        table = catalog.AsnTable([
+            row('185.10.10.0', '185.10.10.255', 210999, 'RU'),       # small clean RU service -> accept
+            row('95.213.0.0', '95.213.255.255', 49505, 'RU'),        # Selectel shared hosting -> reject
+            row('5.128.0.0', '5.131.255.255', 12389, 'RU'),          # >131k ISP -> reject
+        ])
+        cfg_payload = json.dumps({
+            'services': [
+                {'name': 'NewBank', 'asns': [{'asn': 210999, 'name': 'NewBank AS'}]},
+                {'name': 'Hosting', 'asns': [{'asn': 49505, 'name': 'Selectel'}]},
+                {'name': 'BigISP', 'asns': [{'asn': 12389, 'name': 'Rostelecom'}]},
+            ]
+        }).encode('utf-8')
+        configs = [('test-kyo', 'kyoresuas', 'https://example.com/services.json')]
+        with patch.object(catalog, 'http_get', return_value=cfg_payload), \
+             patch.object(refresh, 'announced_prefixes', return_value=['185.10.10.0/24']), \
+             contextlib.redirect_stdout(io.StringIO()):
+            found = refresh.discover_competitor_asns({13238: 'Yandex'}, table, configs)
+        self.assertEqual(found, {210999: 'NewBank AS (автосбор)'})
+
+    def test_enforce_route_budget_caps_dns_hosts_without_touching_asn_routes(self):
+        prefixes = {
+            '5.255.0.0/24': {'source': 'asn', 'asn': 13238, 'cc': 'RU'},
+            '5.255.0.10/32': {'source': 'dns', 'asn': 13238, 'cc': 'RU'},  # covered by /24 -> free
+            '95.213.1.1/32': {'source': 'dns', 'asn': 49505, 'cc': 'RU'},
+            '95.213.2.1/32': {'source': 'dns', 'asn': 49505, 'cc': 'RU'},
+        }
+        kept, trimmed = refresh.enforce_route_budget(prefixes, [], max_routes=2)
+        self.assertEqual(trimmed, 1)
+        self.assertIn('5.255.0.0/24', kept)
+        self.assertIn('5.255.0.10/32', kept)
+        self.assertEqual(len([k for k in kept if k.startswith('95.213.')]), 1)
+
+    def test_merge_domain_pool_combines_fresh_competitor_and_stale_rotation_ips(self):
+        table = ru_table()
+        feed_json = json.dumps([
+            {'hostname': 'sub.bank.ru', 'ips': ['95.213.0.2', '8.8.8.8']},
+            {'hostname': 'unrelated.ru', 'ip': '95.213.0.99'},
+        ]).encode('utf-8')
+        with patch.object(catalog, 'http_get', return_value=feed_json), \
+             contextlib.redirect_stdout(io.StringIO()):
+            comp = resolver.harvest_competitor_domain_ips(['bank.ru'], [('test', 'https://example.com/a.json')])
+        self.assertEqual(comp, {'bank.ru': ['8.8.8.8', '95.213.0.2']})
+        merged = resolver.merge_domain_pool(['95.213.0.1'], comp['bank.ru'], ['95.213.0.3', '8.8.8.8'], table)
+        self.assertEqual(merged, ['95.213.0.1', '95.213.0.2', '95.213.0.3'])
+
     def test_dns_duplicates_and_contained_hosts_share_one_route(self):
         metrics = builder.route_metrics(
             ['a.example', 'b.example'], ['5.255.0.0/16'],

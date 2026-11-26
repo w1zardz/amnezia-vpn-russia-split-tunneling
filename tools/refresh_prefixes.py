@@ -58,15 +58,88 @@ COMPETITOR_SERVICE_FEEDS: tuple[tuple[str, str, str], ...] = (
         "opencck-captcha-core",
         "amnezia",
         "https://russia.iplist.opencck.org/?format=amnezia&data=cidr4"
-        "&site=yandex%40smartcaptcha&site=yandex%40cloud&site=yandex%40cdn"
-        "&site=gosuslugi.ru&site=sberbank.ru&site=tbank.ru&site=ozon.ru&site=wb.ru&site=vk.com",
+        "&site=yandex%40smartcaptcha&site=yandex%40cloud&site=yandex%40cdn&site=yandex%40pay"
+        "&site=gosuslugi.ru&site=nalog.ru&site=sberbank.ru&site=tbank.ru&site=vtb.ru&site=alfabank.ru"
+        "&site=ozon.ru&site=wb.ru&site=avito.ru&site=vk.com&site=rustore.ru&site=rutube.ru",
     ),
     (
         "mobile-whitelist-cidr",
         "cidr",
         "https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/cidrwhitelist.txt",
     ),
+    (
+        "pincetgore-ip-list",
+        "amnezia",
+        "https://github.com/pincetgore/amnezia-app-ru-list/releases/download/latest/ip-list.json",
+    ),
+    (
+        "pvd-dog-no-vpn",
+        "amnezia",
+        "https://raw.githubusercontent.com/pvd-dog/russia-no-vpn-list/main/russia-no-vpn-list_by_%40pvd_dog.json",
+    ),
 )
+# Доменные ленты конкурентов: ищем новые поддомены наших курируемых сервисов
+# (например новые узлы капчи, корзин WB/Ozon, шлюзов банков и Госуслуг).
+COMPETITOR_SUBDOMAIN_FEEDS: tuple[tuple[str, str, str], ...] = (
+    (
+        "kyoresuas-domains",
+        "domains",
+        "https://github.com/kyoresuas/ru-direct/releases/download/latest/ru-standard.domains.txt",
+    ),
+    (
+        "lib4u-domains",
+        "amnezia",
+        "https://raw.githubusercontent.com/lib4u/amnezia-tunneling-ru/main/amnezia.json",
+    ),
+    (
+        "mobile-whitelist-domains",
+        "domains",
+        "https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/whitelist.txt",
+    ),
+    (
+        "unrkn-domains",
+        "domains",
+        "https://raw.githubusercontent.com/UnRKN/ru-blocklist/main/ru-blocklist.txt",
+    ),
+)
+# Источники новых сервисных/капчевых ASN у конкурентов (только малые не-провайдерские AS РФ).
+COMPETITOR_ASN_CONFIGS: tuple[tuple[str, str, str], ...] = (
+    (
+        "runetfreedom-geoip",
+        "runetfreedom",
+        "https://raw.githubusercontent.com/runetfreedom/russia-blocked-geoip/main/config.json",
+    ),
+    (
+        "kyoresuas-payments",
+        "kyoresuas",
+        "https://raw.githubusercontent.com/kyoresuas/ru-direct/main/config/services/payments.json",
+    ),
+    (
+        "kyoresuas-yandex",
+        "kyoresuas",
+        "https://raw.githubusercontent.com/kyoresuas/ru-direct/main/config/services/yandex.json",
+    ),
+    (
+        "kyoresuas-government",
+        "kyoresuas",
+        "https://raw.githubusercontent.com/kyoresuas/ru-direct/main/config/services/government.json",
+    ),
+    (
+        "kyoresuas-social",
+        "kyoresuas",
+        "https://raw.githubusercontent.com/kyoresuas/ru-direct/main/config/services/social.json",
+    ),
+    (
+        "kyoresuas-marketplaces",
+        "kyoresuas",
+        "https://raw.githubusercontent.com/kyoresuas/ru-direct/main/config/services/marketplaces.json",
+    ),
+)
+MAX_AUTO_DISCOVERED_ASN_IPS = 131_072
+MAX_COMPETITOR_SUBDOMAINS = 600
+# Запас до жёсткого лимита сборщика MAX_EFFECTIVE_ROUTES=1000, чтобы AFK-обновления
+# годами копили полезные маршруты и никогда не роняли ежедневный релиз по переполнению.
+MAX_AUTO_ROUTES = 940
 TELEGRAM_SUBNETS = tuple(
     ipaddress.ip_network(value)
     for value in (
@@ -304,16 +377,149 @@ def _extract_feed_networks(text: str, kind: str) -> list[ipaddress.IPv4Network]:
     return networks
 
 
+def _is_public_asn(asn: int) -> bool:
+    return asn > 0 and not (64496 <= asn <= 65535 or 4200000000 <= asn <= 4294967294)
+
+
+def harvest_competitor_subdomains(
+    trusted_domains: Iterable[str],
+    feeds: Iterable[tuple[str, str, str]] = COMPETITOR_SUBDOMAIN_FEEDS,
+) -> dict[str, str]:
+    """Ищет в лентах конкурентов новые поддомены наших курируемых сервисов -> {поддомен: родитель}."""
+    trusted = set(trusted_domains)
+    if not trusted:
+        return {}
+    counts: dict[str, int] = {}
+    parents: dict[str, str] = {}
+    for feed_id, kind, url in feeds:
+        try:
+            payload = catalog.http_get(url, MAX_RIPESTAT_BYTES * 2, timeout=45)
+            text = payload.decode("utf-8-sig", "replace")
+            if kind == "amnezia":
+                doc = json.loads(text)
+                candidates = [
+                    item["hostname"] for item in doc
+                    if isinstance(item, dict) and isinstance(item.get("hostname"), str)
+                ] if isinstance(doc, list) else []
+            else:
+                candidates = text.splitlines()
+        except (catalog.CatalogError, ValueError, OSError) as exc:
+            print(f"ПРЕДУПРЕЖДЕНИЕ: лента поддоменов {feed_id} пропущена ({exc})", file=sys.stderr)
+            continue
+        matched = 0
+        for raw in candidates:
+            value = raw.split("#", 1)[0].strip()
+            for prefix in ("domain:", "full:", "*."):
+                if value.startswith(prefix):
+                    value = value[len(prefix):]
+            if not value or "/" in value:
+                continue
+            try:
+                domain = catalog.normalize_hostname(value, feed_id)
+            except catalog.CatalogError:
+                continue
+            parent = catalog.external_domain_parent(domain, trusted)
+            if parent is None:
+                continue
+            parents[domain] = parent
+            counts[domain] = counts.get(domain, 0) + 1
+            matched += 1
+        print(f"лента поддоменов {feed_id}: найдено {matched} поддоменов наших сервисов")
+    ranked = sorted(parents, key=lambda d: (-counts[d], d))[:MAX_COMPETITOR_SUBDOMAINS]
+    return {domain: parents[domain] for domain in ranked}
+
+
+def discover_competitor_asns(
+    expand: dict[int, str],
+    table: catalog.AsnTable,
+    configs: Iterable[tuple[str, str, str]] = COMPETITOR_ASN_CONFIGS,
+) -> dict[int, str]:
+    """Находит новые малые сервисные/капчевые ASN у конкурентов (строго без провайдеров и хостингов)."""
+    if not any(_is_public_asn(asn) for asn in expand):
+        return {}
+    candidates: dict[int, str] = {}
+    for cfg_id, kind, url in configs:
+        try:
+            payload = catalog.http_get(url, MAX_RIPESTAT_BYTES, timeout=40)
+            document = json.loads(payload.decode("utf-8-sig", "replace"))
+        except (catalog.CatalogError, ValueError, OSError) as exc:
+            print(f"ПРЕДУПРЕЖДЕНИЕ: конфиг ASN {cfg_id} пропущен ({exc})", file=sys.stderr)
+            continue
+        if kind == "runetfreedom" and isinstance(document, dict):
+            for item in document.get("input", []):
+                wanted = (item.get("args") or {}).get("wantedList") if isinstance(item, dict) else None
+                if not isinstance(wanted, dict):
+                    continue
+                for group_name in ("ddos-guard", "yandex"):
+                    for raw_asn in wanted.get(group_name, []):
+                        digits = str(raw_asn).upper().removeprefix("AS")
+                        if digits.isdigit():
+                            candidates.setdefault(int(digits), f"{group_name} (автосбор {cfg_id})")
+        elif kind == "kyoresuas" and isinstance(document, dict):
+            for service in document.get("services", []):
+                if not isinstance(service, dict):
+                    continue
+                svc_name = str(service.get("name") or cfg_id).strip()
+                for asn_item in service.get("asns") or []:
+                    if isinstance(asn_item, dict) and isinstance(asn_item.get("asn"), int):
+                        label = str(asn_item.get("name") or svc_name).strip()
+                        candidates.setdefault(asn_item["asn"], f"{label} (автосбор)")
+
+    accepted: dict[int, str] = {}
+    for asn, label in sorted(candidates.items()):
+        if asn in expand or asn in DENY_ASN or asn in catalog.SHARED_HOSTING_ASN or not _is_public_asn(asn):
+            continue
+        announced_ips = table.announced.get(asn, 0)
+        if not (0 < announced_ips <= MAX_AUTO_DISCOVERED_ASN_IPS):
+            continue
+        try:
+            prefs = announced_prefixes(asn)
+        except RefreshError:
+            continue
+        if not prefs:
+            continue
+        valid_prefs = [
+            p for p in prefs
+            if reviewed_ru_prefix(p, asn, table)
+            and not any(ipaddress.ip_network(p).overlaps(tg) for tg in TELEGRAM_SUBNETS)
+        ]
+        # Принимаем новый ASN автоматически, только если все его IPv4-анонсы чистые и российские.
+        if len(valid_prefs) == len(prefs):
+            accepted[asn] = label
+            print(f"автооткрыт новый сервисный AS{asn} ({label}): {len(valid_prefs)} префиксов")
+    return accepted
+
+
+def save_asn_expand(expand: dict[int, str], path: Path = ASN_EXPAND_FILE) -> None:
+    comment = (
+        "ASN, которые разворачиваем целиком через RIPEstat + сверяем с курируемыми лентами конкурентов: "
+        "контентные платформы, российские облака, капчи, CDN, НСПК/СБП, банки и anti-DDoS крутят адреса "
+        "балансировщиков, и одного резолва домена мало (плюс разворот схлопывает сотни разрозненных /32 в "
+        "компактные подсети). Операторов связи (МТС, Ростелеком, МегаФон) сюда не добавляем — их адресное "
+        "пространство огромно и не нужно."
+    )
+    if path.exists():
+        try:
+            existing = json.loads(path.read_text(encoding="utf-8"))
+            if isinstance(existing, dict) and isinstance(existing.get("comment"), str):
+                comment = existing["comment"]
+        except (OSError, json.JSONDecodeError):
+            pass
+    payload = {
+        "version": 1,
+        "comment": comment,
+        "asn": {str(asn): reason for asn, reason in sorted(expand.items())},
+    }
+    catalog.atomic_write(path, catalog.json_bytes(payload))
+
+
 def harvest_competitor_prefixes(
     expand: dict[int, str],
     table: catalog.AsnTable,
     feeds: Iterable[tuple[str, str, str]] = COMPETITOR_SERVICE_FEEDS,
 ) -> dict[str, int]:
     """Добирает из курируемых лент конкурентов подсети ТОЛЬКО наших проверенных ASN."""
-    public_asns = [
-        asn for asn in expand
-        if not (64496 <= asn <= 65535 or 4200000000 <= asn <= 4294967294)
-    ]
+    public_asns = [asn for asn in expand if _is_public_asn(asn)]
     if not public_asns:
         return {}
     discovered: dict[str, int] = {}
@@ -344,6 +550,40 @@ def harvest_competitor_prefixes(
     return discovered
 
 
+def enforce_route_budget(
+    prefixes: dict[str, dict],
+    manual_cidrs: Iterable[str],
+    max_routes: int = MAX_AUTO_ROUTES,
+) -> tuple[dict[str, dict], int]:
+    """Гарантирует, что сжатое объединение маршрутов никогда не пробьёт потолок сборщика."""
+    base_nets = [ipaddress.ip_network(c) for c in manual_cidrs]
+    asn_items = [(k, v) for k, v in prefixes.items() if v.get("source") == "asn"]
+    other_items = [(k, v) for k, v in prefixes.items() if v.get("source") != "asn"]
+    kept: dict[str, dict] = dict(asn_items)
+    covered = list(ipaddress.collapse_addresses(base_nets + [ipaddress.ip_network(k) for k, _ in asn_items]))
+    coverage_index = [
+        (int(net.network_address), int(net.broadcast_address)) for net in covered
+    ]
+
+    def is_covered(net: ipaddress.IPv4Network) -> bool:
+        lo, hi = int(net.network_address), int(net.broadcast_address)
+        return any(start <= lo and hi <= end for start, end in coverage_index)
+
+    trimmed = 0
+    current_routes = len(covered)
+    for key, meta in other_items:
+        net = ipaddress.ip_network(key)
+        if is_covered(net):
+            kept[key] = meta
+            continue
+        if current_routes < max_routes:
+            kept[key] = meta
+            current_routes += 1
+        else:
+            trimmed += 1
+    return kept, trimmed
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=catalog.PREFIXES_FILE)
@@ -358,27 +598,53 @@ def main() -> int:
     arguments = parser.parse_args()
 
     try:
+        try:
+            previous_prefixes = catalog.load_prefixes(arguments.output)
+        except catalog.CatalogError:
+            previous_prefixes = {}
+
         services = catalog.load_catalog()
-        domains = catalog.catalog_domains(services)
+        base_domains = catalog.catalog_domains(services)
         external_domains = {} if arguments.no_external else catalog.load_external_domains(services, arguments.external)
-        domains = [*domains, *external_domains]
-        owners = catalog.domain_owner(services)
-        print(f"каталог: {len(services)} сервисов, {len(domains)} доменов")
+        owners = dict(catalog.domain_owner(services))
+        expand = {} if arguments.no_expand else load_asn_expand()
+        has_public_expand = any(_is_public_asn(asn) for asn in expand)
+
+        competitor_subdomains: dict[str, str] = {}
+        if has_public_expand and not arguments.no_competitors:
+            competitor_subdomains = harvest_competitor_subdomains(base_domains)
+            for sub, parent in competitor_subdomains.items():
+                if sub not in owners and parent in owners:
+                    owners[sub] = list(owners[parent])
+
+        domains = sorted(set(base_domains) | set(external_domains) | set(competitor_subdomains))
+        print(
+            f"каталог: {len(services)} сервисов, {len(base_domains)} доменов"
+            + (f" (+{len(competitor_subdomains)} поддоменов у конкурентов)" if competitor_subdomains else "")
+        )
 
         answers = resolve_all(domains)
         resolved = {domain: ips for domain, ips in answers.items() if ips}
+        base_resolved = sum(1 for domain in base_domains if answers.get(domain))
         addresses = {address for ips in resolved.values() for address in ips}
         print(f"резолв: {len(resolved)}/{len(domains)} доменов, {len(addresses)} уникальных IP")
-        if len(resolved) < len(domains) * 0.5:
+        if base_domains and base_resolved < len(base_domains) * 0.5:
             raise RefreshError("резолвится меньше половины каталога — сеть или DNS сломаны")
 
         cymru = cymru_lookup(addresses)
         print(f"Cymru: {len(cymru)} IP сопоставлены с BGP-префиксами")
-        if len(cymru) < len(addresses) * 0.8:
+        if addresses and len(cymru) < len(addresses) * 0.8:
             raise RefreshError("Team Cymru сопоставил меньше 80% IP — неполный снапшот не публикуется")
 
-        expand = {} if arguments.no_expand else load_asn_expand()
         table = catalog.load_asn_table(catalog.asn_table_url(), arguments.asn_table)
+
+        if has_public_expand and not arguments.no_competitors:
+            new_asns = discover_competitor_asns(expand, table)
+            if new_asns:
+                expand.update(new_asns)
+                if not arguments.dry_run:
+                    save_asn_expand(expand)
+                    print(f"обновлён {ASN_EXPAND_FILE}: добавлено {len(new_asns)} новых сервисных ASN")
 
         prefixes: dict[str, dict] = {}
         dropped: dict[str, str] = {}
@@ -402,6 +668,9 @@ def main() -> int:
                 if not network.is_global or not (MIN_PREFIXLEN <= network.prefixlen <= 32):
                     dropped[prefix] = f"префикс /{network.prefixlen} вне допустимого диапазона"
                     continue
+                if any(network.overlaps(tg) for tg in TELEGRAM_SUBNETS):
+                    dropped[str(network)] = "пересечение с подсетью Telegram"
+                    continue
                 if not reviewed_ru_prefix(str(network), asn, table):
                     dropped[prefix] = "весь диапазон не подтверждён как RU у этого ASN"
                     continue
@@ -416,14 +685,43 @@ def main() -> int:
                     if service_id not in entry["services"]:
                         entry["services"].append(service_id)
 
+        def safe_announced(asn: int) -> tuple[list[str], str | None]:
+            try:
+                return announced_prefixes(asn), None
+            except RefreshError as exc:
+                return [], str(exc)
+
         with concurrent.futures.ThreadPoolExecutor(max_workers=RIPESTAT_WORKERS) as executor:
-            announced = dict(zip(sorted(expand), executor.map(announced_prefixes, sorted(expand))))
+            announced = dict(zip(sorted(expand), executor.map(safe_announced, sorted(expand))))
+
+        ripestat_failures = 0
+        max_ripestat_failures = max(2, len(expand) // 4)
         for asn, reason in sorted(expand.items()):
-            values = announced[asn]
+            values, error_msg = announced[asn]
             if not values:
-                raise RefreshError(f"RIPEstat: у AS{asn} нет допустимых IPv4-префиксов")
-            print(f"AS{asn} ({reason}): {len(values)} анонсируемых префиксов")
+                prev_values = sorted(
+                    prev_prefix for prev_prefix, meta in previous_prefixes.items()
+                    if meta.get("asn") == asn and meta.get("source") == "asn"
+                    and reviewed_ru_prefix(prev_prefix, asn, table)
+                )
+                ripestat_failures += 1
+                if prev_values and ripestat_failures <= max_ripestat_failures:
+                    print(
+                        f"ПРЕДУПРЕЖДЕНИЕ: RIPEstat не отдал AS{asn} ({error_msg or 'пусто'}), "
+                        f"сохранены {len(prev_values)} префиксов из прошлого снимка",
+                        file=sys.stderr,
+                    )
+                    values = prev_values
+                else:
+                    raise RefreshError(
+                        error_msg or f"RIPEstat: у AS{asn} нет допустимых IPv4-префиксов"
+                    )
+            else:
+                print(f"AS{asn} ({reason}): {len(values)} анонсируемых префиксов")
             for value in values:
+                if any(ipaddress.ip_network(value).overlaps(tg) for tg in TELEGRAM_SUBNETS):
+                    dropped[value] = "пересечение с подсетью Telegram"
+                    continue
                 if not reviewed_ru_prefix(value, asn, table):
                     dropped[value] = "ASN: зарубежный, смешанный или неизвестный диапазон"
                     continue
@@ -451,6 +749,30 @@ def main() -> int:
                 entry.pop("sources", None)
             if harvested:
                 print(f"ленты конкурентов: подтверждено {len(harvested)} префиксов наших ASN (новых {harvested_new})")
+
+        # Аддитивное сохранение вчерашних /32 из DNS ротации, которые ещё живы в RU-таблице.
+        retained_dns = 0
+        for prev_prefix, meta in previous_prefixes.items():
+            if prev_prefix in prefixes or meta.get("source") != "dns":
+                continue
+            net = ipaddress.ip_network(prev_prefix)
+            asn = meta.get("asn")
+            if (
+                net.prefixlen == 32
+                and isinstance(asn, int)
+                and asn not in DENY_ASN
+                and not any(net.overlaps(tg) for tg in TELEGRAM_SUBNETS)
+                and reviewed_ru_prefix(prev_prefix, asn, table)
+            ):
+                prefixes[prev_prefix] = dict(meta, cc="RU")
+                retained_dns += 1
+        if retained_dns:
+            print(f"аддитивно сохранено прошлых /32 из ротации DNS: {retained_dns}")
+
+        manual_cidrs = [cidr for svc in services for cidr in svc.cidrs]
+        prefixes, trimmed_routes = enforce_route_budget(prefixes, manual_cidrs)
+        if trimmed_routes:
+            print(f"потолок маршрутов ({MAX_AUTO_ROUTES}): отсечено старых /32 сверх бюджета: {trimmed_routes}")
 
         external = {} if arguments.no_external else load_external(arguments.external)
         added = 0
