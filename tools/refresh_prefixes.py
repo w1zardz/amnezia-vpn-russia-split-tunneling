@@ -29,6 +29,7 @@ from pathlib import Path
 from typing import Iterable
 
 import catalog
+import resolve_domains
 
 ROOT = catalog.ROOT
 ASN_EXPAND_FILE = ROOT / "config" / "asn-expand.json"
@@ -39,6 +40,47 @@ RIPESTAT_URL = "https://stat.ripe.net/data/announced-prefixes/data.json?resource
 MAX_RIPESTAT_BYTES = 4_194_304
 RIPESTAT_WORKERS = 3
 MAX_CYMRU_BYTES = 4_194_304
+# Курируемые ленты конкурентов (подсети сервисов и SmartCaptcha): добирают префиксы
+# наших проверенных ASN из config/asn-expand.json, если RIPEstat или единичный DNS их не отдал.
+# Сети вне наших ASN, провайдеры связи и зарубежные диапазоны отсекаются строго по ip2asn-v4.
+COMPETITOR_SERVICE_FEEDS: tuple[tuple[str, str, str], ...] = (
+    (
+        "kyoresuas-standard",
+        "cidr",
+        "https://github.com/kyoresuas/ru-direct/releases/download/latest/ru-standard.ipv4.txt",
+    ),
+    (
+        "lib4u-lite",
+        "amnezia",
+        "https://raw.githubusercontent.com/lib4u/amnezia-tunneling-ru/main/amnezia-ip-lite.json",
+    ),
+    (
+        "opencck-captcha-core",
+        "amnezia",
+        "https://russia.iplist.opencck.org/?format=amnezia&data=cidr4"
+        "&site=yandex%40smartcaptcha&site=yandex%40cloud&site=yandex%40cdn"
+        "&site=gosuslugi.ru&site=sberbank.ru&site=tbank.ru&site=ozon.ru&site=wb.ru&site=vk.com",
+    ),
+    (
+        "mobile-whitelist-cidr",
+        "cidr",
+        "https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/cidrwhitelist.txt",
+    ),
+)
+TELEGRAM_SUBNETS = tuple(
+    ipaddress.ip_network(value)
+    for value in (
+        "91.108.56.0/22",
+        "91.108.4.0/22",
+        "91.108.8.0/22",
+        "91.108.16.0/22",
+        "91.108.12.0/22",
+        "149.154.160.0/20",
+        "91.105.192.0/23",
+        "91.108.20.0/22",
+        "185.76.151.0/24",
+    )
+)
 
 # Политика по ASN и допустимая ширина сети общие с импортом внешних списков.
 DENY_ASN = catalog.DENY_ASN
@@ -70,11 +112,20 @@ def resolve_all(domains: Iterable[str], workers: int = 48) -> dict[str, list[str
                 addresses.add(str(address))
         return hostname, sorted(addresses)
 
-    result: dict[str, list[str]] = {}
+    result: dict[str, set[str]] = {hostname: set() for hostname in domain_list}
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
         for hostname, addresses in executor.map(resolve_one, domain_list):
-            result[hostname] = addresses
-    return result
+            result[hostname].update(addresses)
+    # Раннер GitHub находится за рубежом: добираем российские ноды через Google ECS и Яндекс DoT.
+    if domain_list:
+        try:
+            multi = resolve_domains.resolve_many(domain_list)
+            for hostname, answer in multi.items():
+                if hostname in result:
+                    result[hostname].update(answer.addresses)
+        except resolve_domains.ResolveError as exc:
+            print(f"ПРЕДУПРЕЖДЕНИЕ: дополнительный DoH/DoT-резолв пропущен ({exc})", file=sys.stderr)
+    return {hostname: sorted(values, key=ipaddress.IPv4Address) for hostname, values in result.items()}
 
 
 def cymru_lookup(addresses: Iterable[str]) -> dict[str, tuple[int, str, str, str]]:
@@ -214,7 +265,83 @@ def load_asn_expand() -> dict[int, str]:
 def reviewed_ru_prefix(value: str, asn: int, table: catalog.AsnTable) -> bool:
     """Check every range, not just the first/last IP or an ASN's legal country."""
     rows = table.covering_rows(ipaddress.ip_network(value))
-    return bool(rows) and all(record[2] == asn and record[3] == "RU" for record in rows)
+    return bool(rows) and all(
+        record[2] == asn and is_russian(record[2], record[3], record[4])
+        for record in rows
+    )
+
+
+def _extract_feed_networks(text: str, kind: str) -> list[ipaddress.IPv4Network]:
+    candidates: list[str] = []
+    if kind == "amnezia":
+        document = json.loads(text)
+        if not isinstance(document, list):
+            return []
+        for item in document:
+            if not isinstance(item, dict):
+                continue
+            hostname = item.get("hostname")
+            if isinstance(hostname, str) and ("/" in hostname or hostname.replace(".", "").isdigit()):
+                candidates.append(hostname)
+    else:
+        for line in text.splitlines():
+            value = line.split("#", 1)[0].strip()
+            if value:
+                candidates.append(value)
+    networks: list[ipaddress.IPv4Network] = []
+    for raw in candidates:
+        try:
+            net = ipaddress.ip_network(raw, strict=False)
+        except ValueError:
+            continue
+        if (
+            net.version == 4
+            and net.is_global
+            and MIN_PREFIXLEN <= net.prefixlen <= MAX_PREFIXLEN
+            and not any(net.overlaps(tg) for tg in TELEGRAM_SUBNETS)
+        ):
+            networks.append(net)
+    return networks
+
+
+def harvest_competitor_prefixes(
+    expand: dict[int, str],
+    table: catalog.AsnTable,
+    feeds: Iterable[tuple[str, str, str]] = COMPETITOR_SERVICE_FEEDS,
+) -> dict[str, int]:
+    """Добирает из курируемых лент конкурентов подсети ТОЛЬКО наших проверенных ASN."""
+    public_asns = [
+        asn for asn in expand
+        if not (64496 <= asn <= 65535 or 4200000000 <= asn <= 4294967294)
+    ]
+    if not public_asns:
+        return {}
+    discovered: dict[str, int] = {}
+    for feed_id, kind, url in feeds:
+        try:
+            payload = catalog.http_get(url, MAX_RIPESTAT_BYTES, timeout=45)
+            networks = _extract_feed_networks(payload.decode("utf-8-sig", "replace"), kind)
+        except (catalog.CatalogError, ValueError, OSError) as exc:
+            print(f"ПРЕДУПРЕЖДЕНИЕ: лента {feed_id} пропущена ({exc})", file=sys.stderr)
+            continue
+        matched = 0
+        for net in networks:
+            rows = table.covering_rows(net)
+            if not rows:
+                continue
+            asns = {row[2] for row in rows}
+            if len(asns) != 1:
+                continue
+            asn = next(iter(asns))
+            if asn not in expand or asn in DENY_ASN:
+                continue
+            prefix_str = str(net)
+            if not reviewed_ru_prefix(prefix_str, asn, table):
+                continue
+            discovered[prefix_str] = asn
+            matched += 1
+        print(f"лента {feed_id}: проверено {len(networks)} сетей, совпало с нашими ASN: {matched}")
+    return discovered
 
 
 def main() -> int:
@@ -222,6 +349,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, default=catalog.PREFIXES_FILE)
     parser.add_argument("--external", type=Path, default=catalog.EXTERNAL_FILE)
     parser.add_argument("--no-expand", action="store_true", help="без разворота ASN через RIPEstat")
+    parser.add_argument("--no-competitors", action="store_true", help="без добора подсетей из лент конкурентов")
     external_group = parser.add_mutually_exclusive_group()
     external_group.add_argument("--no-external", dest="no_external", action="store_true", default=True)
     external_group.add_argument("--with-external", dest="no_external", action="store_false")
@@ -264,7 +392,7 @@ def main() -> int:
                 if asn in DENY_ASN:
                     dropped[prefix] = f"AS{asn} {as_name} — глобальный CDN"
                     continue
-                if country != "RU":
+                if not is_russian(asn, country, as_name):
                     dropped[prefix] = f"AS{asn} {as_name} — страна {country}"
                     continue
                 # A bank on shared hosting authorizes its IP, not every tenant
@@ -279,7 +407,7 @@ def main() -> int:
                     continue
                 entry = prefixes.setdefault(
                     str(network),
-                    {"asn": asn, "as_name": as_name, "cc": country, "services": [],
+                    {"asn": asn, "as_name": as_name, "cc": "RU", "services": [],
                      "source": "external" if domain in external_domains else "dns"},
                 )
                 if domain in external_domains and entry["source"] == "external":
@@ -308,6 +436,21 @@ def main() -> int:
                 # и тем самым случайно убрать его из lite.
                 entry.update(asn=asn, source="asn")
                 entry.pop("sources", None)
+
+        if expand and not arguments.no_competitors:
+            harvested = harvest_competitor_prefixes(expand, table)
+            harvested_new = 0
+            for value, asn in sorted(harvested.items(), key=lambda item: ipaddress.ip_network(item[0])):
+                if value not in prefixes:
+                    harvested_new += 1
+                entry = prefixes.setdefault(
+                    value,
+                    {"asn": asn, "as_name": expand[asn], "cc": "RU", "services": [], "source": "asn"},
+                )
+                entry.update(asn=asn, source="asn")
+                entry.pop("sources", None)
+            if harvested:
+                print(f"ленты конкурентов: подтверждено {len(harvested)} префиксов наших ASN (новых {harvested_new})")
 
         external = {} if arguments.no_external else load_external(arguments.external)
         added = 0

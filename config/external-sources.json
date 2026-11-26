@@ -79,8 +79,8 @@
       "kind": "amnezia",
       "roots": true,
       "optional": true,
-      "url": "https://raw.githubusercontent.com/kyoresuas/amnezia-split-tunneling/main/lists/ru-bypass.json",
-      "note": "Импорт Amnezia из одних CIDR, собранный по ASN российских сервисов и зон; обновляется ежедневно."
+      "url": "https://github.com/kyoresuas/ru-direct/releases/download/latest/ru-standard.amnezia.json",
+      "note": "Импорт Amnezia из курируемых российских сервисов и их ASN (kyoresuas/ru-direct); обновляется ежедневно."
     },
     {
       "id": "kyoresuas-essential",
@@ -88,8 +88,8 @@
       "kind": "amnezia",
       "roots": true,
       "optional": true,
-      "url": "https://raw.githubusercontent.com/kyoresuas/amnezia-split-tunneling/main/lists/ru-essential-bypass.json",
-      "note": "Короткий вариант того же сборщика: только ключевые сервисы."
+      "url": "https://github.com/kyoresuas/ru-direct/releases/download/latest/ru-lite.amnezia.json",
+      "note": "Короткий вариант того же сборщика: только ключевые сервисы, банки, СБП и госсервисы."
     },
     {
       "id": "pincetgore-ip-list",

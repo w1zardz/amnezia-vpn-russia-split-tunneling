@@ -5,21 +5,42 @@
   "services": [
     {
       "id": "mobile",
-      "title": "Мобильные операторы",
+      "title": "Мобильные операторы, ЛК, оплата и Mobile ID",
       "tier": "core",
       "domains": [
+        "api.beeline.ru",
+        "api.megafon.ru",
+        "api.mts.ru",
+        "api.t2.ru",
+        "auth.ssl.mts.ru",
         "beeline.ru",
+        "he-mc.t2.ru",
+        "he-mc.tele2.ru",
+        "id.mts.ru",
+        "idgw.mobileid.mts.ru",
+        "idphydra.beeline.ru",
+        "idplogin.beeline.ru",
         "lk.megafon.ru",
+        "lk.mts.ru",
+        "lk.t2.ru",
         "login.mts.ru",
         "megafon.ru",
+        "mobileid.megafon.ru",
         "mts.ru",
+        "my.beeline.ru",
+        "oplata.t2.ru",
+        "pay.mts.ru",
+        "payment.mts.ru",
         "skylink.ru",
+        "sso.t2.ru",
         "t2.ru",
         "tele2.ru",
         "volnamobile.ru",
         "yota.ru"
       ],
-      "cidrs": []
+      "cidrs": [
+        "194.176.96.0/24"
+      ]
     },
     {
       "id": "isp",

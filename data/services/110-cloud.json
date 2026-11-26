@@ -58,13 +58,29 @@
     },
     {
       "id": "ru-antiddos",
-      "title": "Qrator, StormWall, Servicepipe и Kaspersky DDoS — защита банков и сервисов РФ",
+      "title": "Qrator, StormWall, Servicepipe, Variti, F6, Multifactor и российские CDN",
       "tier": "core",
-      "notes": "Скрабберы российских анти-DDoS провайдеров (часть подсетей имеет не-RU RIR-регистрацию, но обслуживает российские банки, магазины и госсервисы). Явное включение подсетей убирает сотни разрозненных /32 и защищает от смены IP балансировщиков.",
+      "notes": "Скрабберы российских анти-DDoS провайдеров, антибот/антифрод SDK (Variti, F6/FACCT), 2FA (Multifactor) и отечественные CDN (NGENIX, CDNvideo, Selectel CDN, Cloud.ru).",
       "domains": [
+        "cdnv.ru",
+        "cdnvideo.ru",
+        "cloud.ru",
+        "f6.ru",
+        "facct.ru",
+        "mfa.center",
+        "multifactor.ru",
+        "ngenix.net",
         "qrator.net",
+        "sbercloud.ru",
+        "selcdn.ru",
         "servicepipe.ru",
-        "stormwall.pro"
+        "servicepipe.tech",
+        "stormwall.network",
+        "stormwall.pro",
+        "trbcdn.net",
+        "variti.io",
+        "variti.net",
+        "variti.ru"
       ],
       "cidrs": [
         "5.252.32.0/22",

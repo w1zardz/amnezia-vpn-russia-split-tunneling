@@ -5,21 +5,32 @@
   "services": [
     {
       "id": "streaming",
-      "title": "Онлайн-кинотеатры",
+      "title": "Онлайн-кинотеатры и медиаплееры РФ",
       "tier": "core",
       "domains": [
         "amediateka.ru",
+        "api.ivi.ru",
+        "api.okko.tv",
+        "api.start.ru",
+        "auth.okko.tv",
         "ivi.ru",
         "kion.ru",
+        "mediavitrina.ru",
         "megogo.ru",
         "more.tv",
         "okko.sport",
         "okko.tv",
+        "okkoapi.tv",
+        "okkopretv.ru",
+        "player.okko.tv",
         "premier.one",
         "smotrim.ru",
         "spbtv.com",
         "start.ru",
+        "static.okko.tv",
         "tvzavr.ru",
+        "uma.media",
+        "wink.rt.ru",
         "wink.ru"
       ],
       "cidrs": []

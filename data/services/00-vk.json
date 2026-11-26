@@ -20,14 +20,18 @@
         "login.vk.ru",
         "m.vk.com",
         "m.vk.ru",
+        "nocaptcha.mail.ru",
+        "notrobot.mail.ru",
         "oauth.vk.com",
         "oauth.vk.ru",
         "st.vk.com",
         "static.vk.com",
+        "static.vk.ru",
+        "tracker-api.vk-analytics.ru",
         "vk-portal.net",
         "vk.cc",
-        "vk.com",
         "vk.company",
+        "vk.com",
         "vk.link",
         "vk.me",
         "vk.ru",
@@ -40,8 +44,13 @@
       ],
       "cidrs": [
         "87.240.128.0/18",
+        "91.219.224.0/22",
         "93.186.224.0/20",
-        "95.142.192.0/20"
+        "95.142.192.0/20",
+        "212.233.72.0/21",
+        "212.233.88.0/21",
+        "212.233.120.0/22",
+        "213.248.110.64/26"
       ]
     },
     {
@@ -73,20 +82,24 @@
     },
     {
       "id": "vk-cdn",
-      "title": "VK CDN — фото, видеофайлы, аватары",
+      "title": "VK CDN и VK Cloud — фото, видеофайлы, аватары, S3",
       "tier": "core",
       "domains": [
+        "hb.bizmrg.com",
         "imgsmail.ru",
         "mail.ru",
+        "mcs.mail.ru",
         "mradx.net",
         "mycdn.me",
         "okcdn.ru",
+        "pp.userapi.com",
         "sun1.userapi.com",
         "sun2.userapi.com",
         "sun6.userapi.com",
         "sun9.userapi.com",
         "userapi.com",
         "vk-cdn.net",
+        "vkuser.net",
         "vkuseraudio.com",
         "vkuseraudio.net",
         "vkuseraudio.ru",
@@ -134,8 +147,13 @@
       "title": "MAX — национальный мессенджер",
       "tier": "core",
       "domains": [
+        "api-tg.oneme.ru",
+        "api2.oneme.ru",
+        "download.max.ru",
         "max.ru",
         "oneme.ru",
+        "st.max.ru",
+        "tamtam.chat",
         "web.max.ru"
       ],
       "cidrs": []
@@ -145,6 +163,7 @@
       "title": "Сферум — школьная платформа VK",
       "tier": "core",
       "domains": [
+        "api.sferum.ru",
         "sferum.ru",
         "web.sferum.ru"
       ],
@@ -152,14 +171,18 @@
     },
     {
       "id": "mailru",
-      "title": "Mail.ru — почта, Облако, Портал",
+      "title": "Mail.ru — почта, OAuth ID, Облако, Портал",
       "tier": "core",
       "domains": [
+        "account.mail.ru",
         "auth.mail.ru",
+        "clientapi.mail.ru",
         "cloud.mail.ru",
         "e.mail.ru",
         "my.mail.ru",
         "news.mail.ru",
+        "o2.mail.ru",
+        "oauth.mail.ru",
         "octavius.mail.ru",
         "portal.mail.ru",
         "sportmail.ru",

@@ -122,9 +122,31 @@ class RouteLoadTests(unittest.TestCase):
 
     def test_announced_asn_cannot_label_foreign_ranges_as_russian(self):
         table = catalog.AsnTable([row('8.8.8.0', '8.8.8.127', 64501),
-                                  row('8.8.8.128', '8.8.8.255', 64501, 'US')])
+                                  row('8.8.8.128', '8.8.8.255', 64501, 'US'),
+                                  row('186.2.160.0', '186.2.160.255', 59692, 'BZ')])
         self.assertFalse(refresh.reviewed_ru_prefix('8.8.8.0/24', 64501, table))
         self.assertTrue(refresh.reviewed_ru_prefix('8.8.8.0/25', 64501, table))
+        self.assertTrue(refresh.reviewed_ru_prefix('186.2.160.0/24', 59692, table))
+        self.assertEqual(resolver.address_verdict('186.2.160.5', table)[0], resolver.ACCEPT)
+
+    def test_competitor_feed_harvest_accepts_only_reviewed_expand_asns(self):
+        table = catalog.AsnTable([
+            row('84.201.128.0', '84.201.191.255', 200350, 'RU'),
+            row('95.213.0.0', '95.213.255.255', 49505, 'RU'),
+            row('91.108.4.0', '91.108.7.255', 200350, 'RU'),
+            row('8.8.8.0', '8.8.8.255', 15169, 'US'),
+        ])
+        feed_text = '\n'.join([
+            '84.201.151.0/24',  # Yandex Cloud (in expand) -> accepted
+            '95.213.10.0/24',   # Selectel (not in expand) -> rejected
+            '91.108.4.0/22',    # Overlaps Telegram -> rejected
+            '8.8.8.0/24',       # Foreign -> rejected
+        ])
+        feeds = [('test-feed', 'cidr', 'https://example.com/feed.txt')]
+        with patch.object(catalog, 'http_get', return_value=feed_text.encode('utf-8')), \
+             contextlib.redirect_stdout(io.StringIO()):
+            harvested = refresh.harvest_competitor_prefixes({200350: 'Yandex Cloud'}, table, feeds)
+        self.assertEqual(harvested, {'84.201.151.0/24': 200350})
 
     def test_dns_duplicates_and_contained_hosts_share_one_route(self):
         metrics = builder.route_metrics(

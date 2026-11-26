@@ -42,9 +42,17 @@ import catalog
 
 DOH_RESOLVERS = (
     ("dns.google", "/resolve"),
+    # Российские клиентские подсети (RFC 7871 ECS): из зарубежного раннера GitHub
+    # балансировщики CDN и госсайтов отдают именно российские ноды, а не зарубежные.
+    ("dns.google", "/resolve?edns_client_subnet=77.88.8.0/24"),
+    ("dns.google", "/resolve?edns_client_subnet=95.84.128.0/24"),
     ("cloudflare-dns.com", "/dns-query"),
 )
-UDP_RESOLVERS = ("77.88.8.8", "77.88.8.1")  # Яндекс.DNS
+# DNS-over-TLS Яндекса по TCP/853 не режется раннером GitHub (в отличие от UDP/53)
+# и резолвит домены ФНС/госорганов, чьи NS не отвечают зарубежным резолверам.
+DOT_SERVERS = ("77.88.8.8", "77.88.8.1")
+DOT_HOSTNAME = "common.dot.dns.yandex.net"
+UDP_RESOLVERS = ("77.88.8.8", "77.88.8.1")  # Яндекс.DNS (резерв)
 QUERIES_PER_RESOLVER = 2
 TIMEOUT = 4.0
 RETRIES = 2
@@ -208,10 +216,11 @@ def doh_query(host: str, path: str, name: str) -> tuple[int, list[str]]:
     if connection is None:
         connection = http.client.HTTPSConnection(host, timeout=TIMEOUT, context=_TLS)
         connections[host] = connection
+    separator = "&" if "?" in path else "?"
     try:
         connection.request(
             "GET",
-            f"{path}?name={urllib.parse.quote(name)}&type=A",
+            f"{path}{separator}name={urllib.parse.quote(name)}&type=A",
             headers={"Accept": "application/dns-json", "User-Agent": "amnezia-split-route-sync/2.0"},
         )
         response = connection.getresponse()
@@ -238,14 +247,71 @@ def doh_query(host: str, path: str, name: str) -> tuple[int, list[str]]:
     return status, addresses
 
 
+def _recv_exact(sock: ssl.SSLSocket, size: int, deadline: float, label: str) -> bytes:
+    chunks = bytearray()
+    while len(chunks) < size:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise DnsFailure(f"{label}: таймаут DoT")
+        sock.settimeout(remaining)
+        piece = sock.recv(size - len(chunks))
+        if not piece:
+            raise DnsFailure(f"{label}: соединение DoT закрыто")
+        chunks.extend(piece)
+    return bytes(chunks)
+
+
+def dot_query(server: str, server_hostname: str, name: str) -> tuple[int, list[str]]:
+    """DNS-over-TLS (RFC 7858, TCP/853): постоянный TLS-сокет в потоке."""
+    connections = _THREAD.__dict__.setdefault("dot", {})
+    tls_sock = connections.get(server)
+    if tls_sock is None:
+        raw_sock = socket.create_connection((server, 853), timeout=TIMEOUT)
+        try:
+            tls_sock = _TLS.wrap_socket(raw_sock, server_hostname=server_hostname)
+        except BaseException:
+            raw_sock.close()
+            raise
+        connections[server] = tls_sock
+    query_id = secrets.randbelow(65536)
+    payload = build_query(name, query_id)
+    deadline = time.monotonic() + TIMEOUT
+    try:
+        tls_sock.settimeout(TIMEOUT)
+        tls_sock.sendall(struct.pack("!H", len(payload)) + payload)
+        while True:
+            header = _recv_exact(tls_sock, 2, deadline, server)
+            length = struct.unpack("!H", header)[0]
+            if length == 0 or length > MAX_DOH_BYTES:
+                raise ValueError(f"{server}: некорректная длина ответа DoT {length}")
+            body = _recv_exact(tls_sock, length, deadline, server)
+            try:
+                return parse_dns_response(body, query_id, name)
+            except DnsMismatch:
+                continue
+    except BaseException:
+        try:
+            tls_sock.close()
+        except OSError:
+            pass
+        connections.pop(server, None)
+        raise
+
+
 # --- резолв -------------------------------------------------------------------
 
 
 class Resolver:
-    """Один резолвер: DoH-адрес или пара UDP-серверов с автоотключением."""
+    """Один резолвер: DoH-адрес, DoT-серверы или пара UDP-серверов с автоотключением."""
 
-    def __init__(self, label: str, doh: tuple[str, str] | None = None, udp: tuple[str, ...] = ()) -> None:
-        self.label, self.doh, self.udp = label, doh, udp
+    def __init__(
+        self,
+        label: str,
+        doh: tuple[str, str] | None = None,
+        udp: tuple[str, ...] = (),
+        dot: tuple[tuple[str, ...], str] | None = None,
+    ) -> None:
+        self.label, self.doh, self.udp, self.dot = label, doh, udp, dot
         self.enabled = True
         self._failures = 0
         self._lock = threading.Lock()
@@ -253,6 +319,9 @@ class Resolver:
     def query(self, name: str, round_: int) -> tuple[int, list[str]]:
         if self.doh:
             return doh_query(*self.doh, name)
+        if self.dot:
+            servers, hostname = self.dot
+            return dot_query(servers[round_ % len(servers)], hostname, name)
         return udp_query(self.udp[round_ % len(self.udp)], name)
 
     def ask(self, name: str, round_: int) -> tuple[str, list[str]]:
@@ -313,13 +382,14 @@ def merge_answers(answers: Iterable[Answer]) -> Answer:
 
 def default_resolvers() -> list[Resolver]:
     return [
-        *(Resolver(f"DoH {host}", doh=(host, path)) for host, path in DOH_RESOLVERS),
+        *(Resolver(f"DoH {host}{path}", doh=(host, path)) for host, path in DOH_RESOLVERS),
+        Resolver("Яндекс DoT/853", dot=(DOT_SERVERS, DOT_HOSTNAME)),
         Resolver("Яндекс UDP/53", udp=UDP_RESOLVERS),
     ]
 
 
 def resolve_many(domains: Iterable[str], workers: int = WORKERS) -> dict[str, Answer]:
-    """Все домены у всех доступных резолверов; без DoH работать не с чем."""
+    """Все домены у всех доступных резолверов; без DoH/DoT работать не с чем."""
     names = sorted(set(domains))
     resolvers = default_resolvers()
     for resolver in resolvers:
@@ -328,8 +398,8 @@ def resolve_many(domains: Iterable[str], workers: int = WORKERS) -> dict[str, An
         if resolver.ask(PROBE_DOMAIN, 0)[0] == FAIL:
             resolver.enabled = False
             print(f"ПРЕДУПРЕЖДЕНИЕ: {resolver.label} недоступен, пропускаю", file=sys.stderr)
-    if not any(resolver.enabled for resolver in resolvers if resolver.doh):
-        raise ResolveError("ни один DoH-резолвер не отвечает")
+    if not any(resolver.enabled for resolver in resolvers if resolver.doh or resolver.dot):
+        raise ResolveError("ни один шифрованный DNS-резолвер не отвечает")
     active = [resolver for resolver in resolvers if resolver.enabled]
     tasks = [(name, resolver) for name in names for resolver in active]
     partial: dict[str, list[Answer]] = {name: [] for name in names}
@@ -357,7 +427,7 @@ def address_verdict(address: str, table: catalog.AsnTable) -> tuple[str, tuple |
         return NO_ROW, None
     if record[2] in catalog.DENY_ASN:
         return GLOBAL_CDN, record
-    if record[3] != "RU":
+    if not catalog.is_russian(record[2], record[3], record[4]):
         return FOREIGN, record
     return ACCEPT, record
 

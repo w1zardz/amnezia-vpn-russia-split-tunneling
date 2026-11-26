@@ -5,21 +5,30 @@
   "services": [
     {
       "id": "gosuslugi",
-      "title": "Госуслуги (ЕПГУ, ЕСИА, Госключ)",
+      "title": "Госуслуги (ЕПГУ, ЕСИА, Госключ, НУЦ Минцифры)",
       "tier": "core",
       "domains": [
         "dom.gosuslugi.ru",
         "e-yakutia.ru",
+        "epgu.gosuslugi.ru",
         "esia.gosuslugi.ru",
+        "goskey.gosuslugi.ru",
         "goskey.ru",
         "gosuslugi.gov.ru",
         "gosuslugi.ru",
         "gosuslugi.spb.ru",
         "gu-st.ru",
         "lk.gosuslugi.ru",
+        "max.gosuslugi.ru",
+        "nuc-cdp.digital.gov.ru",
+        "nuc-cdp.voskhod.ru",
+        "oplata.gosuslugi.ru",
         "partners.gosuslugi.ru",
+        "pay.gosuslugi.ru",
+        "payment.gosuslugi.ru",
         "pgu.spb.ru",
         "pos.gosuslugi.ru",
+        "sign-sdk.gosuslugi.ru",
         "uslugi.tatarstan.ru",
         "www.gosuslugi.ru"
       ],
@@ -29,11 +38,14 @@
     },
     {
       "id": "nalog",
-      "title": "ФНС — налоги, самозанятые, ЕГРЮЛ",
+      "title": "ФНС — налоги, Мой налог (самозанятые), ЕГРЮЛ",
       "tier": "core",
       "domains": [
+        "data.nalog.ru",
         "egrul.nalog.ru",
+        "lkfl.nalog.ru",
         "lkfl2.nalog.ru",
+        "lkip.nalog.ru",
         "lknpd.nalog.ru",
         "lkul.nalog.ru",
         "nalog.gov.ru",
@@ -41,23 +53,34 @@
         "npd.nalog.ru",
         "ofd.nalog.ru",
         "pb.nalog.ru",
-        "service.nalog.ru"
+        "service.nalog.ru",
+        "www.nalog.gov.ru"
       ],
-      "cidrs": []
+      "cidrs": [
+        "213.24.64.181/32"
+      ]
     },
     {
       "id": "mos",
-      "title": "Портал mos.ru и московские сервисы",
+      "title": "Портал mos.ru, ЕМИАС и подмосковные сервисы",
       "tier": "core",
       "domains": [
+        "api.mos.ru",
         "avtokod.mos.ru",
         "avtokod.ru",
         "emias.info",
         "emias.mos.ru",
+        "login.mos.ru",
         "mos.ru",
+        "mosreg.ru",
         "my.mos.ru",
+        "oauth20.mos.ru",
+        "parking.mos.ru",
         "school.mos.ru",
-        "transport.mos.ru"
+        "transport.mos.ru",
+        "troika.mos.ru",
+        "uslugi.mosreg.ru",
+        "www.mos.ru"
       ],
       "cidrs": []
     },
