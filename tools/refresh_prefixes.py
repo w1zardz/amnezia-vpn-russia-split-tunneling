@@ -57,14 +57,7 @@ COMPETITOR_SERVICE_FEEDS: tuple[tuple[str, str, str], ...] = (
     (
         "opencck-russia-all",
         "amnezia",
-<<<<<<< Updated upstream
-        "https://russia.iplist.opencck.org/?format=amnezia&data=cidr4"
-        "&site=yandex%40smartcaptcha&site=yandex%40cloud&site=yandex%40cdn&site=yandex%40pay"
-        "&site=gosuslugi.ru&site=nalog.ru&site=sberbank.ru&site=tbank.ru&site=vtb.ru&site=alfabank.ru"
-        "&site=ozon.ru&site=wb.ru&site=avito.ru&site=vk.com&site=rustore.ru&site=rutube.ru",
-=======
         "https://russia.iplist.opencck.org/?format=amnezia&data=cidr4",
->>>>>>> Stashed changes
     ),
     (
         "mobile-whitelist-cidr",
