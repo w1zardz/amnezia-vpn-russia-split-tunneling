@@ -187,6 +187,22 @@
       ]
     },
     {
+      "id": "hassle-online",
+      "title": "Hassle Online: сайт, авторизация, лаунчер и игровые серверы",
+      "tier": "core",
+      "notes": "Домены лаунчера и авторизации из кэша официального клиента; подсеть игровых серверов 80.66.71.0/24 (AS206980 AntiDDoS Solutions) позволяет обходиться без раздельного туннелирования приложений WindowsSplitTunnel (Issue #1996).",
+      "domains": [
+        "dl-ru.hasslecdn.com",
+        "dl.hasslecdn.com",
+        "hassle.online",
+        "launcher.hassle-games.com",
+        "users.hassle.online"
+      ],
+      "cidrs": [
+        "80.66.71.0/24"
+      ]
+    },
+    {
       "id": "game-donate-panels",
       "title": "EasyDonate, EasyX и витрины игрового доната РФ",
       "tier": "core",

@@ -23,7 +23,9 @@
         "uslugi.tatarstan.ru",
         "www.gosuslugi.ru"
       ],
-      "cidrs": []
+      "cidrs": [
+        "213.59.252.0/22"
+      ]
     },
     {
       "id": "nalog",

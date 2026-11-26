@@ -233,6 +233,8 @@ direct.yastatic.net
 disk.yandex.com
 disk.yandex.ru
 dixy.ru
+dl-ru.hasslecdn.com
+dl.hasslecdn.com
 dnevnik.ru
 dns-shop.ru
 docdoc.ru
@@ -380,6 +382,7 @@ gtd.ru
 gu-st.ru
 guta.ru
 habr.com
+hassle.online
 hd.kinopoisk.ru
 headhunter.ru
 health.mail.ru
@@ -472,9 +475,11 @@ lada.ru
 lady.mail.ru
 lamoda.ru
 lanit.ru
+launcher.hassle-games.com
 lavka.yandex.ru
 leader-id.ru
 lektorium.tv
+lemanapro.ru
 lenta.com
 lenta.ru
 leroymerlin.ru
@@ -1138,6 +1143,7 @@ uralsib.ru
 urent.ru
 urfu.ru
 userapi.com
+users.hassle.online
 uslugi.tatarstan.ru
 uslugi.yandex.ru
 utair.ru
