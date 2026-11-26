@@ -187,6 +187,25 @@
       ]
     },
     {
+      "id": "game-donate-panels",
+      "title": "EasyDonate, EasyX и витрины игрового доната РФ",
+      "tier": "core",
+      "notes": "Панели и витрины доната российских игровых серверов стоят за DDoS-Guard + Yandex SmartCaptcha: если капча идёт напрямую, а панель через VPN, вход блокируется из-за расхождения IP.",
+      "domains": [
+        "api.easydonate.ru",
+        "api.easyx.ru",
+        "cp.easydonate.ru",
+        "easydonate.ru",
+        "easyx.ru",
+        "gamestores.app",
+        "id.easyx.ru",
+        "kmpay.ru",
+        "moscow.ovh",
+        "trademc.org"
+      ],
+      "cidrs": []
+    },
+    {
       "id": "game-ru",
       "title": "Российские игровые площадки и лаунчеры",
       "tier": "extended",

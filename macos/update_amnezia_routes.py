@@ -339,8 +339,9 @@ def route_state(preferences: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def run_helper(helper_path: Path, state_path: Path) -> None:
-    assert_protected_clients_stopped(state_path.parent)
+def run_helper(helper_path: Path, state_path: Path, keep_clients_open: bool = False) -> None:
+    if not keep_clients_open:
+        assert_protected_clients_stopped(state_path.parent)
     assert_amnezia_stopped()
     process = subprocess.run(
         [str(helper_path), "--domain", APP_DOMAIN, "--state", str(state_path)],
@@ -351,7 +352,8 @@ def run_helper(helper_path: Path, state_path: Path) -> None:
     )
     if process.returncode != 0:
         raise UpdateError(f"helper не применил routing Preferences: {process.stderr.strip()}")
-    assert_protected_clients_stopped(state_path.parent)
+    if not keep_clients_open:
+        assert_protected_clients_stopped(state_path.parent)
     assert_amnezia_stopped()
 
 
@@ -796,14 +798,15 @@ def assert_safe_amnezia_restart(
 
 def stop_amnezia(
     session: AmneziaSession, allow_vpn_reconnect: bool = False,
-    state_dir: Path | None = None,
+    state_dir: Path | None = None, keep_clients_open: bool = False,
 ) -> None:
     gui_pids = process_ids(AMNEZIA_GUI_PROCESS)
     tunnel_running = bool(process_ids(AMNEZIA_TUNNEL_PROCESS))
     if bool(gui_pids) != session.was_running or tunnel_running != session.was_connected:
         raise SessionChanged("состояние AmneziaVPN изменилось во время подготовки; повторите запуск")
     assert_safe_amnezia_restart(session, allow_vpn_reconnect)
-    assert_protected_clients_stopped(state_dir)
+    if not keep_clients_open:
+        assert_protected_clients_stopped(state_dir)
     if tunnel_running and not gui_pids:
         raise UpdateError("AmneziaWG активен без GUI; безопасная запись Preferences невозможна")
     if not gui_pids:
@@ -871,6 +874,7 @@ def apply_preferences(
     cidrs: list[str],
     replace_all: bool = False,
     allow_vpn_reconnect: bool = False,
+    keep_clients_open: bool = False,
 ) -> tuple[bool, int]:
     _, preferences = export_preferences()
     current_state = route_state(preferences)
@@ -895,7 +899,8 @@ def apply_preferences(
             "AmneziaVPN открыта без обнаруженного AmneziaWG-туннеля; "
             "обновление отложено до закрытия GUI или подключения AmneziaWG"
         )
-    close_protected_clients(state_dir)
+    if not keep_clients_open:
+        close_protected_clients(state_dir)
     atomic_write(
         pending_path,
         json_bytes({"phase": "stopping", "session": session_document(session)}),
@@ -905,7 +910,10 @@ def apply_preferences(
     try:
         stop_attempted = True
         try:
-            stop_amnezia(session, allow_vpn_reconnect, state_dir)
+            if keep_clients_open:
+                stop_amnezia(session, allow_vpn_reconnect, state_dir, keep_clients_open=True)
+            else:
+                stop_amnezia(session, allow_vpn_reconnect, state_dir)
         except SessionChanged:
             stop_attempted = False
             pending_path.unlink()
@@ -939,7 +947,10 @@ def apply_preferences(
         protected_hash_before = protected_settings_hash(preferences)
 
         try:
-            run_helper(helper_path, desired_path)
+            if keep_clients_open:
+                run_helper(helper_path, desired_path, keep_clients_open=True)
+            else:
+                run_helper(helper_path, desired_path)
             _, verified = export_preferences()
             if route_state(verified) != desired_state:
                 raise UpdateError("routing Preferences после записи не совпали с ожидаемыми")
@@ -949,7 +960,10 @@ def apply_preferences(
             route_resolved = True
         except Exception:
             try:
-                run_helper(helper_path, previous_path)
+                if keep_clients_open:
+                    run_helper(helper_path, previous_path, keep_clients_open=True)
+                else:
+                    run_helper(helper_path, previous_path)
                 _, rolled_back = export_preferences()
                 if route_state(rolled_back) != current_state:
                     raise UpdateError("routing rollback не восстановил исходное состояние")
@@ -976,7 +990,7 @@ def apply_preferences(
 
 def recover_pending_transaction(
     helper_path: Path, state_dir: Path, managed_path: Path,
-    allow_vpn_reconnect: bool = False,
+    allow_vpn_reconnect: bool = False, keep_clients_open: bool = False,
 ) -> None:
     pending_path = state_dir / PENDING_FILENAME
     if not pending_path.exists():
@@ -1026,7 +1040,8 @@ def recover_pending_transaction(
         return
 
     assert_safe_amnezia_restart(current_session, allow_vpn_reconnect)
-    close_protected_clients(state_dir)
+    if not keep_clients_open:
+        close_protected_clients(state_dir)
     recovery_session = current_session if current_session.was_running else saved_session
     rollback_path = state_dir / ".recovery-routing-state.json"
     route_resolved = False
@@ -1034,12 +1049,18 @@ def recover_pending_transaction(
     try:
         stop_attempted = True
         try:
-            stop_amnezia(current_session, allow_vpn_reconnect, state_dir)
+            if keep_clients_open:
+                stop_amnezia(current_session, allow_vpn_reconnect, state_dir, keep_clients_open=True)
+            else:
+                stop_amnezia(current_session, allow_vpn_reconnect, state_dir)
         except SessionChanged:
             stop_attempted = False
             raise
         atomic_write(rollback_path, json_bytes(previous_state))
-        run_helper(helper_path, rollback_path)
+        if keep_clients_open:
+            run_helper(helper_path, rollback_path, keep_clients_open=True)
+        else:
+            run_helper(helper_path, rollback_path)
         _, verified = export_preferences()
         if route_state(verified) != previous_state:
             raise UpdateError("recovery rollback не восстановил исходный routing state")
@@ -1180,9 +1201,14 @@ def update(
     replace_all: bool = False,
     with_domains: bool = False,
     allow_vpn_reconnect: bool = False,
+    keep_clients_open: bool = False,
 ) -> int:
     if sys.platform != "darwin":
         raise UpdateError("скрипт предназначен только для macOS")
+    if keep_clients_open and not allow_vpn_reconnect:
+        raise UpdateError(
+            "--keep-clients-open требует разового --allow-vpn-reconnect"
+        )
     if not APP_BUNDLE.is_dir():
         raise UpdateError(f"не найдена {APP_BUNDLE}")
     if recover_only:
@@ -1197,7 +1223,8 @@ def update(
             except BlockingIOError as exc:
                 raise UpdateError("другой updater ещё работает") from exc
             recover_pending_transaction(
-                helper_path, state_dir, state_dir / "managed-cidrs.json", allow_vpn_reconnect
+                helper_path, state_dir, state_dir / "managed-cidrs.json",
+                allow_vpn_reconnect, keep_clients_open,
             )
         print("Recovery завершён; незавершённых routing-транзакций нет")
         return 0
@@ -1232,7 +1259,9 @@ def update(
 
         managed_path = state_dir / "managed-cidrs.json"
         # Recovery не зависит от сети: сначала обязательно вернуть VPN/session.
-        recover_pending_transaction(helper_path, state_dir, managed_path, allow_vpn_reconnect)
+        recover_pending_transaction(
+            helper_path, state_dir, managed_path, allow_vpn_reconnect, keep_clients_open
+        )
         domains, cidrs = download_list(source)
         skipped_domains = 0
         if not with_domains:
@@ -1249,7 +1278,7 @@ def update(
         try:
             changed, manual_count = apply_preferences(
                 helper_path, state_dir, managed_path, previous_managed, entries,
-                replace_all, allow_vpn_reconnect
+                replace_all, allow_vpn_reconnect, keep_clients_open
             )
         except UpdateDeferred as exc:
             # Не путать скачанный снимок с применённым списком или transaction journal.
@@ -1328,6 +1357,10 @@ def main() -> int:
         "--allow-vpn-reconnect", action="store_true",
         help="разово разрешить переподключение VPN; требует независимой блокировки сети",
     )
+    parser.add_argument(
+        "--keep-clients-open", action="store_true",
+        help="не закрывать Claude/ChatGPT/Codex при разовом --allow-vpn-reconnect",
+    )
     parser.add_argument("--state-dir", type=Path, default=STATE_DIR, help=argparse.SUPPRESS)
     arguments = parser.parse_args()
     source = arguments.source or (LIST_LITE if arguments.lite else LIST_FULL)
@@ -1340,6 +1373,7 @@ def main() -> int:
             replace_all=arguments.replace_all,
             with_domains=arguments.with_domains,
             allow_vpn_reconnect=arguments.allow_vpn_reconnect,
+            keep_clients_open=arguments.keep_clients_open,
         )
     except UpdateError as exc:
         print(f"ОШИБКА: {exc}", file=sys.stderr)

@@ -66,7 +66,7 @@ class ManagedRouteReplacementTests(unittest.TestCase):
         self.close_clients = stack.enter_context(patch.object(updater, "close_protected_clients"))
         self.check_clients = stack.enter_context(patch.object(updater, "assert_protected_clients_stopped"))
 
-    def apply_state(self, helper_path, state_path):
+    def apply_state(self, helper_path, state_path, **_kwargs):
         state = json.loads(state_path.read_text(encoding="utf-8"))
         for state_key, preference_key in (
             ("sites", updater.PREFS_ROUTE_KEY),
@@ -130,6 +130,25 @@ class ManagedRouteReplacementTests(unittest.TestCase):
         self.relaunch.assert_not_called()
         self.helper.assert_not_called()
         self.close_clients.assert_not_called()
+
+    def test_keep_clients_open_requires_reconnect_and_skips_closing_clients(self):
+        self.download.return_value = ([], ["8.8.8.0/24"])
+        with self.assertRaisesRegex(updater.UpdateError, "--allow-vpn-reconnect"):
+            updater.update(
+                state_dir=self.state_dir,
+                source="https://example.com/routes.json",
+                allow_vpn_reconnect=False,
+                keep_clients_open=True,
+            )
+        self.assertEqual(updater.update(
+            state_dir=self.state_dir,
+            source="https://example.com/routes.json",
+            allow_vpn_reconnect=True,
+            keep_clients_open=True,
+        ), 0)
+        self.close_clients.assert_not_called()
+        self.stop.assert_called_once()
+        self.relaunch.assert_called_once()
 
     def test_failed_application_restores_routes_ownership_and_previous_local_list(self):
         self.run_update(["old.example"], ["8.8.8.0/24"], True)

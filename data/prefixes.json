@@ -1,13 +1,48 @@
 {
   "version": 1,
-  "updated": "2026-11-24",
+  "updated": "2026-11-26",
   "source": "Team Cymru bulk whois + RIPEstat announced-prefixes",
-  "prefix_count": 1098,
+  "prefix_count": 1035,
   "external_count": 0,
   "external_domains": 0,
-  "resolved_domains": 1076,
-  "catalog_domains": 1159,
+  "resolved_domains": 1198,
+  "catalog_domains": 1297,
   "prefixes": {
+    "5.45.214.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "5.45.219.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "5.45.241.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "5.45.243.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "5.45.252.0/22": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "5.61.16.0/21": {
       "asn": 47764,
       "as_name": "VK-AS - LLC VK, RU",
@@ -99,6 +134,13 @@
       "services": [],
       "source": "asn"
     },
+    "5.255.205.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "31.31.196.17/32": {
       "asn": 197695,
       "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
@@ -135,6 +177,27 @@
         "misc-extra"
       ],
       "source": "dns"
+    },
+    "31.44.8.0/21": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "31.44.9.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "31.77.44.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "31.130.142.0/24": {
       "asn": 207986,
@@ -200,6 +263,27 @@
       ],
       "source": "dns"
     },
+    "37.9.75.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "37.9.86.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "37.9.98.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "37.130.193.75/32": {
       "asn": 34545,
       "as_name": "MTSLink - Webinar Tehnologii OOO, RU",
@@ -250,204 +334,154 @@
       ],
       "source": "dns"
     },
-    "37.220.161.51/32": {
+    "37.220.160.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "37.220.161.64/32": {
+    "37.220.161.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
+        "avia",
+        "brokers",
+        "delivery-extra",
+        "gosuslugi",
         "mobile"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "37.220.161.117/32": {
+    "37.220.162.0/23": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "delivery-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "37.220.161.124/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "37.220.161.129/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "brokers"
-      ],
-      "source": "dns"
-    },
-    "37.220.161.200/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "37.220.161.212/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "37.220.161.219/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "37.220.161.222/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "37.220.161.237/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "37.220.161.251/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "37.220.162.231/32": {
+    "37.220.162.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
         "health-extra",
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "37.220.162.232/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
+        "misc-extra",
         "shops"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "37.220.162.254/32": {
+    "37.220.163.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "37.220.163.4/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "37.220.163.23/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "37.220.163.45/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "37.220.163.129/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
+        "avia",
+        "mobile",
         "streaming"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "37.220.163.130/32": {
+    "37.220.165.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "37.220.166.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "37.220.167.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "37.230.118.233/32": {
+      "asn": 29182,
+      "as_name": "RU-JSCIOT - JSC IOT, RU",
       "cc": "RU",
       "services": [
-        "streaming"
+        "cloud-extra"
       ],
       "source": "dns"
     },
-    "37.220.163.151/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+    "37.230.137.0/24": {
+      "asn": 197309,
+      "as_name": "MyArena — российский игровой и веб-хостинг",
       "cc": "RU",
-      "services": [
-        "streaming"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "37.220.163.152/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+    "37.230.162.0/24": {
+      "asn": 197309,
+      "as_name": "MyArena — российский игровой и веб-хостинг",
       "cc": "RU",
-      "services": [
-        "streaming"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "37.220.163.156/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+    "37.230.168.0/23": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
       "cc": "RU",
-      "services": [
-        "streaming"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
+    },
+    "37.230.172.0/22": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "37.230.210.0/24": {
+      "asn": 197309,
+      "as_name": "MyArena — российский игровой и веб-хостинг",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "37.230.228.0/24": {
+      "asn": 197309,
+      "as_name": "MyArena — российский игровой и веб-хостинг",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "45.10.240.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "45.10.241.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "45.10.243.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "45.12.71.0/24": {
+      "asn": 197309,
+      "as_name": "MyArena — российский игровой и веб-хостинг",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "45.84.128.0/22": {
       "asn": 47764,
@@ -468,6 +502,20 @@
     "45.136.20.0/22": {
       "asn": 47764,
       "as_name": "VK — VK-AS (Mail.ru, OK, MAX, Сферум)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "45.136.204.0/23": {
+      "asn": 197309,
+      "as_name": "MyArena — российский игровой и веб-хостинг",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "45.155.60.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -498,6 +546,13 @@
         "misc-extra"
       ],
       "source": "dns"
+    },
+    "46.21.244.0/22": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "46.28.16.112/32": {
       "asn": 51309,
@@ -538,35 +593,35 @@
     },
     "46.42.185.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "46.42.186.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "46.42.187.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "46.42.188.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "46.42.191.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -596,14 +651,15 @@
       "services": [],
       "source": "asn"
     },
-    "46.174.49.199/32": {
+    "46.174.48.0/21": {
       "asn": 197309,
       "as_name": "RS-Media-ru - RS-Media LLC, RU",
       "cc": "RU",
       "services": [
+        "cloud-myarena",
         "game-servers"
       ],
-      "source": "dns"
+      "source": "asn"
     },
     "46.226.122.0/24": {
       "asn": 44386,
@@ -612,185 +668,129 @@
       "services": [],
       "source": "asn"
     },
-    "46.235.184.68/32": {
+    "46.235.184.0/23": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "46.235.184.84/32": {
+    "46.235.184.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
+        "avia",
+        "gosuslugi",
+        "nalog",
         "shops"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "46.235.184.89/32": {
+    "46.235.185.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
+        "avia",
         "gosuslugi"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "46.235.184.152/32": {
+    "46.235.186.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "46.235.184.195/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "46.235.184.197/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "46.235.184.211/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "nalog"
-      ],
-      "source": "dns"
-    },
-    "46.235.185.73/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "46.235.185.169/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "46.235.186.41/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "46.235.186.67/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "46.235.186.77/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "nalog"
-      ],
-      "source": "dns"
-    },
-    "46.235.186.164/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "46.235.186.238/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
+        "avia",
+        "nalog",
+        "shops",
         "streaming"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "46.235.186.254/32": {
+    "46.235.187.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "46.235.188.0/23": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
+        "gosuslugi",
         "streaming"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "46.235.189.79/32": {
+    "46.235.190.0/23": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "46.235.189.201/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+    "46.243.210.0/23": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
       "cc": "RU",
-      "services": [
-        "streaming"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "51.250.120.146/32": {
+    "51.250.0.0/17": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "51.250.48.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "51.250.50.0/23": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "51.250.54.0/23": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "51.250.112.0/21": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "51.250.120.0/22": {
       "asn": 200350,
       "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
       "cc": "RU",
       "services": [
+        "classifieds",
         "misc-extra"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "51.250.123.126/32": {
+    "51.250.126.0/24": {
       "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
       "cc": "RU",
-      "services": [
-        "classifieds"
-      ],
-      "source": "dns"
-    },
-    "51.250.126.110/32": {
-      "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
-      "cc": "RU",
-      "services": [
-        "yandex-auto"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
     "62.33.186.12/32": {
       "asn": 20485,
@@ -800,6 +800,40 @@
         "isp"
       ],
       "source": "dns"
+    },
+    "62.76.205.3/32": {
+      "asn": 60544,
+      "as_name": "RBS - LLC Runet Business Systems, RU",
+      "cc": "RU",
+      "services": [
+        "sber"
+      ],
+      "source": "dns"
+    },
+    "62.76.205.110/32": {
+      "asn": 60544,
+      "as_name": "RBS - LLC Runet Business Systems, RU",
+      "cc": "RU",
+      "services": [
+        "sber"
+      ],
+      "source": "dns"
+    },
+    "62.76.205.134/32": {
+      "asn": 60544,
+      "as_name": "RBS - LLC Runet Business Systems, RU",
+      "cc": "RU",
+      "services": [
+        "sber"
+      ],
+      "source": "dns"
+    },
+    "62.84.112.0/20": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "62.109.11.76/32": {
       "asn": 29182,
@@ -819,6 +853,20 @@
       ],
       "source": "dns"
     },
+    "62.122.213.0/24": {
+      "asn": 197309,
+      "as_name": "MyArena — российский игровой и веб-хостинг",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "62.122.214.0/23": {
+      "asn": 197309,
+      "as_name": "MyArena — российский игровой и веб-хостинг",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "62.148.128.5/32": {
       "asn": 15468,
       "as_name": "IDDQD-AS - IDDQD-AS, RU",
@@ -831,6 +879,20 @@
     "62.217.160.0/20": {
       "asn": 47764,
       "as_name": "VK — VK-AS (Mail.ru, OK, MAX, Сферум)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "77.88.6.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "77.88.12.0/23": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -908,122 +970,60 @@
       ],
       "source": "dns"
     },
-    "78.41.110.46/32": {
+    "78.41.104.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "78.41.110.103/32": {
+    "78.41.105.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "78.41.110.143/32": {
+    "78.41.106.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "78.41.110.157/32": {
+    "78.41.107.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "78.41.110.211/32": {
+    "78.41.108.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "78.41.110.215/32": {
+    "78.41.109.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "78.41.110.216/32": {
+    "78.41.110.0/23": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "78.41.110.238/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "78.41.111.11/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
+        "avia",
+        "gosuslugi",
+        "mobile",
+        "shops",
         "streaming"
       ],
-      "source": "dns"
-    },
-    "78.41.111.34/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "78.41.111.154/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "78.41.111.199/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "streaming"
-      ],
-      "source": "dns"
-    },
-    "78.41.111.224/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
+      "source": "asn"
     },
     "78.108.80.125/32": {
       "asn": 43362,
@@ -1034,64 +1034,47 @@
       ],
       "source": "dns"
     },
-    "78.155.198.17/32": {
+    "78.155.198.0/24": {
       "asn": 51115,
       "as_name": "HLL-AS - HLL LLC, RU",
       "cc": "RU",
       "services": [
+        "booking",
         "shops"
       ],
-      "source": "dns"
-    },
-    "78.155.198.113/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "booking"
-      ],
-      "source": "dns"
-    },
-    "78.155.198.133/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "booking"
-      ],
-      "source": "dns"
+      "source": "asn"
     },
     "78.159.248.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "78.159.249.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "78.159.251.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "78.159.252.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "78.159.253.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -1402,14 +1385,14 @@
       ],
       "source": "dns"
     },
-    "81.26.191.59/32": {
+    "81.26.176.0/20": {
       "asn": 200350,
       "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
       ],
-      "source": "dns"
+      "source": "asn"
     },
     "81.30.199.238/32": {
       "asn": 24955,
@@ -1419,6 +1402,13 @@
         "isp"
       ],
       "source": "dns"
+    },
+    "81.161.98.0/23": {
+      "asn": 51115,
+      "as_name": "HighLoadLab (HLL / Qrator) — российский CDN и anti-DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "81.177.122.5/32": {
       "asn": 12389,
@@ -1449,14 +1439,14 @@
     },
     "81.222.126.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "81.222.127.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -1497,113 +1487,51 @@
       ],
       "source": "dns"
     },
-    "82.202.189.14/32": {
+    "82.202.186.0/24": {
       "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
+      "as_name": "Kaspersky DDoS Protection — защита российских банков и сервисов",
       "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "82.202.189.125/32": {
+    "82.202.188.0/24": {
+      "asn": 209030,
+      "as_name": "Kaspersky DDoS Protection — защита российских банков и сервисов",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "82.202.189.0/24": {
       "asn": 209030,
       "as_name": "KL-KDP - AO Kaspersky Lab, RU",
       "cc": "RU",
       "services": [
+        "misc-extra",
         "mos"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "82.202.189.136/32": {
+    "82.202.190.0/24": {
       "asn": 209030,
       "as_name": "KL-KDP - AO Kaspersky Lab, RU",
       "cc": "RU",
       "services": [
-        "mos"
-      ],
-      "source": "dns"
-    },
-    "82.202.190.53/32": {
-      "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
-      "cc": "RU",
-      "services": [
+        "banks-extra",
+        "edu-extra",
+        "misc-extra",
+        "other-banks",
         "shops"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "82.202.190.91/32": {
-      "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "82.202.190.99/32": {
-      "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
-      "cc": "RU",
-      "services": [
-        "other-banks"
-      ],
-      "source": "dns"
-    },
-    "82.202.190.107/32": {
-      "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
-      "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
-    },
-    "82.202.190.187/32": {
+    "82.202.191.0/24": {
       "asn": 209030,
       "as_name": "KL-KDP - AO Kaspersky Lab, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
       ],
-      "source": "dns"
-    },
-    "82.202.190.240/32": {
-      "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
-      "cc": "RU",
-      "services": [
-        "other-banks"
-      ],
-      "source": "dns"
-    },
-    "82.202.191.50/32": {
-      "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "82.202.191.110/32": {
-      "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "82.202.191.191/32": {
-      "asn": 209030,
-      "as_name": "KL-KDP - AO Kaspersky Lab, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
+      "source": "asn"
     },
     "82.202.213.210/32": {
       "asn": 50340,
@@ -1721,14 +1649,32 @@
       ],
       "source": "dns"
     },
-    "84.201.151.229/32": {
+    "84.201.128.0/18": {
       "asn": 200350,
       "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
       "cc": "RU",
       "services": [
-        "yandex"
+        "yandex",
+        "yandex-cloud"
       ],
-      "source": "dns"
+      "source": "asn"
+    },
+    "84.201.184.0/22": {
+      "asn": 200350,
+      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
+      "cc": "RU",
+      "services": [
+        "yandex-auto",
+        "yandex-cloud"
+      ],
+      "source": "asn"
+    },
+    "84.201.188.0/23": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "84.237.49.123/32": {
       "asn": 3335,
@@ -1738,6 +1684,13 @@
         "misc-extra"
       ],
       "source": "dns"
+    },
+    "84.252.128.0/20": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "84.252.144.0/24": {
       "asn": 35237,
@@ -1793,6 +1746,20 @@
     "84.252.152.0/24": {
       "asn": 35237,
       "as_name": "Сбербанк",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "84.252.160.0/20": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "84.252.160.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -2060,6 +2027,13 @@
       ],
       "source": "dns"
     },
+    "87.250.240.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "88.212.196.78/32": {
       "asn": 39134,
       "as_name": "UNITEDNET - EDINAYA SET LIMITED LIABILITY COMPANY, RU",
@@ -2096,6 +2070,13 @@
       ],
       "source": "dns"
     },
+    "89.104.112.0/23": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "89.108.122.195/32": {
       "asn": 197695,
       "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
@@ -2113,6 +2094,20 @@
         "misc-extra"
       ],
       "source": "dns"
+    },
+    "89.125.125.0/24": {
+      "asn": 197309,
+      "as_name": "MyArena — российский игровой и веб-хостинг",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "89.169.128.0/18": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "89.175.190.152/32": {
       "asn": 8359,
@@ -2219,6 +2214,20 @@
       ],
       "source": "asn"
     },
+    "89.232.188.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "89.232.189.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "89.248.230.0/24": {
       "asn": 207353,
       "as_name": "Ruform - Ruform LLC, RU",
@@ -2292,6 +2301,13 @@
       "services": [],
       "source": "asn"
     },
+    "91.107.80.0/22": {
+      "asn": 202611,
+      "as_name": "Яндекс — дополнительный пул сервисов",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "91.109.201.40/32": {
       "asn": 199669,
       "as_name": "ATLEX-AS - Okay-Telecom Ltd., RU",
@@ -2354,6 +2370,13 @@
         "misc-extra"
       ],
       "source": "dns"
+    },
+    "91.192.92.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "91.194.226.0/23": {
       "asn": 43399,
@@ -2448,88 +2471,23 @@
       ],
       "source": "dns"
     },
-    "91.206.127.19/32": {
+    "91.206.127.0/24": {
       "asn": 201706,
       "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
       "cc": "RU",
       "services": [
-        "other-banks"
-      ],
-      "source": "dns"
-    },
-    "91.206.127.24/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
+        "banks-extra",
+        "brokers",
+        "jobs",
+        "misc-extra",
+        "other-banks",
+        "post",
+        "ru-antiddos",
+        "sber",
+        "shops",
         "tv"
       ],
-      "source": "dns"
-    },
-    "91.206.127.39/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra",
-        "sber",
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "91.206.127.88/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "jobs"
-      ],
-      "source": "dns"
-    },
-    "91.206.127.89/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "91.206.127.102/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "91.206.127.197/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "brokers"
-      ],
-      "source": "dns"
-    },
-    "91.206.127.224/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
-    },
-    "91.206.127.236/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "post"
-      ],
-      "source": "dns"
+      "source": "asn"
     },
     "91.207.59.163/32": {
       "asn": 48061,
@@ -2565,95 +2523,38 @@
       ],
       "source": "dns"
     },
-    "91.215.42.117/32": {
+    "91.215.40.0/24": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
       "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "91.215.42.162/32": {
+    "91.215.41.0/24": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
       "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "91.215.42.192/32": {
+    "91.215.42.0/24": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
+        "misc-extra",
         "tv"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "91.215.42.222/32": {
+    "91.215.43.0/24": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
       ],
-      "source": "dns"
-    },
-    "91.215.43.100/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "91.215.43.128/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "91.215.43.185/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "91.215.43.202/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "91.215.43.206/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "91.215.43.223/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
+      "source": "asn"
     },
     "91.217.194.0/24": {
       "asn": 35237,
@@ -2727,87 +2628,29 @@
       ],
       "source": "dns"
     },
-    "91.221.164.24/32": {
+    "91.221.164.0/24": {
       "asn": 201706,
       "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
       "cc": "RU",
       "services": [
         "banks-extra",
-        "music"
-      ],
-      "source": "dns"
-    },
-    "91.221.164.42/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "91.221.164.55/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
+        "food",
+        "misc-extra",
+        "music",
         "rutube"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "91.221.164.73/32": {
+    "91.221.165.0/24": {
       "asn": 201706,
       "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
       "cc": "RU",
       "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "91.221.164.120/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "91.221.164.151/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "91.221.165.118/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "news"
-      ],
-      "source": "dns"
-    },
-    "91.221.165.156/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
+        "banks-extra",
+        "news",
         "shops"
       ],
-      "source": "dns"
-    },
-    "91.221.165.177/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
+      "source": "asn"
     },
     "91.222.128.11/32": {
       "asn": 197467,
@@ -2882,35 +2725,35 @@
     },
     "91.231.234.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "91.231.235.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "91.231.236.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "91.231.237.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "91.231.239.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -3024,21 +2867,21 @@
     },
     "91.238.108.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "91.238.109.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "91.238.110.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -3054,28 +2897,28 @@
     },
     "91.240.168.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "91.240.169.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "91.240.170.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "91.240.171.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -3114,6 +2957,48 @@
       ],
       "source": "dns"
     },
+    "92.255.1.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "92.255.3.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "92.255.13.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "92.255.15.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "93.77.160.0/19": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "93.77.168.0/22": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "93.91.8.37/32": {
       "asn": 31430,
       "as_name": "TEL-NET-AS - OOO Suntel, RU",
@@ -3123,68 +3008,62 @@
       ],
       "source": "dns"
     },
-    "93.93.89.38/32": {
+    "93.93.88.0/23": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "93.93.89.134/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
+        "avia",
+        "shops",
         "streaming"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "93.93.89.154/32": {
+    "93.93.90.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "93.93.91.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "streaming"
-      ],
-      "source": "dns"
-    },
-    "93.93.89.173/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
+        "avia",
+        "gosuslugi",
         "shops"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "93.93.91.63/32": {
+    "93.93.92.0/23": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "93.93.91.103/32": {
+    "93.93.92.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "93.93.91.107/32": {
+    "93.93.93.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
+    },
+    "93.93.94.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "93.95.101.202/32": {
       "asn": 48347,
@@ -3194,6 +3073,48 @@
         "misc-extra"
       ],
       "source": "dns"
+    },
+    "93.158.144.0/22": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "93.158.184.0/21": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "93.158.184.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "93.158.185.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "93.158.186.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "93.158.187.0/24": {
+      "asn": 44534,
+      "as_name": "Яндекс — офисная и служебная сеть YANDEX LLC",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "93.186.224.0/21": {
       "asn": 47541,
@@ -3348,140 +3269,72 @@
       "services": [],
       "source": "asn"
     },
-    "95.129.232.81/32": {
+    "95.129.232.0/24": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
-        "misc-extra"
+        "classifieds",
+        "media-extra",
+        "misc-extra",
+        "news",
+        "shops",
+        "tv"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "95.129.232.95/32": {
+    "95.129.233.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "95.129.234.0/24": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
-        "media-extra"
+        "game-donate-panels"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "95.129.232.128/32": {
+    "95.129.235.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "95.129.236.0/24": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
-        "news"
-      ],
-      "source": "dns"
-    },
-    "95.129.232.159/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "95.129.232.210/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "95.129.232.243/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "classifieds"
-      ],
-      "source": "dns"
-    },
-    "95.129.236.96/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "news"
-      ],
-      "source": "dns"
-    },
-    "95.129.236.100/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "95.129.236.170/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "game-ru"
-      ],
-      "source": "dns"
-    },
-    "95.129.236.192/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "95.129.236.203/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
+        "edu-extra",
+        "game-ru",
+        "misc-extra",
+        "news",
         "post"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "95.129.236.219/32": {
+    "95.129.237.0/24": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "95.129.237.124/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
+        "edu-extra",
         "misc-extra"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "95.129.237.198/32": {
+    "95.129.238.0/24": {
       "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
       "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "95.129.237.199/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
     "95.142.192.0/21": {
       "asn": 47541,
@@ -4024,6 +3877,13 @@
       ],
       "source": "dns"
     },
+    "103.76.52.0/22": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "109.95.80.178/32": {
       "asn": 50241,
       "as_name": "UNITTEL-AS - Unittel Ltd, RU",
@@ -4130,6 +3990,15 @@
       ],
       "source": "dns"
     },
+    "109.235.165.9/32": {
+      "asn": 43247,
+      "as_name": "YooMoney-AS - _YooMoney_ NBCO LLC, RU",
+      "cc": "RU",
+      "services": [
+        "payments"
+      ],
+      "source": "dns"
+    },
     "109.235.165.222/32": {
       "asn": 43247,
       "as_name": "YooMoney-AS - _YooMoney_ NBCO LLC, RU",
@@ -4139,163 +4008,61 @@
       ],
       "source": "dns"
     },
-    "109.238.88.17/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "classifieds"
-      ],
-      "source": "dns"
-    },
-    "109.238.88.46/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "gibdd"
-      ],
-      "source": "dns"
-    },
-    "109.238.88.141/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "109.238.88.146/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "109.238.88.151/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "health-extra"
-      ],
-      "source": "dns"
-    },
-    "109.238.88.230/32": {
+    "109.238.88.0/24": {
       "asn": 201706,
       "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
       "cc": "RU",
       "services": [
         "banks-extra",
-        "brokers"
+        "brokers",
+        "classifieds",
+        "edu-extra",
+        "food",
+        "gibdd",
+        "health-extra",
+        "misc-extra"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "109.238.88.243/32": {
+    "109.238.90.0/24": {
       "asn": 201706,
       "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
       "cc": "RU",
       "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "109.238.88.251/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "109.238.90.119/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "109.238.90.126/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "health-extra"
-      ],
-      "source": "dns"
-    },
-    "109.238.90.130/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "other-banks"
-      ],
-      "source": "dns"
-    },
-    "109.238.90.139/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "109.238.90.194/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "109.238.90.201/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "109.238.90.217/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
+        "edu-extra",
+        "food",
+        "health-extra",
+        "other-banks",
+        "rutube",
+        "shops",
         "streaming"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "109.238.90.218/32": {
+    "109.238.91.0/24": {
       "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
       "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "109.238.90.239/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
+    "111.88.144.0/20": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
       "cc": "RU",
-      "services": [
-        "rutube"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
+    },
+    "111.88.240.0/20": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "128.75.231.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -4321,14 +4088,29 @@
       "services": [],
       "source": "asn"
     },
-    "132.243.178.72/32": {
+    "130.193.32.0/19": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "130.193.62.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "132.243.176.0/22": {
       "asn": 51115,
       "as_name": "HLL-AS - HLL LLC, RU",
       "cc": "RU",
       "services": [
-        "misc-extra"
+        "misc-extra",
+        "tbank"
       ],
-      "source": "dns"
+      "source": "asn"
     },
     "135.106.158.74/32": {
       "asn": 50340,
@@ -4369,6 +4151,13 @@
       "services": [],
       "source": "asn"
     },
+    "138.249.16.0/24": {
+      "asn": 197309,
+      "as_name": "MyArena — российский игровой и веб-хостинг",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "146.185.208.0/22": {
       "asn": 47764,
       "as_name": "VK — VK-AS (Mail.ru, OK, MAX, Сферум)",
@@ -4385,89 +4174,229 @@
     },
     "151.236.64.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.65.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.67.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.70.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.72.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.73.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.74.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.75.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.76.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.77.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.78.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.80.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.81.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.83.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.84.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.85.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.86.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.87.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.89.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.90.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.91.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.94.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.95.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.96.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.99.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.100.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.102.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.106.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.107.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.109.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.111.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.113.0/24": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.122.0/23": {
       "asn": 57363,
       "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
@@ -4476,156 +4405,44 @@
       ],
       "source": "asn"
     },
-    "151.236.83.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.84.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.85.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.86.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.87.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.89.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.90.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.91.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.94.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.95.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.96.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.99.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.100.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.102.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.106.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.107.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.109.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.111.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.113.0/24": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
-    "151.236.122.0/23": {
-      "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
     "151.236.123.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "151.236.127.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "153.51.32.0/19": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "153.51.96.0/19": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "153.51.96.0/23": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "153.80.233.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -4639,68 +4456,36 @@
       ],
       "source": "asn"
     },
-    "155.212.234.29/32": {
+    "155.212.234.0/24": {
       "asn": 201706,
       "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
       "cc": "RU",
       "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "155.212.234.79/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
+        "avia",
+        "food",
         "misc-extra"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "155.212.234.239/32": {
+    "155.212.235.0/24": {
       "asn": 201706,
       "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
       "cc": "RU",
       "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "155.212.235.135/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
+        "jobs",
+        "streaming",
         "tv"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "155.212.235.180/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "jobs"
-      ],
-      "source": "dns"
-    },
-    "155.212.235.231/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "streaming"
-      ],
-      "source": "dns"
-    },
-    "158.160.102.60/32": {
+    "158.160.0.0/16": {
       "asn": 200350,
       "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
       "cc": "RU",
       "services": [
         "shops"
       ],
-      "source": "dns"
+      "source": "asn"
     },
     "160.5.208.0/20": {
       "asn": 47764,
@@ -4732,6 +4517,20 @@
       "services": [],
       "source": "asn"
     },
+    "168.113.248.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "168.113.251.0/24": {
+      "asn": 209030,
+      "as_name": "Kaspersky DDoS Protection — защита российских банков и сервисов",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "168.113.255.155/32": {
       "asn": 208677,
       "as_name": "CLOUDRU-AS - _Cloud Technologies_ LLC trading as Cloud.ru, RU",
@@ -4740,6 +4539,13 @@
         "game-ru"
       ],
       "source": "dns"
+    },
+    "171.22.242.0/24": {
+      "asn": 43298,
+      "as_name": "StormWall (StormNetworks) — российская защита сайтов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "176.53.226.158/32": {
       "asn": 50340,
@@ -4750,14 +4556,28 @@
       ],
       "source": "dns"
     },
-    "176.57.65.48/32": {
+    "176.57.64.0/23": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
       ],
-      "source": "dns"
+      "source": "asn"
+    },
+    "176.57.66.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "176.57.67.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "176.99.14.23/32": {
       "asn": 197695,
@@ -4909,6 +4729,15 @@
       ],
       "source": "asn"
     },
+    "178.72.176.230/32": {
+      "asn": 49505,
+      "as_name": "SELECTEL - JSC Selectel, RU",
+      "cc": "RU",
+      "services": [
+        "misc-extra"
+      ],
+      "source": "dns"
+    },
     "178.130.128.0/23": {
       "asn": 43399,
       "as_name": "Т-Банк (TCS)",
@@ -4922,6 +4751,7 @@
       "cc": "RU",
       "services": [
         "banks-extra",
+        "payments",
         "tbank"
       ],
       "source": "asn"
@@ -4935,14 +4765,42 @@
       ],
       "source": "asn"
     },
-    "178.154.245.251/32": {
+    "178.154.192.0/19": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "178.154.224.0/19": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "178.154.243.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "178.154.244.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "178.154.245.0/24": {
       "asn": 200350,
       "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
       ],
-      "source": "dns"
+      "source": "asn"
     },
     "178.177.13.147/32": {
       "asn": 25159,
@@ -5054,545 +4912,87 @@
       "services": [],
       "source": "asn"
     },
-    "178.248.232.13/32": {
+    "178.248.232.0/21": {
       "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
+      "as_name": "HighLoadLab (HLL / Qrator) — российский CDN и anti-DDoS",
       "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "178.248.232.43/32": {
+    "178.248.232.0/23": {
       "asn": 51115,
       "as_name": "HLL-AS - HLL LLC, RU",
       "cc": "RU",
       "services": [
-        "classifieds"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.59/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.80/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.88/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.100/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "delivery-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.117/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.145/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.168/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "jobs"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.180/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.183/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.192/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "other-banks"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.209/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.221/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "178.248.232.241/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "rutube"
-      ],
-      "source": "dns"
-    },
-    "178.248.233.46/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "178.248.233.57/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.233.80/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "other-banks"
-      ],
-      "source": "dns"
-    },
-    "178.248.233.91/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.233.127/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
+        "classifieds",
+        "delivery-extra",
+        "edu-extra",
+        "food",
+        "jobs",
+        "misc-extra",
+        "news",
+        "other-banks",
+        "rutube",
+        "shops",
         "tv"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "178.248.233.140/32": {
+    "178.248.234.0/23": {
       "asn": 51115,
       "as_name": "HLL-AS - HLL LLC, RU",
       "cc": "RU",
       "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "178.248.233.148/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "rutube"
-      ],
-      "source": "dns"
-    },
-    "178.248.233.188/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "tv"
-      ],
-      "source": "dns"
-    },
-    "178.248.233.231/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "news"
-      ],
-      "source": "dns"
-    },
-    "178.248.234.15/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.234.61/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "booking"
-      ],
-      "source": "dns"
-    },
-    "178.248.234.66/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "178.248.234.104/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.234.206/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.234.210/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "classifieds"
-      ],
-      "source": "dns"
-    },
-    "178.248.234.241/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
+        "booking",
+        "classifieds",
+        "edu-extra",
+        "misc-extra",
+        "news",
+        "shops",
         "streaming"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "178.248.235.46/32": {
+    "178.248.236.0/23": {
       "asn": 51115,
       "as_name": "HLL-AS - HLL LLC, RU",
       "cc": "RU",
       "services": [
-        "news"
-      ],
-      "source": "dns"
-    },
-    "178.248.235.59/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "178.248.235.64/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.235.86/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.235.109/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.235.144/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.235.158/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.235.201/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.236.69/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
+        "health-extra",
         "isp"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "178.248.236.73/32": {
+    "178.248.237.0/24": {
       "asn": 51115,
       "as_name": "HLL-AS - HLL LLC, RU",
       "cc": "RU",
       "services": [
-        "health-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.237.16/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
+        "booking",
+        "news",
         "sber"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "178.248.237.59/32": {
+    "178.248.238.0/23": {
       "asn": 51115,
       "as_name": "HLL-AS - HLL LLC, RU",
       "cc": "RU",
       "services": [
-        "booking"
-      ],
-      "source": "dns"
-    },
-    "178.248.237.68/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "news"
-      ],
-      "source": "dns"
-    },
-    "178.248.238.19/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "news"
-      ],
-      "source": "dns"
-    },
-    "178.248.238.27/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "178.248.238.28/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "178.248.238.79/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.238.97/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "health-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.238.120/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.238.156/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "health-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.238.170/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "media-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.238.211/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
+        "avia",
+        "cloud-extra",
+        "edu-extra",
+        "food",
+        "gov-extra",
+        "health-extra",
+        "media-extra",
+        "misc-extra",
+        "mobile",
+        "news",
+        "other-banks",
         "post"
       ],
-      "source": "dns"
-    },
-    "178.248.238.227/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.239.111/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.239.115/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "other-banks"
-      ],
-      "source": "dns"
-    },
-    "178.248.239.158/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "178.248.239.188/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "178.248.239.227/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "178.248.239.249/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "gov-extra"
-      ],
-      "source": "dns"
+      "source": "asn"
     },
     "185.5.136.0/22": {
       "asn": 47764,
@@ -5648,6 +5048,13 @@
       ],
       "source": "dns"
     },
+    "185.13.160.0/24": {
+      "asn": 43298,
+      "as_name": "StormWall (StormNetworks) — российская защита сайтов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "185.15.39.100/32": {
       "asn": 203451,
       "as_name": "K-Telecom-Network - K-telekom LLC, RU",
@@ -5692,6 +5099,43 @@
       "services": [],
       "source": "asn"
     },
+    "185.17.168.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.17.169.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.17.170.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.17.171.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.25.91.128/32": {
+      "asn": 60832,
+      "as_name": "ASOKEY - O`KEY, Limited Liability Company, RU",
+      "cc": "RU",
+      "services": [
+        "food"
+      ],
+      "source": "dns"
+    },
     "185.27.195.146/32": {
       "asn": 60651,
       "as_name": "Stek-Kazan - Stek Kazan LLC, RU",
@@ -5703,28 +5147,35 @@
     },
     "185.31.112.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "185.31.113.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "185.31.114.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
       "services": [],
       "source": "asn"
     },
     "185.31.115.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.32.184.0/23": {
+      "asn": 202611,
+      "as_name": "Яндекс — дополнительный пул сервисов",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -5741,6 +5192,27 @@
     "185.32.251.0/24": {
       "asn": 28709,
       "as_name": "VK — региональный CDN (раздача видео)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.35.4.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.35.5.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.35.6.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -5797,473 +5269,122 @@
       ],
       "source": "asn"
     },
-    "185.65.148.33/32": {
+    "185.65.148.0/22": {
       "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
+      "as_name": "HighLoadLab (HLL / Qrator) — российский CDN и anti-DDoS",
       "cc": "RU",
-      "services": [
-        "news"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "185.65.148.89/32": {
+    "185.65.148.0/23": {
       "asn": 51115,
       "as_name": "HLL-AS - HLL LLC, RU",
       "cc": "RU",
       "services": [
-        "cloud-extra"
-      ],
-      "source": "dns"
-    },
-    "185.65.148.114/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "news"
-      ],
-      "source": "dns"
-    },
-    "185.65.148.127/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "185.65.148.149/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.65.148.172/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "booking"
-      ],
-      "source": "dns"
-    },
-    "185.65.148.187/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
+        "banks-extra",
+        "booking",
+        "classifieds",
+        "cloud-extra",
+        "edu-extra",
+        "food",
+        "misc-extra",
+        "news",
+        "nomerogram",
+        "shops",
         "streaming"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "185.65.148.196/32": {
+    "185.65.150.0/23": {
       "asn": 51115,
       "as_name": "HLL-AS - HLL LLC, RU",
       "cc": "RU",
       "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "185.65.148.200/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.65.148.219/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.65.148.250/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
-    },
-    "185.65.148.253/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "185.65.149.69/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "streaming"
-      ],
-      "source": "dns"
-    },
-    "185.65.149.115/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "classifieds"
-      ],
-      "source": "dns"
-    },
-    "185.65.149.117/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "nomerogram"
-      ],
-      "source": "dns"
-    },
-    "185.65.149.127/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "185.65.149.135/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "news"
-      ],
-      "source": "dns"
-    },
-    "185.65.149.227/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
-    },
-    "185.65.150.49/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
-      "cc": "RU",
-      "services": [
+        "banks-extra",
+        "classifieds",
         "media-extra",
         "tv"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "185.65.150.222/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
+    "185.66.84.0/22": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
       "cc": "RU",
-      "services": [
-        "classifieds"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "185.65.151.250/32": {
-      "asn": 51115,
-      "as_name": "HLL-AS - HLL LLC, RU",
+    "185.66.86.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
       "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "185.71.64.65/32": {
+    "185.66.87.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.71.64.0/24": {
       "asn": 43298,
       "as_name": "StormNetworks - Storm Networks LLC, RU",
       "cc": "RU",
       "services": [
-        "news"
-      ],
-      "source": "dns"
-    },
-    "185.71.64.66/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.64.103/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.64.129/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "brokers"
-      ],
-      "source": "dns"
-    },
-    "185.71.64.130/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.64.131/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
+        "banks-extra",
+        "brokers",
+        "edu-extra",
+        "food",
         "misc-extra",
+        "news",
+        "payments",
         "travel-extra"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "185.71.64.158/32": {
+    "185.71.65.0/24": {
+      "asn": 43298,
+      "as_name": "StormWall (StormNetworks) — российская защита сайтов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.71.66.0/24": {
+      "asn": 43298,
+      "as_name": "StormWall (StormNetworks) — российская защита сайтов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.71.67.0/24": {
       "asn": 43298,
       "as_name": "StormNetworks - Storm Networks LLC, RU",
       "cc": "RU",
       "services": [
-        "food"
+        "banks-extra",
+        "classifieds",
+        "cloud-extra",
+        "game-ru",
+        "jobs",
+        "media-extra",
+        "misc-extra",
+        "other-banks",
+        "post",
+        "ru-antiddos",
+        "rzd",
+        "shops",
+        "tv"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "185.71.64.169/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.64.178/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.64.201/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.64.226/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
+    "185.71.78.17/32": {
+      "asn": 43247,
+      "as_name": "YooMoney-AS - _YooMoney_ NBCO LLC, RU",
       "cc": "RU",
       "services": [
         "payments"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.17/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "jobs"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.21/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "media-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.23/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "cloud-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.35/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.56/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.58/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.65/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.80/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "classifieds"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.88/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.109/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "other-banks"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.111/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "rzd"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.112/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "post"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.123/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.137/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "tv"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.161/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.208/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.230/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "game-ru"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.241/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.242/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "185.71.67.246/32": {
-      "asn": 43298,
-      "as_name": "StormNetworks - Storm Networks LLC, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
       ],
       "source": "dns"
     },
@@ -6372,6 +5493,41 @@
       "services": [],
       "source": "asn"
     },
+    "185.94.108.0/22": {
+      "asn": 51115,
+      "as_name": "HighLoadLab (HLL / Qrator) — российский CDN и anti-DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.94.108.0/23": {
+      "asn": 51115,
+      "as_name": "HighLoadLab (HLL / Qrator) — российский CDN и anti-DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.94.110.0/23": {
+      "asn": 51115,
+      "as_name": "HighLoadLab (HLL / Qrator) — российский CDN и anti-DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.94.110.0/24": {
+      "asn": 51115,
+      "as_name": "HighLoadLab (HLL / Qrator) — российский CDN и anti-DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.94.111.0/24": {
+      "asn": 51115,
+      "as_name": "HighLoadLab (HLL / Qrator) — российский CDN и anti-DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "185.99.141.41/32": {
       "asn": 12389,
       "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
@@ -6388,68 +5544,59 @@
       "services": [],
       "source": "asn"
     },
-    "185.129.100.112/32": {
+    "185.111.86.13/32": {
+      "asn": 204198,
+      "as_name": "monetaru - NCO _MONETA_ (LLC), RU",
+      "cc": "RU",
+      "services": [
+        "payments"
+      ],
+      "source": "dns"
+    },
+    "185.121.243.0/24": {
+      "asn": 43298,
+      "as_name": "StormWall (StormNetworks) — российская защита сайтов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.129.100.0/24": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
+        "ddos-guard",
+        "tv",
         "urban"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "185.129.100.162/32": {
+    "185.129.101.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.129.102.0/24": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
-        "tv"
-      ],
-      "source": "dns"
-    },
-    "185.129.100.166/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "tv"
-      ],
-      "source": "dns"
-    },
-    "185.129.102.26/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "cloud-ufo"
-      ],
-      "source": "dns"
-    },
-    "185.129.102.109/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
+        "cloud-ufo",
         "jobs"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "185.129.103.93/32": {
+    "185.129.103.0/24": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
-        "health-extra"
-      ],
-      "source": "dns"
-    },
-    "185.129.103.123/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
+        "health-extra",
         "misc-extra"
       ],
-      "source": "dns"
+      "source": "asn"
     },
     "185.130.112.0/22": {
       "asn": 47764,
@@ -6512,7 +5659,14 @@
     },
     "185.141.225.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (static.avito.ru и статика других RU-сервисов)",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.149.120.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -6554,140 +5708,78 @@
       ],
       "source": "dns"
     },
-    "185.163.159.5/32": {
+    "185.163.156.0/24": {
+      "asn": 207104,
+      "as_name": "BI.ZONE — облачный WAF и защита сервисов Сбера",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.163.157.0/24": {
+      "asn": 207104,
+      "as_name": "BI.ZONE — облачный WAF и защита сервисов Сбера",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.163.158.0/24": {
+      "asn": 207104,
+      "as_name": "BI.ZONE — облачный WAF и защита сервисов Сбера",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.163.159.0/24": {
       "asn": 207104,
       "as_name": "BIZONE-AS - _BiZone_ LLC, RU",
       "cc": "RU",
       "services": [
+        "banks-extra",
+        "booking",
         "misc-extra"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "185.163.159.23/32": {
-      "asn": 207104,
-      "as_name": "BIZONE-AS - _BiZone_ LLC, RU",
+    "185.169.152.0/22": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
       "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "185.163.159.108/32": {
-      "asn": 207104,
-      "as_name": "BIZONE-AS - _BiZone_ LLC, RU",
+    "185.169.152.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
       "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "185.163.159.137/32": {
-      "asn": 207104,
-      "as_name": "BIZONE-AS - _BiZone_ LLC, RU",
+    "185.169.153.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
       "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "185.163.159.166/32": {
-      "asn": 207104,
-      "as_name": "BIZONE-AS - _BiZone_ LLC, RU",
+    "185.169.154.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
       "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "185.163.159.184/32": {
-      "asn": 207104,
-      "as_name": "BIZONE-AS - _BiZone_ LLC, RU",
-      "cc": "RU",
-      "services": [
-        "booking"
-      ],
-      "source": "dns"
-    },
-    "185.169.155.27/32": {
+    "185.169.155.0/24": {
       "asn": 201706,
       "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
       "cc": "RU",
       "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "185.169.155.73/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.169.155.85/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "185.169.155.118/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
+        "banks-extra",
+        "misc-extra",
+        "post",
+        "shops",
         "streaming"
       ],
-      "source": "dns"
-    },
-    "185.169.155.141/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "post"
-      ],
-      "source": "dns"
-    },
-    "185.169.155.169/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.169.155.177/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "post"
-      ],
-      "source": "dns"
-    },
-    "185.169.155.187/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
-    },
-    "185.169.155.189/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
+      "source": "asn"
     },
     "185.170.3.30/32": {
       "asn": 41185,
@@ -6725,86 +5817,38 @@
       ],
       "source": "dns"
     },
-    "185.178.208.3/32": {
+    "185.178.208.0/24": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
+        "edu-extra",
+        "health-extra",
+        "jobs",
+        "misc-extra",
+        "news",
+        "payments",
         "tv"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "185.178.208.4/32": {
+    "185.178.209.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.178.210.0/24": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
+        "ddos-guard",
+        "game-donate-panels",
         "news"
       ],
-      "source": "dns"
-    },
-    "185.178.208.7/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "payments"
-      ],
-      "source": "dns"
-    },
-    "185.178.208.73/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.178.208.121/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "jobs"
-      ],
-      "source": "dns"
-    },
-    "185.178.208.151/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "edu-extra"
-      ],
-      "source": "dns"
-    },
-    "185.178.208.183/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "185.178.208.215/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "health-extra"
-      ],
-      "source": "dns"
-    },
-    "185.178.210.201/32": {
-      "asn": 57724,
-      "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
-      "cc": "RU",
-      "services": [
-        "news"
-      ],
-      "source": "dns"
+      "source": "asn"
     },
     "185.179.36.228/32": {
       "asn": 57573,
@@ -6815,14 +5859,42 @@
       ],
       "source": "dns"
     },
-    "185.179.146.43/32": {
+    "185.179.144.0/22": {
+      "asn": 24823,
+      "as_name": "Банк ВТБ",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.179.144.0/24": {
       "asn": 24823,
       "as_name": "VTB-BANK-AS - VTB Bank (Public Joint-Stock Company), RU",
       "cc": "RU",
       "services": [
         "vtb"
       ],
-      "source": "dns"
+      "source": "asn"
+    },
+    "185.179.145.0/24": {
+      "asn": 24823,
+      "as_name": "Банк ВТБ",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.179.146.0/24": {
+      "asn": 24823,
+      "as_name": "Банк ВТБ",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.179.147.0/24": {
+      "asn": 24823,
+      "as_name": "Банк ВТБ",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "185.179.226.4/32": {
       "asn": 43740,
@@ -6896,6 +5968,27 @@
       "services": [],
       "source": "asn"
     },
+    "185.191.32.0/24": {
+      "asn": 207104,
+      "as_name": "BI.ZONE — облачный WAF и защита сервисов Сбера",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.191.33.0/24": {
+      "asn": 207104,
+      "as_name": "BI.ZONE — облачный WAF и защита сервисов Сбера",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "185.191.34.0/24": {
+      "asn": 207104,
+      "as_name": "BI.ZONE — облачный WAF и защита сервисов Сбера",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "185.200.242.8/32": {
       "asn": 9123,
       "as_name": "TimeWeb-AS - JSC _TIMEWEB_, RU",
@@ -6905,32 +5998,23 @@
       ],
       "source": "dns"
     },
-    "185.206.167.35/32": {
+    "185.206.164.0/22": {
       "asn": 200350,
       "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
       "cc": "RU",
       "services": [
-        "yandex-extra"
+        "yandex-cloud"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "185.206.167.50/32": {
-      "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
-      "cc": "RU",
-      "services": [
-        "yandex-extra"
-      ],
-      "source": "dns"
-    },
-    "185.215.4.13/32": {
+    "185.215.4.0/24": {
       "asn": 57724,
       "as_name": "DDOS-GUARD - DDOS-GUARD LTD, RU",
       "cc": "RU",
       "services": [
         "misc-extra"
       ],
-      "source": "dns"
+      "source": "asn"
     },
     "185.216.207.222/32": {
       "asn": 39503,
@@ -6940,6 +6024,13 @@
         "misc-extra"
       ],
       "source": "dns"
+    },
+    "185.223.92.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "185.226.52.0/22": {
       "asn": 47764,
@@ -7142,6 +6233,20 @@
       ],
       "source": "dns"
     },
+    "193.32.216.0/22": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "193.32.216.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "193.37.157.43/32": {
       "asn": 42024,
       "as_name": "CRYPTOPRO-AS - CryptoPro LTD, RU",
@@ -7150,6 +6255,20 @@
         "misc-extra"
       ],
       "source": "dns"
+    },
+    "193.84.78.0/24": {
+      "asn": 43298,
+      "as_name": "StormWall (StormNetworks) — российская защита сайтов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "193.84.90.0/24": {
+      "asn": 43298,
+      "as_name": "StormWall (StormNetworks) — российская защита сайтов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "193.104.207.0/24": {
       "asn": 42974,
@@ -7285,9 +6404,11 @@
     },
     "194.54.15.0/24": {
       "asn": 35237,
-      "as_name": "Сбербанк",
+      "as_name": "Sberbank - Sberbank of Russia PJSC, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "sber"
+      ],
       "source": "asn"
     },
     "194.54.177.229/32": {
@@ -7305,6 +6426,24 @@
       "cc": "RU",
       "services": [
         "delivery-extra"
+      ],
+      "source": "dns"
+    },
+    "194.67.71.106/32": {
+      "asn": 197695,
+      "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
+      "cc": "RU",
+      "services": [
+        "misc-extra"
+      ],
+      "source": "dns"
+    },
+    "194.67.71.193/32": {
+      "asn": 197695,
+      "as_name": "AS-REGRU - _Domain names registrar REG.RU_, Ltd, RU",
+      "cc": "RU",
+      "services": [
+        "food"
       ],
       "source": "dns"
     },
@@ -7334,6 +6473,13 @@
         "misc-extra"
       ],
       "source": "dns"
+    },
+    "194.93.2.0/24": {
+      "asn": 197309,
+      "as_name": "MyArena — российский игровой и веб-хостинг",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "194.105.131.44/32": {
       "asn": 44014,
@@ -7387,68 +6533,20 @@
       "services": [],
       "source": "asn"
     },
-    "194.190.0.23/32": {
+    "194.190.0.0/24": {
       "asn": 201706,
       "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
       "cc": "RU",
       "services": [
+        "avia",
+        "banks-extra",
+        "booking",
+        "food",
+        "isp",
+        "misc-extra",
         "payments"
       ],
-      "source": "dns"
-    },
-    "194.190.0.50/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "194.190.0.152/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "194.190.0.220/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "banks-extra"
-      ],
-      "source": "dns"
-    },
-    "194.190.0.234/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "isp"
-      ],
-      "source": "dns"
-    },
-    "194.190.0.239/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "194.190.0.245/32": {
-      "asn": 201706,
-      "as_name": "AS-SERVICEPIPE - SERVICEPIPE LLC, RU",
-      "cc": "RU",
-      "services": [
-        "booking"
-      ],
-      "source": "dns"
+      "source": "asn"
     },
     "194.190.9.31/32": {
       "asn": 52184,
@@ -7603,6 +6701,13 @@
     "194.226.118.0/23": {
       "asn": 8291,
       "as_name": "RSNET — государственные информсистемы",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "194.247.51.0/24": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
       "cc": "RU",
       "services": [],
       "source": "asn"
@@ -7794,68 +6899,129 @@
       ],
       "source": "dns"
     },
-    "195.208.65.204/32": {
+    "195.208.64.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.208.65.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
         "avia"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "195.208.66.33/32": {
+    "195.208.66.0/23": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.208.66.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "195.208.66.45/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gov-extra"
-      ],
-      "source": "dns"
-    },
-    "195.208.66.112/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "food"
-      ],
-      "source": "dns"
-    },
-    "195.208.66.149/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
+        "avia",
+        "food",
+        "gov-extra",
+        "nalog",
         "news"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "195.208.66.164/32": {
+    "195.208.67.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.208.68.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.208.69.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.208.70.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.208.71.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.208.72.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.208.73.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "food"
+        "payments"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "195.208.66.236/32": {
+    "195.208.74.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "nalog"
+        "payments"
       ],
-      "source": "dns"
+      "source": "asn"
+    },
+    "195.208.75.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.208.76.0/23": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.208.76.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.208.77.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "195.208.245.190/32": {
       "asn": 5480,
@@ -7875,151 +7041,291 @@
       ],
       "source": "dns"
     },
-    "195.209.66.33/32": {
+    "195.209.64.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "195.209.66.53/32": {
+    "195.209.65.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.66.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
+        "avia",
         "shops"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "195.209.66.182/32": {
+    "195.209.67.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "195.209.81.113/32": {
+    "195.209.68.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "health-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "195.209.81.131/32": {
+    "195.209.69.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "195.209.81.149/32": {
+    "195.209.70.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "195.209.81.215/32": {
+    "195.209.71.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.73.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.74.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.75.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.76.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.77.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.78.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.79.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.80.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.81.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
         "health-extra",
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "195.209.82.71/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "brokers"
-      ],
-      "source": "dns"
-    },
-    "195.209.82.84/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "195.209.82.129/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
+        "misc-extra",
         "shops"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "195.209.82.243/32": {
+    "195.209.82.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "health-extra",
-        "misc-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "195.209.86.111/32": {
+    "195.209.83.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "brokers"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "195.209.87.105/32": {
+    "195.209.85.0/24": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "brokers"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "195.209.88.127/32": {
+    "195.209.86.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
         "brokers"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "195.209.90.117/32": {
+    "195.209.87.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
         "brokers"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "195.209.90.166/32": {
+    "195.209.88.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "shops"
+        "brokers"
       ],
-      "source": "dns"
+      "source": "asn"
+    },
+    "195.209.89.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.90.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.92.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.93.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.94.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.192.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.193.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.194.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.195.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.196.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.197.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.198.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.199.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.200.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.201.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.209.202.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "195.209.215.86/32": {
       "asn": 35598,
@@ -8071,41 +7377,32 @@
       ],
       "source": "dns"
     },
-    "195.242.82.13/32": {
+    "195.242.82.0/23": {
+      "asn": 24823,
+      "as_name": "Банк ВТБ",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "195.242.82.0/24": {
       "asn": 24823,
       "as_name": "VTB-BANK-AS - VTB Bank (Public Joint-Stock Company), RU",
       "cc": "RU",
       "services": [
+        "other-banks",
         "vtb"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "195.242.82.14/32": {
+    "195.242.83.0/24": {
       "asn": 24823,
       "as_name": "VTB-BANK-AS - VTB Bank (Public Joint-Stock Company), RU",
       "cc": "RU",
       "services": [
-        "other-banks"
-      ],
-      "source": "dns"
-    },
-    "195.242.83.13/32": {
-      "asn": 24823,
-      "as_name": "VTB-BANK-AS - VTB Bank (Public Joint-Stock Company), RU",
-      "cc": "RU",
-      "services": [
+        "other-banks",
         "vtb"
       ],
-      "source": "dns"
-    },
-    "195.242.83.14/32": {
-      "asn": 24823,
-      "as_name": "VTB-BANK-AS - VTB Bank (Public Joint-Stock Company), RU",
-      "cc": "RU",
-      "services": [
-        "other-banks"
-      ],
-      "source": "dns"
+      "source": "asn"
     },
     "195.245.206.101/32": {
       "asn": 15707,
@@ -8215,6 +7512,34 @@
       ],
       "source": "dns"
     },
+    "212.67.24.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "212.67.25.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "212.67.26.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "212.67.27.0/24": {
+      "asn": 201706,
+      "as_name": "Servicepipe — российская защита банков и госсервисов от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "212.74.251.101/32": {
       "asn": 50340,
       "as_name": "SELECTEL-MSK - JSC Selectel, RU",
@@ -8249,15 +7574,6 @@
       "services": [],
       "source": "asn"
     },
-    "212.164.137.137/32": {
-      "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
-      "cc": "RU",
-      "services": [
-        "gov-extra"
-      ],
-      "source": "dns"
-    },
     "212.164.137.249/32": {
       "asn": 12389,
       "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
@@ -8282,15 +7598,6 @@
       "cc": "RU",
       "services": [
         "gov-extra"
-      ],
-      "source": "dns"
-    },
-    "212.164.138.14/32": {
-      "asn": 12389,
-      "as_name": "ROSTELECOM-AS - PJSC Rostelecom, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
       ],
       "source": "dns"
     },
@@ -8546,329 +7853,124 @@
       ],
       "source": "dns"
     },
-    "212.193.152.39/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
+    "212.193.144.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "212.193.152.75/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
+    "212.193.145.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "212.193.152.77/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
+    "212.193.146.0/23": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "nalog"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "212.193.152.80/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
+    "212.193.148.0/23": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "212.193.152.85/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
+    "212.193.150.0/23": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "212.193.152.91/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
+    "212.193.150.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "delivery-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "212.193.152.97/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
+    "212.193.151.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "212.193.152.137/32": {
+    "212.193.152.0/23": {
       "asn": 204878,
       "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "212.193.152.147/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "delivery-extra"
-      ],
-      "source": "dns"
-    },
-    "212.193.152.165/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "212.193.152.183/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "212.193.152.252/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "212.193.153.0/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "212.193.153.14/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "212.193.153.24/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "212.193.153.34/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "212.193.153.124/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "mobile"
-      ],
-      "source": "dns"
-    },
-    "212.193.153.131/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
+        "avia",
+        "delivery-extra",
+        "gosuslugi",
+        "mobile",
+        "nalog",
+        "shops",
         "streaming"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "212.193.153.133/32": {
+    "212.193.154.0/24": {
       "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX M9 — московские узлы CDN",
       "cc": "RU",
-      "services": [
-        "streaming"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "212.193.153.139/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "streaming"
-      ],
-      "source": "dns"
-    },
-    "212.193.153.141/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "streaming"
-      ],
-      "source": "dns"
-    },
-    "212.193.153.154/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "streaming"
-      ],
-      "source": "dns"
-    },
-    "212.193.153.166/32": {
-      "asn": 204878,
-      "as_name": "CCT-M9P1 - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "avia"
-      ],
-      "source": "dns"
-    },
-    "212.193.155.41/32": {
+    "212.193.155.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "nalog"
-      ],
-      "source": "dns"
-    },
-    "212.193.155.42/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "nalog"
-      ],
-      "source": "dns"
-    },
-    "212.193.155.44/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "health-extra"
-      ],
-      "source": "dns"
-    },
-    "212.193.155.50/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
+        "health-extra",
+        "misc-extra",
+        "nalog",
         "shops"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "212.193.155.78/32": {
+    "212.193.156.0/23": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "212.193.156.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "212.193.155.92/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "health-extra"
-      ],
-      "source": "dns"
-    },
-    "212.193.156.205/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
+        "delivery-extra",
         "gosuslugi"
       ],
-      "source": "dns"
+      "source": "asn"
     },
-    "212.193.156.238/32": {
+    "212.193.157.0/24": {
       "asn": 34879,
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "delivery-extra"
-      ],
-      "source": "dns"
-    },
-    "212.193.157.64/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "212.193.157.88/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "delivery-extra"
-      ],
-      "source": "dns"
-    },
-    "212.193.157.189/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "gosuslugi"
-      ],
-      "source": "dns"
-    },
-    "212.193.157.209/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
-        "shops"
-      ],
-      "source": "dns"
-    },
-    "212.193.157.252/32": {
-      "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
-      "cc": "RU",
-      "services": [
+        "delivery-extra",
+        "gosuslugi",
+        "shops",
         "streaming"
       ],
-      "source": "dns"
+      "source": "asn"
+    },
+    "212.193.159.0/24": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "212.233.72.0/21": {
       "asn": 47764,
@@ -8939,6 +8041,15 @@
       "cc": "RU",
       "services": [],
       "source": "asn"
+    },
+    "213.5.228.2/32": {
+      "asn": 49542,
+      "as_name": "AS-ARTPLANET - ArtPlanet LLC, RU",
+      "cc": "RU",
+      "services": [
+        "game-donate-panels"
+      ],
+      "source": "dns"
     },
     "213.24.64.140/32": {
       "asn": 12389,
@@ -9070,23 +8181,35 @@
       ],
       "source": "dns"
     },
-    "213.165.196.135/32": {
+    "213.130.80.0/21": {
       "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
       "cc": "RU",
-      "services": [
-        "yandex"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
-    "213.165.196.237/32": {
+    "213.165.192.0/19": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "213.165.196.0/22": {
       "asn": 200350,
       "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
       "cc": "RU",
       "services": [
         "yandex"
       ],
-      "source": "dns"
+      "source": "asn"
+    },
+    "213.165.200.0/21": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "213.167.56.230/32": {
       "asn": 8905,
@@ -9182,14 +8305,42 @@
       "services": [],
       "source": "asn"
     },
-    "217.14.50.179/32": {
+    "217.14.48.0/20": {
       "asn": 24823,
       "as_name": "VTB-BANK-AS - VTB Bank (Public Joint-Stock Company), RU",
       "cc": "RU",
       "services": [
         "vtb"
       ],
-      "source": "dns"
+      "source": "asn"
+    },
+    "217.14.57.0/24": {
+      "asn": 24823,
+      "as_name": "Банк ВТБ",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "217.14.59.0/24": {
+      "asn": 24823,
+      "as_name": "Банк ВТБ",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "217.14.62.0/24": {
+      "asn": 24823,
+      "as_name": "Банк ВТБ",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "217.14.63.0/24": {
+      "asn": 24823,
+      "as_name": "Банк ВТБ",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     },
     "217.16.16.0/20": {
       "asn": 47764,
@@ -9219,14 +8370,12 @@
       ],
       "source": "dns"
     },
-    "217.28.231.121/32": {
+    "217.28.224.0/20": {
       "asn": 200350,
-      "as_name": "YandexCloud - Yandex.Cloud LLC, RU",
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
       "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
+      "services": [],
+      "source": "asn"
     },
     "217.65.3.196/32": {
       "asn": 3175,
@@ -9307,6 +8456,13 @@
       ],
       "source": "dns"
     },
+    "217.114.42.0/24": {
+      "asn": 57724,
+      "as_name": "DDoS-Guard — российская сеть защиты сайтов и панелей от DDoS",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "217.118.87.98/32": {
       "asn": 16345,
       "as_name": "BEE-AS - PJSC _Vimpelcom_, RU",
@@ -9358,6 +8514,13 @@
         "other-banks"
       ],
       "source": "dns"
+    },
+    "217.198.168.0/21": {
+      "asn": 200350,
+      "as_name": "Яндекс Облако — Yandex.Cloud LLC (SmartCaptcha, S3, API, хостинг сервисов РФ)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
     }
   }
 }

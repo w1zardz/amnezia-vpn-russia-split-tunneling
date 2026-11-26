@@ -59,12 +59,15 @@ DENY_ASN = {
     63949, 20473,  # Akamai/Linode, Vultr
     60068, 9009,  # Datacamp/M247
 }
-# Российские anti-DDoS/скрабберы: юрлицо не в РФ, но за префиксами стоят RU-сайты.
+# Российские anti-DDoS/скрабберы и CDN: юрлицо может быть вне РФ, но за префиксами стоят RU-сайты.
 ALLOW_ASN = {
     209671, 211112, 200449,  # Qrator Labs
-    59796,  # StormWall
-    57724, 262254,  # DDoS-Guard
-    208972,  # Servicepipe
+    51115,  # HighLoadLab (HLL / Qrator CDN)
+    59796, 43298,  # StormWall / StormNetworks
+    57724, 262254, 59692,  # DDoS-Guard (включая IQWeb)
+    208972, 201706,  # Servicepipe
+    209030,  # Kaspersky DDoS Protection
+    207104,  # BI.ZONE WAF (Сбер)
 }
 
 
