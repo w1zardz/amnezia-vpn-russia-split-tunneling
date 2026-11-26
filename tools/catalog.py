@@ -82,6 +82,7 @@ ALLOW_ASN = {
     60922,  # Variti (антибот и защита от DDoS)
     209030,  # Kaspersky DDoS Protection
     207104,  # BI.ZONE WAF (Сбер)
+    202614,  # Kinescope CDN (российский видеоплеер курсов и сервисов)
 }
 
 

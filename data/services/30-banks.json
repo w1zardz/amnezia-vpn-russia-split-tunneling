@@ -38,6 +38,7 @@
       "title": "Т-Банк (Тинькофф), T-ID, T-Pay и Долями",
       "tier": "core",
       "domains": [
+        "acdn.tbank.ru",
         "acdn.tinkoff.ru",
         "api.t-bank-app.ru",
         "api.tbank.ru",
@@ -48,12 +49,15 @@
         "cdn.t-static.ru",
         "cdn.tbank.ru",
         "dolyame.ru",
+        "forma.tbank.ru",
+        "forma.tinkoff.ru",
         "id.t-bank-app.ru",
         "id.tbank.ru",
         "id.tinkoff.ru",
         "pay.tbank-online.com",
         "pay.tbank.ru",
         "preidentity.tbank-online.com",
+        "securepay.tbank.ru",
         "securepay.tinkoff.ru",
         "static.tinkoff.ru",
         "t-bank-app.ru",
@@ -63,7 +67,9 @@
         "www.tbank.ru",
         "www.tinkoff.ru"
       ],
-      "cidrs": []
+      "cidrs": [
+        "193.17.93.0/24"
+      ]
     },
     {
       "id": "vtb",
@@ -161,6 +167,7 @@
       "tier": "core",
       "domains": [
         "api.yookassa.ru",
+        "best2pay.net",
         "cbr.ru",
         "certs.yoomoney.ru",
         "cloudpayments.ru",
@@ -174,14 +181,20 @@
         "mirpay.ru",
         "mirpayonline.ru",
         "moex.com",
+        "moneta.ru",
         "money.yandex.ru",
         "nspk.ru",
+        "pay.best2pay.net",
+        "pay.raif.ru",
         "payanyway.ru",
+        "payform.ru",
         "paykeeper.ru",
+        "paysecure.ru",
         "payselection.com",
         "platiecom.ru",
         "platiqr.ru",
         "privetmir.ru",
+        "prodamus.ru",
         "qiwi.com",
         "qr.nspk.ru",
         "robokassa.com",

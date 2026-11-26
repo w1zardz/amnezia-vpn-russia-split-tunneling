@@ -1209,6 +1209,12 @@ def update(
         raise UpdateError(
             "--keep-clients-open требует разового --allow-vpn-reconnect"
         )
+    if keep_clients_open:
+        print(
+            "ВНИМАНИЕ: разово разрешено не закрывать Claude/ChatGPT/Codex; "
+            "во время переподключения VPN без App VPN Guard (pf) их трафик может пойти напрямую.",
+            file=sys.stderr,
+        )
     if not APP_BUNDLE.is_dir():
         raise UpdateError(f"не найдена {APP_BUNDLE}")
     if recover_only:

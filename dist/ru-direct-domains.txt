@@ -30,6 +30,7 @@ a.lmcdn.ru
 abr.ru
 absolutbank.ru
 account.mail.ru
+acdn.tbank.ru
 acdn.tinkoff.ru
 acm.timus.ru
 acra-ratings.ru
@@ -177,6 +178,7 @@ beeline.ru
 befree.ru
 beget.com
 beru.ru
+best2pay.net
 bfm.ru
 bi.zone
 bibika.ru
@@ -200,6 +202,7 @@ burgerking.ru
 business.tbank.ru
 business.yandex.ru
 calendar.yandex.ru
+captcha-api.yandex.cloud
 captcha-api.yandex.com
 captcha-api.yandex.ru
 captcha.yandex.net
@@ -349,11 +352,12 @@ eaisto.ru
 eapteka.ru
 easydonate.ru
 easyx.ru
-echo.msk.ru
 ecom.sberbank.ru
 economy.gov.ru
 eda.yandex
 eda.yandex.ru
+edgecdn.ru
+edgecenter.ru
 edu.ru
 education.yandex.ru
 ege.yandex.ru
@@ -406,6 +410,8 @@ fl.ru
 fom.ru
 fontanka.ru
 forbes.ru
+forma.tbank.ru
+forma.tinkoff.ru
 forms.yandex.ru
 foxford.ru
 freelance.ru
@@ -555,6 +561,8 @@ kfc.ru
 kfu.ru
 khl.ru
 kiks.yandex.ru
+kinescope.io
+kinescopecdn.net
 kino-teatr.ru
 kino.mail.ru
 kinopoisk.ru
@@ -697,6 +705,7 @@ mobpayment.yandex.net
 modulbank.ru
 moex.com
 moex.ru
+moneta.ru
 money.yandex.ru
 more.tv
 morflot.ru
@@ -743,8 +752,6 @@ netology.ru
 news.mail.ru
 news.ru
 news.yandex.ru
-newsru.com
-newtimes.ru
 ng.ru
 ngenix.net
 ngs.ru
@@ -760,7 +767,6 @@ norsi-trans.ru
 notes.yandex.ru
 notrobot.mail.ru
 novatek.ru
-novayagazeta.ru
 novikombank.ru
 novofon.ru
 novostroy.su
@@ -836,15 +842,18 @@ passport.yandex.com
 passport.yandex.kz
 passport.yandex.ru
 pay-backapi.rustore.ru
+pay.best2pay.net
 pay.gosuslugi.ru
 pay.mts.ru
 pay.ozon.ru
+pay.raif.ru
 pay.sber.ru
 pay.tbank-online.com
 pay.tbank.ru
 pay.ya.ru
 pay.yandex.ru
 payanyway.ru
+payform.ru
 paykeeper.ru
 paymaster.ru
 payment-widget.plus.yandex.net
@@ -852,6 +861,7 @@ payment-widget.plus.yandex.ru
 payment.gosuslugi.ru
 payment.mts.ru
 payments.sberbank.ru
+paysecure.ru
 payselection.com
 pb.nalog.ru
 pedsovet.su
@@ -896,6 +906,7 @@ premier.one
 price.ru
 private.auth.alfabank.ru
 privetmir.ru
+prodamus.ru
 prodoctorov.ru
 profi.ru
 profile.sber.ru
@@ -1169,6 +1180,7 @@ search.wb.ru
 searchinform.ru
 secretmag.ru
 securepay.ozon.ru
+securepay.tbank.ru
 securepay.tinkoff.ru
 securepayments.sberbank.ru
 security.wildberries.ru
@@ -1313,7 +1325,6 @@ tinkoff-mobile.ru
 tinkoff.com
 tinkoff.ru
 tinkoffinsurance.ru
-tjournal.ru
 tmk.ru
 tnt-online.ru
 tochka.com
@@ -1438,6 +1449,7 @@ vtbins.ru
 vtbleasing.ru
 vtbmobile.ru
 vuzopedia.ru
+waf.bi.zone
 wallet.yandex.ru
 wb-bank.ru
 wb.ru

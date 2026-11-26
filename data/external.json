@@ -11460,13 +11460,6 @@
         "mobile-whitelist-domains"
       ]
     },
-    "api-maps.yandex.ru": {
-      "parent": "yandex.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
     "api.2gis.ru": {
       "parent": "2gis.ru",
       "sources": [
@@ -11537,7 +11530,7 @@
       ]
     },
     "api.s3.yandex.net": {
-      "parent": "yandex.net",
+      "parent": "s3.yandex.net",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -11651,14 +11644,6 @@
       "parent": "mail.ru",
       "sources": [
         "lib4u-amnezia"
-      ]
-    },
-    "bank.ozon.ru": {
-      "parent": "ozon.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "jirnobruh-amnezia",
-        "mobile-whitelist-domains"
       ]
     },
     "banners-website.wildberries.ru": {
@@ -11786,7 +11771,7 @@
       ]
     },
     "bro-bg-store.s3.yandex.net": {
-      "parent": "yandex.net",
+      "parent": "s3.yandex.net",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -11903,7 +11888,7 @@
       ]
     },
     "cdn.s3.yandex.net": {
-      "parent": "yandex.net",
+      "parent": "s3.yandex.net",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -12497,13 +12482,6 @@
         "mobile-whitelist-domains"
       ]
     },
-    "download.max.ru": {
-      "parent": "max.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
     "dr2.yandex.net": {
       "parent": "yandex.net",
       "sources": [
@@ -12587,7 +12565,7 @@
       ]
     },
     "enterprise.api-maps.yandex.ru": {
-      "parent": "yandex.ru",
+      "parent": "api-maps.yandex.ru",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -12690,13 +12668,6 @@
     },
     "finance.mail.ru": {
       "parent": "mail.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
-    "finance.wb.ru": {
-      "parent": "wb.ru",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -12848,7 +12819,7 @@
       ]
     },
     "help.mcs.mail.ru": {
-      "parent": "mail.ru",
+      "parent": "mcs.mail.ru",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -12981,6 +12952,12 @@
     },
     "identical-products.wildberries.ru": {
       "parent": "wildberries.ru",
+      "sources": [
+        "egkodin-ru-sites"
+      ]
+    },
+    "imgproxy.cdn-tinkoff.ru": {
+      "parent": "cdn-tinkoff.ru",
       "sources": [
         "egkodin-ru-sites"
       ]
@@ -13198,7 +13175,7 @@
       ]
     },
     "kz.mcs.mail.ru": {
-      "parent": "mail.ru",
+      "parent": "mcs.mail.ru",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -13282,12 +13259,6 @@
     },
     "lkep.mos.ru": {
       "parent": "mos.ru",
-      "sources": [
-        "egkodin-ru-sites"
-      ]
-    },
-    "lkip.nalog.ru": {
-      "parent": "nalog.ru",
       "sources": [
         "egkodin-ru-sites"
       ]
@@ -13468,13 +13439,6 @@
       "sources": [
         "jirnobruh-amnezia",
         "lib4u-amnezia"
-      ]
-    },
-    "mcs.mail.ru": {
-      "parent": "mail.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
       ]
     },
     "me.cs7777.vk.ru": {
@@ -13824,12 +13788,6 @@
         "mobile-whitelist-domains"
       ]
     },
-    "online.raiffeisen.ru": {
-      "parent": "raiffeisen.ru",
-      "sources": [
-        "jirnobruh-amnezia"
-      ]
-    },
     "operator.mail.ru": {
       "parent": "mail.ru",
       "sources": [
@@ -13899,12 +13857,6 @@
         "mobile-whitelist-domains"
       ]
     },
-    "parking.mos.ru": {
-      "parent": "mos.ru",
-      "sources": [
-        "egkodin-ru-sites"
-      ]
-    },
     "partners.lemanapro.ru": {
       "parent": "lemanapro.ru",
       "sources": [
@@ -13913,13 +13865,6 @@
     },
     "pay.mail.ru": {
       "parent": "mail.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
-    "pay.ozon.ru": {
-      "parent": "ozon.ru",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -14355,13 +14300,6 @@
         "mobile-whitelist-domains"
       ]
     },
-    "s3.yandex.net": {
-      "parent": "yandex.net",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
     "sales.mail.ru": {
       "parent": "mail.ru",
       "sources": [
@@ -14420,13 +14358,6 @@
     },
     "secure.rzd.ru": {
       "parent": "rzd.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
-    "securepay.ozon.ru": {
-      "parent": "ozon.ru",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -14546,28 +14477,6 @@
         "mobile-whitelist-domains"
       ]
     },
-    "sso-app5.vtb.ru": {
-      "parent": "vtb.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
-    "sso.auto.ru": {
-      "parent": "auto.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
-    "sso.dzen.ru": {
-      "parent": "dzen.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "jirnobruh-amnezia",
-        "mobile-whitelist-domains"
-      ]
-    },
     "sso.kinopoisk.ru": {
       "parent": "kinopoisk.ru",
       "sources": [
@@ -14603,22 +14512,8 @@
         "mobile-whitelist-domains"
       ]
     },
-    "st.max.ru": {
-      "parent": "max.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
     "st.okcdn.ru": {
       "parent": "okcdn.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
-      ]
-    },
-    "st.ozone.ru": {
-      "parent": "ozone.ru",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -14738,7 +14633,7 @@
       ]
     },
     "status.mcs.mail.ru": {
-      "parent": "mail.ru",
+      "parent": "mcs.mail.ru",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -14794,7 +14689,7 @@
       ]
     },
     "suggest.sso.dzen.ru": {
-      "parent": "dzen.ru",
+      "parent": "sso.dzen.ru",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -15856,7 +15751,7 @@
       ]
     },
     "support.mcs.mail.ru": {
-      "parent": "mail.ru",
+      "parent": "mcs.mail.ru",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -16114,7 +16009,7 @@
       ]
     },
     "uxfeedback-cdn.s3.yandex.net": {
-      "parent": "yandex.net",
+      "parent": "s3.yandex.net",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -16746,7 +16641,7 @@
       ]
     },
     "www.mcs.mail.ru": {
-      "parent": "mail.ru",
+      "parent": "mcs.mail.ru",
       "sources": [
         "egkodin-ru-sites",
         "mobile-whitelist-domains"
@@ -16772,12 +16667,6 @@
     },
     "www.mvideo.ru": {
       "parent": "mvideo.ru",
-      "sources": [
-        "jirnobruh-amnezia"
-      ]
-    },
-    "www.nalog.gov.ru": {
-      "parent": "nalog.gov.ru",
       "sources": [
         "jirnobruh-amnezia"
       ]
@@ -17043,13 +16932,6 @@
       "parent": "vkusvill.ru",
       "sources": [
         "jirnobruh-amnezia"
-      ]
-    },
-    "www.vtb.ru": {
-      "parent": "vtb.ru",
-      "sources": [
-        "egkodin-ru-sites",
-        "mobile-whitelist-domains"
       ]
     },
     "www.wf.mail.ru": {
@@ -17337,16 +17219,6 @@
         200350
       ]
     },
-    "abr.ru": {
-      "sources": [
-        "jirnobruh-amnezia",
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        50640
-      ]
-    },
     "acmvid.com": {
       "sources": [
         "lib4u-amnezia",
@@ -17469,16 +17341,6 @@
       ],
       "asn": [
         198610
-      ]
-    },
-    "alfa.me": {
-      "sources": [
-        "jirnobruh-amnezia",
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        15632
       ]
     },
     "alfabank.st": {
@@ -18073,16 +17935,6 @@
         48096
       ]
     },
-    "best2pay.net": {
-      "sources": [
-        "jirnobruh-amnezia",
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        57724
-      ]
-    },
     "betboom.ru": {
       "sources": [
         "lib4u-amnezia",
@@ -18358,25 +18210,6 @@
         34879
       ]
     },
-    "cdn-tinkoff.ru": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        210756
-      ]
-    },
-    "cdnvideo.ru": {
-      "sources": [
-        "jirnobruh-amnezia",
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        57363
-      ]
-    },
     "cdnvideohub.com": {
       "sources": [
         "jirnobruh-amnezia",
@@ -18544,15 +18377,6 @@
       ],
       "asn": [
         51115
-      ]
-    },
-    "cloud.ru": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        43298
       ]
     },
     "clt.ru": {
@@ -18989,15 +18813,6 @@
       ],
       "asn": [
         201706
-      ]
-    },
-    "dolyame.ru": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        43399
       ]
     },
     "domashny.ru": {
@@ -19516,15 +19331,6 @@
         49505
       ]
     },
-    "f6.ru": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        49505
-      ]
-    },
     "f6.security": {
       "sources": [
         "lib4u-amnezia",
@@ -19540,15 +19346,6 @@
       ],
       "asn": [
         51115
-      ]
-    },
-    "facct.ru": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        200350
       ]
     },
     "farmlend.ru": {
@@ -19577,15 +19374,6 @@
       ],
       "asn": [
         201706
-      ]
-    },
-    "finuslugi.ru": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        48009
       ]
     },
     "fix-price.com": {
@@ -20093,15 +19881,6 @@
         47724
       ]
     },
-    "hhcdn.ru": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        47724
-      ]
-    },
     "hosting.ru": {
       "sources": [
         "kozlov-amnezia"
@@ -20545,14 +20324,6 @@
       ],
       "asn": [
         51115
-      ]
-    },
-    "imgproxy.cdn-tinkoff.ru": {
-      "sources": [
-        "egkodin-ru-sites"
-      ],
-      "asn": [
-        210756
       ]
     },
     "inbox.ru": {
@@ -21510,15 +21281,6 @@
         24866
       ]
     },
-    "mfa.center": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        48399
-      ]
-    },
     "mfk-bank.ru": {
       "sources": [
         "jirnobruh-amnezia",
@@ -21782,16 +21544,6 @@
         31133
       ]
     },
-    "mosreg.ru": {
-      "sources": [
-        "jirnobruh-amnezia",
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        201706
-      ]
-    },
     "mosvodokanal.ru": {
       "sources": [
         "egkodin-ru-sites"
@@ -21843,15 +21595,6 @@
       ],
       "asn": [
         50340
-      ]
-    },
-    "multifactor.ru": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        197695
       ]
     },
     "murmansk.ru": {
@@ -22053,15 +21796,6 @@
       ],
       "asn": [
         51115
-      ]
-    },
-    "ngenix.net": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        34879
       ]
     },
     "ngs24.ru": {
@@ -22299,15 +22033,6 @@
       ],
       "asn": [
         47764
-      ]
-    },
-    "okkoapi.tv": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        211609
       ]
     },
     "oknovrossiu.ru": {
@@ -22700,15 +22425,6 @@
         51115
       ]
     },
-    "platiecom.ru": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        35237
-      ]
-    },
     "playfamily.ru": {
       "sources": [
         "lib4u-amnezia",
@@ -22882,16 +22598,6 @@
       ],
       "asn": [
         50340
-      ]
-    },
-    "psb.ru": {
-      "sources": [
-        "jirnobruh-amnezia",
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        42231
       ]
     },
     "psk.ru": {
@@ -24192,15 +23898,6 @@
         201706
       ]
     },
-    "sberbank-tele.com": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        207104
-      ]
-    },
     "sberbankins.ru": {
       "sources": [
         "lib4u-amnezia",
@@ -24479,15 +24176,6 @@
       ],
       "asn": [
         51115
-      ]
-    },
-    "servicepipe.tech": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        201706
       ]
     },
     "setka.ru": {
@@ -25010,15 +24698,6 @@
         200928
       ]
     },
-    "t-bank-app.ru": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        210756
-      ]
-    },
     "t-bank-app.su": {
       "sources": [
         "lib4u-amnezia",
@@ -25217,15 +24896,6 @@
       ],
       "asn": [
         5553
-      ]
-    },
-    "tamtam.chat": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        47764
       ]
     },
     "tarantool.io": {
@@ -25605,17 +25275,6 @@
         43399
       ]
     },
-    "trbcdn.net": {
-      "sources": [
-        "jirnobruh-amnezia",
-        "lib4u-amnezia",
-        "supertico-domains",
-        "v2fly-ru"
-      ],
-      "asn": [
-        57363
-      ]
-    },
     "troika.ru": {
       "sources": [
         "jirnobruh-amnezia"
@@ -25854,16 +25513,6 @@
       ],
       "asn": [
         8342
-      ]
-    },
-    "uma.media": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        51115,
-        201706
       ]
     },
     "umschool.net": {
@@ -26162,16 +25811,6 @@
         200350
       ]
     },
-    "vkuser.net": {
-      "sources": [
-        "jirnobruh-amnezia",
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        47541
-      ]
-    },
     "vkusercdn.ru": {
       "sources": [
         "jirnobruh-amnezia",
@@ -26399,15 +26038,6 @@
         200928
       ]
     },
-    "wb-bank.ru": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        57073
-      ]
-    },
     "wb-sale.ru": {
       "sources": [
         "lib4u-amnezia",
@@ -26482,16 +26112,6 @@
     },
     "wbmotivator.ru": {
       "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        57073
-      ]
-    },
-    "wbpay.ru": {
-      "sources": [
-        "jirnobruh-amnezia",
         "lib4u-amnezia",
         "v2fly-ru"
       ],
@@ -27906,15 +27526,6 @@
       "asn": [
         25159,
         31133
-      ]
-    },
-    "youla.io": {
-      "sources": [
-        "lib4u-amnezia",
-        "v2fly-ru"
-      ],
-      "asn": [
-        47764
       ]
     },
     "yourgood.app": {

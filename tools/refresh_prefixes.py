@@ -55,12 +55,16 @@ COMPETITOR_SERVICE_FEEDS: tuple[tuple[str, str, str], ...] = (
         "https://raw.githubusercontent.com/lib4u/amnezia-tunneling-ru/main/amnezia-ip-lite.json",
     ),
     (
-        "opencck-captcha-core",
+        "opencck-russia-all",
         "amnezia",
+<<<<<<< Updated upstream
         "https://russia.iplist.opencck.org/?format=amnezia&data=cidr4"
         "&site=yandex%40smartcaptcha&site=yandex%40cloud&site=yandex%40cdn&site=yandex%40pay"
         "&site=gosuslugi.ru&site=nalog.ru&site=sberbank.ru&site=tbank.ru&site=vtb.ru&site=alfabank.ru"
         "&site=ozon.ru&site=wb.ru&site=avito.ru&site=vk.com&site=rustore.ru&site=rutube.ru",
+=======
+        "https://russia.iplist.opencck.org/?format=amnezia&data=cidr4",
+>>>>>>> Stashed changes
     ),
     (
         "mobile-whitelist-cidr",
@@ -370,7 +374,7 @@ def _extract_feed_networks(text: str, kind: str) -> list[ipaddress.IPv4Network]:
         if (
             net.version == 4
             and net.is_global
-            and MIN_PREFIXLEN <= net.prefixlen <= MAX_PREFIXLEN
+            and MIN_PREFIXLEN <= net.prefixlen <= 32
             and not any(net.overlaps(tg) for tg in TELEGRAM_SUBNETS)
         ):
             networks.append(net)
