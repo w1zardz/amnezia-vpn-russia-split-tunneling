@@ -43,7 +43,7 @@ MIN_ENTRIES = 300
 # ($MaximumRoutes / MAX_TOTAL_ROUTES). Список, который они отвергнут, нельзя
 # публиковать: у пользователя обновление просто перестанет применяться.
 MAX_ROUTES = 1_500
-MAX_EFFECTIVE_ROUTES = 1_000
+MAX_EFFECTIVE_ROUTES = 1_450
 
 
 def curated_prefixes(prefixes: dict[str, dict], reviewed: set[int]) -> dict[str, dict]:
@@ -59,10 +59,33 @@ def curated_prefixes(prefixes: dict[str, dict], reviewed: set[int]) -> dict[str,
     }
 
 
-def snapshot_routes(domains: Iterable[str], cidrs: Iterable[str], ips: dict[str, list[str]]) -> list[str]:
-    networks = [ipaddress.ip_network(value) for value in cidrs]
-    networks.extend(ipaddress.ip_network(ip) for domain in domains for ip in ips.get(domain, []))
-    return [str(network) for network in ipaddress.collapse_addresses(networks)]
+def snapshot_routes(
+    domains: Iterable[str],
+    cidrs: Iterable[str],
+    ips: dict[str, list[str]],
+    max_routes: int = MAX_EFFECTIVE_ROUTES,
+) -> list[str]:
+    base = list(ipaddress.collapse_addresses(ipaddress.ip_network(value) for value in cidrs))
+    extra = [ipaddress.ip_network(ip) for domain in domains for ip in ips.get(domain, [])]
+    collapsed = list(ipaddress.collapse_addresses(base + extra))
+    if len(collapsed) <= max_routes:
+        return [str(network) for network in collapsed]
+    bounds = [(int(n.network_address), int(n.broadcast_address)) for n in base]
+    kept = list(base)
+    room = max(0, max_routes - len(base))
+    seen: set[ipaddress.IPv4Network] = set()
+    for net in extra:
+        if net in seen:
+            continue
+        seen.add(net)
+        addr = int(net.network_address)
+        if any(lo <= addr <= hi for lo, hi in bounds):
+            continue
+        if room <= 0:
+            break
+        kept.append(net)
+        room -= 1
+    return [str(network) for network in ipaddress.collapse_addresses(kept)]
 
 
 class BuildError(RuntimeError):

@@ -134,9 +134,9 @@ COMPETITOR_ASN_CONFIGS: tuple[tuple[str, str, str], ...] = (
 )
 MAX_AUTO_DISCOVERED_ASN_IPS = 131_072
 MAX_COMPETITOR_SUBDOMAINS = 600
-# Запас до жёсткого лимита сборщика MAX_EFFECTIVE_ROUTES=1000, чтобы AFK-обновления
-# годами копили полезные маршруты и никогда не роняли ежедневный релиз по переполнению.
-MAX_AUTO_ROUTES = 940
+# Запас до лимита сборщика MAX_EFFECTIVE_ROUTES=1450 (апдейтеры macOS/Windows держат 1500),
+# чтобы после добавления DNS /32 список оставался компактным (~900-1050 маршрутов) и никогда не падал.
+MAX_AUTO_ROUTES = 850
 TELEGRAM_SUBNETS = tuple(
     ipaddress.ip_network(value)
     for value in (

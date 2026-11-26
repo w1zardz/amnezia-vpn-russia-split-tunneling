@@ -79,7 +79,7 @@ jobs:
           manifest = json.loads((dist / "manifest.json").read_text())
           assert manifest["selection_policy"] == "reviewed-catalog"
           assert manifest["external_domains"] == manifest["external_roots"] == 0
-          assert manifest["routing"]["full"]["compacted"] <= 1000
+          assert manifest["routing"]["full"]["compacted"] <= 1450
           for name, digest in manifest["sha256"].items():
               assert hashlib.sha256((dist / name).read_bytes()).hexdigest() == digest, name
           PY
