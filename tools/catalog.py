@@ -90,21 +90,22 @@ def http_get(url: str, max_bytes: int, timeout: int = 70) -> bytes:
     curl = shutil.which("curl")
     if curl is None:
         raise CatalogError("нужен curl")
+    per_attempt = max(15, timeout - 10)
     try:
         process = subprocess.run(
             [
                 curl, "--fail", "--silent", "--show-error", "--location",
                 "--proto", "=https", "--proto-redir", "=https", "--tlsv1.2",
                 "--max-filesize", str(max_bytes),
-                "--connect-timeout", "10", "--max-time", str(timeout - 10),
-                "--retry", "2",
+                "--connect-timeout", "10", "--max-time", str(per_attempt),
+                "--retry", "3", "--retry-delay", "2",
                 "--user-agent", "amnezia-split-route-sync/2.0",
                 url,
             ],
             check=False,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            timeout=timeout,
+            timeout=per_attempt * 4 + 15,
         )
     except (OSError, subprocess.TimeoutExpired) as exc:
         raise CatalogError(f"запрос не удался: {url}") from exc

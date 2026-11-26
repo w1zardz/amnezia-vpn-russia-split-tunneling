@@ -37,7 +37,7 @@ CYMRU_PORT = 43
 CYMRU_CHUNK = 500
 RIPESTAT_URL = "https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS{asn}"
 MAX_RIPESTAT_BYTES = 4_194_304
-RIPESTAT_WORKERS = 4
+RIPESTAT_WORKERS = 3
 MAX_CYMRU_BYTES = 4_194_304
 
 # Политика по ASN и допустимая ширина сети общие с импортом внешних списков.
@@ -129,14 +129,19 @@ def cymru_lookup(addresses: Iterable[str]) -> dict[str, tuple[int, str, str, str
 
 
 def fetch_json(url: str) -> dict:
-    try:
-        payload = catalog.http_get(url, MAX_RIPESTAT_BYTES)
-    except catalog.CatalogError as exc:
-        raise RefreshError(str(exc)) from exc
-    try:
-        return json.loads(payload.decode("utf-8"))
-    except (UnicodeError, json.JSONDecodeError) as exc:
-        raise RefreshError(f"ответ {url} не является JSON") from exc
+    last_error: Exception | None = None
+    for attempt in range(3):
+        try:
+            payload = catalog.http_get(url, MAX_RIPESTAT_BYTES, timeout=40)
+            return json.loads(payload.decode("utf-8"))
+        except catalog.CatalogError as exc:
+            last_error = RefreshError(str(exc))
+        except (UnicodeError, json.JSONDecodeError) as exc:
+            raise RefreshError(f"ответ {url} не является JSON") from exc
+        if attempt < 2:
+            time.sleep(2 * (attempt + 1))
+    assert last_error is not None
+    raise last_error
 
 
 def announced_prefixes(asn: int) -> list[str]:
