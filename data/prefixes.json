@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "updated": "2026-11-26",
+  "updated": "2026-11-27",
   "source": "Team Cymru bulk whois + RIPEstat announced-prefixes",
-  "prefix_count": 2109,
+  "prefix_count": 2103,
   "external_count": 0,
   "external_domains": 0,
   "resolved_domains": 2048,
@@ -1101,15 +1101,17 @@
       "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
       "services": [
-        "avito"
+        "streaming"
       ],
       "source": "asn"
     },
     "46.42.188.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "tbank"
+      ],
       "source": "asn"
     },
     "46.42.189.0/24": {
@@ -1124,8 +1126,8 @@
       "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
       "services": [
-        "food",
-        "shops"
+        "avito",
+        "food"
       ],
       "source": "asn"
     },
@@ -1245,7 +1247,6 @@
       "cc": "RU",
       "services": [
         "avia",
-        "gosuslugi",
         "ru-antiddos"
       ],
       "source": "asn"
@@ -1273,14 +1274,9 @@
     },
     "46.235.188.0/23": {
       "asn": 34879,
-      "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
-      "services": [
-        "gosuslugi",
-        "mobile",
-        "ru-antiddos",
-        "streaming"
-      ],
+      "services": [],
       "source": "asn"
     },
     "46.235.188.0/24": {
@@ -2263,11 +2259,9 @@
     },
     "78.159.248.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
-      "services": [
-        "avito"
-      ],
+      "services": [],
       "source": "asn"
     },
     "78.159.249.0/24": {
@@ -2275,8 +2269,8 @@
       "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
       "services": [
-        "sber",
-        "shops"
+        "payments",
+        "sber"
       ],
       "source": "asn"
     },
@@ -2289,9 +2283,11 @@
     },
     "78.159.251.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "avito"
+      ],
       "source": "asn"
     },
     "78.159.252.0/24": {
@@ -2447,15 +2443,6 @@
       ],
       "source": "asn"
     },
-    "80.68.253.14/32": {
-      "asn": 20848,
-      "as_name": "ROSBUSINESSCONSULTING-AS - ROSBUSINESSCONSULTING JSC, RU",
-      "cc": "RU",
-      "services": [
-        "news"
-      ],
-      "source": "dns"
-    },
     "80.87.201.22/32": {
       "asn": 29182,
       "as_name": "RU-JSCIOT - JSC IOT, RU",
@@ -2536,15 +2523,6 @@
       ],
       "source": "dns"
     },
-    "80.247.40.24/32": {
-      "asn": 25292,
-      "as_name": "VGTRK-AS - Federal State Unitary Enterprise _The Russian Television and Radio Broadcasting Company_, RU",
-      "cc": "RU",
-      "services": [
-        "media-extra"
-      ],
-      "source": "dns"
-    },
     "80.250.169.2/32": {
       "asn": 3267,
       "as_name": "IDDQD-AS - IDDQD-AS, RU",
@@ -2605,33 +2583,6 @@
       "cc": "RU",
       "services": [
         "news"
-      ],
-      "source": "dns"
-    },
-    "81.19.82.0/32": {
-      "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "81.19.82.1/32": {
-      "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "81.19.82.2/32": {
-      "asn": 24638,
-      "as_name": "RAMBLER-TELECOM-AS - Rambler Internet Holding LLC, RU",
-      "cc": "RU",
-      "services": [
-        "misc-extra"
       ],
       "source": "dns"
     },
@@ -2765,9 +2716,11 @@
     },
     "81.222.127.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "tbank"
+      ],
       "source": "asn"
     },
     "82.147.65.36/32": {
@@ -5481,6 +5434,7 @@
       "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
       "services": [
+        "food",
         "tbank"
       ],
       "source": "asn"
@@ -5501,9 +5455,12 @@
     },
     "91.231.236.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "food",
+        "payments"
+      ],
       "source": "asn"
     },
     "91.231.237.0/24": {
@@ -5720,11 +5677,9 @@
     },
     "91.240.168.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
-      "services": [
-        "streaming"
-      ],
+      "services": [],
       "source": "asn"
     },
     "91.240.169.0/24": {
@@ -5732,7 +5687,6 @@
       "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
       "services": [
-        "food",
         "payments",
         "sber"
       ],
@@ -5743,7 +5697,8 @@
       "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
       "services": [
-        "avito"
+        "avito",
+        "tbank"
       ],
       "source": "asn"
     },
@@ -7785,15 +7740,6 @@
       ],
       "source": "dns"
     },
-    "135.106.198.147/32": {
-      "asn": 50340,
-      "as_name": "SELECTEL-MSK - JSC Selectel, RU",
-      "cc": "RU",
-      "services": [
-        "booking"
-      ],
-      "source": "dns"
-    },
     "136.234.16.5/32": {
       "asn": 49505,
       "as_name": "SELECTEL - JSC Selectel, RU",
@@ -8328,6 +8274,13 @@
       "services": [],
       "source": "asn"
     },
+    "151.236.64.0/23": {
+      "asn": 57363,
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
     "151.236.64.0/24": {
       "asn": 57363,
       "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
@@ -8337,9 +8290,11 @@
     },
     "151.236.65.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "payments"
+      ],
       "source": "asn"
     },
     "151.236.66.0/24": {
@@ -8367,9 +8322,11 @@
     },
     "151.236.68.0/24": {
       "asn": 204720,
-      "as_name": "Global Cloud Network (CDNetworks RU) — российский CDN Сбера, НСПК СБП, ВТБ, Avito и 2ГИС",
+      "as_name": "CDNetworks - GLOBAL CLOUD NETWORK LLC, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "avito"
+      ],
       "source": "asn"
     },
     "151.236.69.0/24": {
@@ -8396,8 +8353,7 @@
         "avito",
         "food",
         "sber",
-        "shops",
-        "streaming"
+        "shops"
       ],
       "source": "asn"
     },
@@ -8406,18 +8362,18 @@
       "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
       "services": [
+        "food",
         "payments",
+        "sber",
         "shops"
       ],
       "source": "asn"
     },
     "151.236.73.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
-      "services": [
-        "streaming"
-      ],
+      "services": [],
       "source": "asn"
     },
     "151.236.74.0/24": {
@@ -8436,9 +8392,12 @@
     },
     "151.236.76.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "shops",
+        "streaming"
+      ],
       "source": "asn"
     },
     "151.236.77.0/24": {
@@ -8480,11 +8439,9 @@
     },
     "151.236.81.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
-      "services": [
-        "sber"
-      ],
+      "services": [],
       "source": "asn"
     },
     "151.236.82.0/24": {
@@ -8496,9 +8453,11 @@
     },
     "151.236.83.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "tbank"
+      ],
       "source": "asn"
     },
     "151.236.84.0/23": {
@@ -8514,8 +8473,7 @@
       "cc": "RU",
       "services": [
         "avito",
-        "payments",
-        "sber"
+        "payments"
       ],
       "source": "asn"
     },
@@ -8528,11 +8486,9 @@
     },
     "151.236.86.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
-      "services": [
-        "food"
-      ],
+      "services": [],
       "source": "asn"
     },
     "151.236.87.0/24": {
@@ -8589,9 +8545,13 @@
     },
     "151.236.94.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "payments",
+        "sber",
+        "shops"
+      ],
       "source": "asn"
     },
     "151.236.95.0/24": {
@@ -8647,13 +8607,9 @@
     },
     "151.236.102.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
-      "services": [
-        "food",
-        "sber",
-        "shops"
-      ],
+      "services": [],
       "source": "asn"
     },
     "151.236.103.0/24": {
@@ -8674,11 +8630,9 @@
     },
     "151.236.106.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
-      "services": [
-        "tbank"
-      ],
+      "services": [],
       "source": "asn"
     },
     "151.236.107.0/24": {
@@ -8707,10 +8661,8 @@
       "as_name": "CDNetworks - GLOBAL CLOUD NETWORK LLC, RU",
       "cc": "RU",
       "services": [
-        "payments",
-        "sber",
-        "shops",
-        "tbank"
+        "food",
+        "sber"
       ],
       "source": "asn"
     },
@@ -8753,9 +8705,13 @@
     },
     "151.236.115.0/24": {
       "asn": 204720,
-      "as_name": "Global Cloud Network (CDNetworks RU) — российский CDN Сбера, НСПК СБП, ВТБ, Avito и 2ГИС",
+      "as_name": "CDNetworks - GLOBAL CLOUD NETWORK LLC, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "food",
+        "shops",
+        "tbank"
+      ],
       "source": "asn"
     },
     "151.236.116.0/22": {
@@ -8784,6 +8740,7 @@
       "as_name": "CDNetworks - GLOBAL CLOUD NETWORK LLC, RU",
       "cc": "RU",
       "services": [
+        "food",
         "tbank"
       ],
       "source": "asn"
@@ -8793,13 +8750,19 @@
       "as_name": "CDNetworks - GLOBAL CLOUD NETWORK LLC, RU",
       "cc": "RU",
       "services": [
-        "food",
         "shops",
         "streaming"
       ],
       "source": "asn"
     },
     "151.236.119.0/24": {
+      "asn": 204720,
+      "as_name": "Global Cloud Network (CDNetworks RU) — российский CDN Сбера, НСПК СБП, ВТБ, Avito и 2ГИС",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "151.236.120.0/23": {
       "asn": 204720,
       "as_name": "Global Cloud Network (CDNetworks RU) — российский CDN Сбера, НСПК СБП, ВТБ, Avito и 2ГИС",
       "cc": "RU",
@@ -8819,7 +8782,7 @@
       "cc": "RU",
       "services": [
         "payments",
-        "sber"
+        "shops"
       ],
       "source": "asn"
     },
@@ -8830,7 +8793,8 @@
       "services": [
         "food",
         "payments",
-        "sber"
+        "sber",
+        "shops"
       ],
       "source": "asn"
     },
@@ -8843,18 +8807,18 @@
     },
     "151.236.123.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
+      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
-      "services": [],
+      "services": [
+        "avito"
+      ],
       "source": "asn"
     },
     "151.236.127.0/24": {
       "asn": 57363,
-      "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
+      "as_name": "CDNvideo — российский CDN (НСПК/СБП, статика RU-сервисов)",
       "cc": "RU",
-      "services": [
-        "streaming"
-      ],
+      "services": [],
       "source": "asn"
     },
     "151.244.91.0/24": {
@@ -9605,15 +9569,6 @@
       "cc": "RU",
       "services": [
         "misc-extra"
-      ],
-      "source": "dns"
-    },
-    "161.104.54.201/32": {
-      "asn": 50340,
-      "as_name": "SELECTEL-MSK - JSC Selectel, RU",
-      "cc": "RU",
-      "services": [
-        "booking"
       ],
       "source": "dns"
     },
@@ -10653,9 +10608,7 @@
       "as_name": "CDNvideo-AS - CDNvideo LLC, RU",
       "cc": "RU",
       "services": [
-        "avito",
         "food",
-        "sber",
         "shops"
       ],
       "source": "asn"
@@ -13424,13 +13377,6 @@
       "services": [],
       "source": "asn"
     },
-    "194.226.95.0/24": {
-      "asn": 43797,
-      "as_name": "RSNET2 — государственные информсистемы",
-      "cc": "RU",
-      "services": [],
-      "source": "asn"
-    },
     "194.226.98.114/32": {
       "asn": 44112,
       "as_name": "SWEB-AS - SpaceWeb Ltd, RU",
@@ -14050,6 +13996,7 @@
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
+        "ru-antiddos",
         "shops",
         "streaming"
       ],
@@ -14161,13 +14108,6 @@
         "brokers",
         "shops"
       ],
-      "source": "asn"
-    },
-    "195.209.92.0/23": {
-      "asn": 34879,
-      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
-      "cc": "RU",
-      "services": [],
       "source": "asn"
     },
     "195.209.92.0/24": {
@@ -15240,8 +15180,8 @@
       "as_name": "CCT-AS - OOO _Sovremennye setevye tekhnologii_, RU",
       "cc": "RU",
       "services": [
-        "delivery-extra",
         "gosuslugi",
+        "mobile",
         "ru-antiddos"
       ],
       "source": "asn"
@@ -15255,7 +15195,6 @@
         "gosuslugi",
         "mobile",
         "nalog",
-        "ru-antiddos",
         "shops",
         "streaming"
       ],
@@ -15269,6 +15208,13 @@
       "source": "asn"
     },
     "212.193.157.159/32": {
+      "asn": 34879,
+      "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
+      "cc": "RU",
+      "services": [],
+      "source": "asn"
+    },
+    "212.193.157.189/32": {
       "asn": 34879,
       "as_name": "NGENIX — основной российский CDN банков, медиа и ритейла",
       "cc": "RU",
